@@ -33,3 +33,23 @@ export type SignUpData ={
 export type LoginData = {
   userId: string;
 }
+
+export type User = {
+  userId: string;
+  email: string;
+  createdAt: string;
+  updatedAt: string;
+  deleted: boolean;
+  deletedAt: string | null;
+}
+
+export type UserStore = {
+  userId: string | null;
+  email: string | null;
+  createdAt: string | null;
+  updatedAt: string | null;
+  deleted: boolean | null;
+  deletedAt: string | null;
+  setUser: (user: User) => void;
+  clearUser: () => void;
+}

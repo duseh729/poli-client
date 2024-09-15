@@ -32,3 +32,10 @@ export type ChatMessagesResponse = {
   uuid: string;
   rooms: ChatMessage[];
 };
+
+
+export type ChatRoomsStore = {
+  chatRooms: ChatRoom[];
+  setChatRooms: (chatRooms: ChatRoom[]) => void;
+  clearChatRooms: () => void;
+};

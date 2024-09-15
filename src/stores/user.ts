@@ -1,19 +1,11 @@
 
 import create from "zustand";
 import { persist } from "zustand/middleware";
+import { UserStore } from "@/types/user";
 
-interface UserState {
-  userId: string | null;
-  email: string | null;
-  createdAt: string | null;
-  updatedAt: string | null;
-  deleted: boolean | null;
-  deletedAt: string | null;
-  setUser: (user: any) => void;
-  clearUser: () => void;
-}
 
-export const useUserStore = create<UserState>()(
+
+export const useUserStore = create<UserStore>()(
   persist(
     (set) => ({
       userId: null,

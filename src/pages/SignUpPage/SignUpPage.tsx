@@ -2,24 +2,14 @@
 import { useNavigate } from "react-router-dom";
 import { AxiosError } from "axios";
 import { useForm } from "react-hook-form";
-import * as Yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as S from "./SignUpPage";
 import { checkUserExistence, signUp } from "@/api/user";
 import poliMdLogo from "@/assets/poli-md-logo.svg";
 import poliSmText from "@/assets/poli-sm-text.svg";
 import { SignUpData } from "@/types/user";
+import { signUpSchema } from "@/schemas/user";
 
-const schema = Yup.object().shape({
-  userId: Yup.string()
-    .required("아이디를 입력하세요.")
-    .min(5, "5자~15자로 입력해 주세요.")
-    .max(15, "5자~15자로 입력해 주세요.")
-    .matches(/^[A-Za-z0-9]+$/, "알파벳과 숫자만 입력해주세요."),
-  email: Yup.string()
-    .required("이메일을 입력하세요.")
-    .email("유효한 이메일 주소를 입력해 주세요."),
-});
 
 const SignUpPage = () => {
   const {
@@ -28,7 +18,7 @@ const SignUpPage = () => {
     setError,
     formState: { errors },
   } = useForm({
-    resolver: yupResolver(schema),
+    resolver: yupResolver(signUpSchema),
   });
   const navigate = useNavigate();
 

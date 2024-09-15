@@ -2,7 +2,6 @@
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import { isAxiosError } from "axios";
-import * as Yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as S from "./LoginPage";
 import { logIn } from "@/api/user";
@@ -10,14 +9,7 @@ import poliMdLogo from "@/assets/poli-md-logo.svg";
 import poliSmText from "@/assets/poli-sm-text.svg";
 import { useUserStore } from "@/stores/index";
 import { LoginData } from "@/types/user";
-
-const schema = Yup.object().shape({
-  userId: Yup.string()
-    .required("아이디를 입력하세요.")
-    .min(5, "5자~15자로 입력해 주세요.")
-    .max(15, "5자~15자로 입력해 주세요.")
-    .matches(/^[A-Za-z0-9]+$/, "알파벳과 숫자만 입력해주세요."),
-});
+import { loginSchema } from "@/schemas/user";
 
 const LoginPage = () => {
   const setUser = useUserStore((state) => state.setUser);
@@ -27,7 +19,7 @@ const LoginPage = () => {
     setError,
     formState: { errors },
   } = useForm({
-    resolver: yupResolver(schema),
+    resolver: yupResolver(loginSchema),
   });
   const navigate = useNavigate();
 
