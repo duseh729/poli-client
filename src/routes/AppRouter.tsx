@@ -8,17 +8,18 @@ import HomePage from "@/pages/HomePage/HomePage.tsx";
 import LoginPage from "@/pages/LoginPage/LoginPage.tsx";
 import SignUpPage from "@/pages/SignUpPage/SignUpPage.tsx";
 import LeftSideBar from "@/components/layout/LeftSideBar.tsx";
+import { ROUTES } from "@/constants/routes";
 
 
 const publicRoutes = [
-  { path: "/", element: <HomePage /> },
-  { path: "/login", element: <LoginPage /> },
-  { path: "/signup", element: <SignUpPage /> },
+  { path: ROUTES.HOME, element: <HomePage /> },
+  { path: ROUTES.LOGIN, element: <LoginPage /> },
+  { path: ROUTES.SIGNUP, element: <SignUpPage /> },
 ];
 
 const protectedRoutes = [
-  { path: "/chat", element: <InfoCollectionPage /> },
-  { path: "/chat/:id", element: <ChatPage /> },
+  { path: ROUTES.CHAT, element: <InfoCollectionPage /> },
+  { path: ROUTES.CHAT_ID, element: <ChatPage /> },
 ];
 
 function AppRouter() {
@@ -46,7 +47,7 @@ function AppRouter() {
               />
             ))}
           </Route>
-          <Route path="*" element={<Navigate to="/" />} />
+          <Route path="*" element={<Navigate to={ROUTES.HOME} />} />
         </Routes>
       </div>
     </Router>

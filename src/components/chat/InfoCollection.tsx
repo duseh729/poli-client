@@ -8,6 +8,8 @@ import * as S from "./InfoCollection.ts";
 import { useChatRoomsStore } from "@/stores";
 import { ChatRoom } from "@/types/chat";
 import { chatStream, getChatRooms } from "@/api/chat";
+import { ROUTES } from "@/constants/routes.ts";
+import { getDynamicPath } from "@/utils/routes.ts";
 
 registerLocale("ko", localeKo as unknown as Locale);
 
@@ -83,7 +85,7 @@ const InfoCollection = ({ setIsEnableNext, isEnableNext }: InfoCollectionProps) 
         setChatRooms(updatedChatRooms);
 
         if (newChatRoom) {
-          navigate(`/chat/${newChatRoom.id}`);
+          navigate(getDynamicPath(ROUTES.CHAT_ID, { id: newChatRoom.id }));
         } else {
           console.error("새로운 채팅방을 찾을 수 없습니다.");
         }

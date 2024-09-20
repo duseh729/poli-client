@@ -9,6 +9,7 @@ import poliMdLogo from "@/assets/poli-md-logo.svg";
 import poliSmText from "@/assets/poli-sm-text.svg";
 import { SignUpData } from "@/types/user";
 import { signUpSchema } from "@/schemas/user";
+import { ROUTES } from "@/constants/routes";
 
 
 const SignUpPage = () => {
@@ -39,7 +40,7 @@ const SignUpPage = () => {
       }
 
       await signUp(data);
-      navigate("/login");
+      navigate(ROUTES.LOGIN);
     } catch (error) {
       console.error("error", error);
       

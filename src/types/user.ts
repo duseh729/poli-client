@@ -1,5 +1,4 @@
 import * as Yup from "yup";
-import dayjs from "dayjs"
 import { loginSchema, signUpSchema } from "@/schemas/user";
 
 export type SignUpRequest = Yup.InferType<typeof signUpSchema>;
@@ -13,9 +12,9 @@ export type SignUpResponse = {
 
 export type LoginResponse = {
   deleted: boolean;
-  deletedAt: dayjs.ConfigType;
-  createdAt: dayjs.ConfigType;
-  updatedAt: dayjs.ConfigType;
+  deletedAt: string;
+  createdAt: string;
+  updatedAt: string;
   userId: string;
   email: string;
 };

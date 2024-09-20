@@ -10,6 +10,8 @@ import poliSmText from "@/assets/poli-sm-text.svg";
 import { useUserStore } from "@/stores/index";
 import { LoginData } from "@/types/user";
 import { loginSchema } from "@/schemas/user";
+import { HTTP_STATUS } from "@/constants/http";
+import { ROUTES } from "@/constants/routes";
 
 const LoginPage = () => {
   const setUser = useUserStore((state) => state.setUser);
@@ -28,7 +30,7 @@ const LoginPage = () => {
       const response = await logIn(data);
       if (response) {
         setUser(response);
-        navigate("/chat");
+        navigate(ROUTES.CHAT);
       }
     } catch (error) {
       if (isAxiosError(error)) {

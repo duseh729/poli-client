@@ -10,6 +10,8 @@ import { useUserStore } from "@/stores/user";
 import { getChatRooms } from "@/api/chat";
 import { useChatRoomsStore } from "@/stores";
 import { ChatRoom } from "@/types/chat.ts";
+import { getDynamicPath } from "@/utils/routes.ts";
+import { ROUTES } from "@/constants/routes.ts";
 
 const LeftSideBar = () => {
   const [consultations, setConsultations] = useState<ChatRoom[]>([]);
@@ -35,13 +37,13 @@ const LeftSideBar = () => {
   };
 
   const handleConsultationClick = (id: number) => {
-    navigate(`/chat/${id}`);
+    navigate(getDynamicPath(ROUTES.CHAT_ID, { id }));
   };
 
   const handleLogout = () => {
     clearUser();
     clearChatRooms();
-    navigate("/");
+    navigate(ROUTES.HOME);
   };
 
   return (

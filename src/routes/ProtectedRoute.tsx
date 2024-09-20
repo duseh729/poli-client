@@ -1,6 +1,7 @@
 import React, { ReactNode } from "react";
 import { Navigate } from "react-router-dom";
 import { useUserStore } from "@/stores/user";
+import { ROUTES } from "@/constants/routes";
 
 type ProtectedRouteProps = {
   children: ReactNode;
@@ -11,11 +12,11 @@ function ProtectedRoute({ children, requireAuth }: ProtectedRouteProps) {
   const { userId } = useUserStore();
 
   if (requireAuth && !userId) {
-    return <Navigate to="/" />;
+    return <Navigate to={ROUTES.HOME} />;
   }
 
   if (!requireAuth && userId) {
-    return <Navigate to="/chat" />;
+    return <Navigate to={ROUTES.CHAT} />;
   }
   
   return <>{children}</>;
