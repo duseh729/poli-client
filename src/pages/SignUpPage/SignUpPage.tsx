@@ -4,7 +4,7 @@ import { AxiosError } from "axios";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as S from "./SignUpPage";
-import { checkUserExistence, signUp } from "@/api/user";
+import {  signUp } from "@/api/user";
 import poliMdLogo from "@/assets/poli-md-logo.svg";
 import poliSmText from "@/assets/poli-sm-text.svg";
 import { SignUpData } from "@/types/user";
@@ -32,13 +32,6 @@ const SignUpPage = () => {
 
   const onSubmit = async (data: SignUpData) => {
     try {
-      const { exists } = await checkUserExistence(data.userId);
-      
-      if (exists) {
-        setUserIdError("이미 존재하는 아이디입니다.");
-        return;
-      }
-
       await signUp(data);
       navigate(ROUTES.LOGIN);
     } catch (error) {
