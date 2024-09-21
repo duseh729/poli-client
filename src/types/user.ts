@@ -12,7 +12,7 @@ export type SignUpResponse = {
 
 export type LoginResponse = {
   deleted: boolean;
-  deletedAt: string;
+  deletedAt: string | null;
   createdAt: string;
   updatedAt: string;
   userId: string;

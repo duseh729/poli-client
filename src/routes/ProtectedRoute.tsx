@@ -1,4 +1,4 @@
-import React, { ReactNode } from "react";
+import { ReactNode } from "react";
 import { Navigate } from "react-router-dom";
 import { useUserStore } from "@/stores/user";
 import { ROUTES } from "@/constants/routes";
