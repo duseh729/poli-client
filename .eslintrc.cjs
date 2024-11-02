@@ -16,7 +16,6 @@ module.exports = {
     ],
     '@typescript-eslint/no-explicit-any': 'off',
 
-    // import 순서 규칙 추가
     'import/order': [
       'error',
       {
