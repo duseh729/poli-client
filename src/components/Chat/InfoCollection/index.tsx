@@ -154,6 +154,14 @@ const InfoCollection = ({
                   slotProps={{
                     textField: {
                       placeholder: "날짜",
+                      inputProps: {
+                        style: {
+                          color: "#0F0F10",
+                          fontFamily: "Wanted Sans",
+                          fontSize: "14px",
+                          fontWeight: 500,
+                        },
+                      },
                     },
                   }}
                   sx={{
@@ -185,6 +193,14 @@ const InfoCollection = ({
                   slotProps={{
                     textField: {
                       placeholder: "시간",
+                      inputProps: {
+                        style: {
+                          color: "#0F0F10",
+                          fontFamily: "Wanted Sans",
+                          fontSize: "14px",
+                          fontWeight: 500,
+                        },
+                      },
                     },
                   }}
                   sx={{

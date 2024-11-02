@@ -37,11 +37,12 @@ export const Label = styled.label`
   font-size: 16px;
   color: #808996;
   margin: 42px 0 16px 0;
-  font-weight: 600;
+  font-weight: 500;
 `;
 
 export const Highlight = styled.span`
   color: #0f0f10;
+  font-weight: 600;
 `;
 
 export const Input = styled.input`
