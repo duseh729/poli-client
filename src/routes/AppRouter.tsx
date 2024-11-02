@@ -5,7 +5,6 @@ import {
   Routes,
   Navigate,
 } from "react-router-dom";
-import { css } from "@emotion/react";
 import ProtectedRoute from "./ProtectedRoute";
 import { ROUTES } from "@/constants/routes";
 import HomePage from "@/pages/HomePage";
@@ -29,35 +28,29 @@ const protectedRoutes = [
 function AppRouter() {
   return (
     <Router>
-      <div
-        css={css`
-          margin: 0 auto;
-        `}
-      >
-        <Routes>
-          {publicRoutes.map(({ path, element }) => (
+      <Routes>
+        {publicRoutes.map(({ path, element }) => (
+          <Route
+            key={path}
+            path={path}
+            element={
+              <ProtectedRoute requireAuth={false}>{element}</ProtectedRoute>
+            }
+          />
+        ))}
+        <Route element={<LeftSideBar />}>
+          {protectedRoutes.map(({ path, element }) => (
             <Route
               key={path}
               path={path}
               element={
-                <ProtectedRoute requireAuth={false}>{element}</ProtectedRoute>
+                <ProtectedRoute requireAuth={true}>{element}</ProtectedRoute>
               }
             />
           ))}
-          <Route element={<LeftSideBar />}>
-            {protectedRoutes.map(({ path, element }) => (
-              <Route
-                key={path}
-                path={path}
-                element={
-                  <ProtectedRoute requireAuth={true}>{element}</ProtectedRoute>
-                }
-              />
-            ))}
-          </Route>
-          <Route path="*" element={<Navigate to={ROUTES.HOME} />} />
-        </Routes>
-      </div>
+        </Route>
+        <Route path="*" element={<Navigate to={ROUTES.HOME} />} />
+      </Routes>
     </Router>
   );
 }

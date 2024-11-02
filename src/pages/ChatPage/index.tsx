@@ -1,12 +1,14 @@
 /** @jsxImportSource @emotion/react */
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useLocation, useParams } from "react-router-dom";
 import * as S from "./style";
 import { getChatMessages } from "@/api/chat";
 import { ChatMessage } from "@/types/chat";
 import Chat from "@/components/Chat/Chat";
 
 const ChatPage = () => {
+  const location = useLocation();
+  const { roomName } = location?.state || { roomName: "" };
   const { id } = useParams<{ id: string }>();
   const [messages, setMessages] = useState<ChatMessage[]>([]);
 
@@ -25,15 +27,18 @@ const ChatPage = () => {
   }, [id]);
 
   return (
-    <S.Container
-      initial={{ opacity: 0, scale: 0.9, y: 20 }}
-      animate={{ opacity: 1, scale: 1, y: 0 }}
-      exit={{ opacity: 0, scale: 0.9, y: 20 }}
-      transition={{ duration: 0.5 }}
-    >
-      <S.Main>
-        <Chat messages={messages} roomId={parseInt(id!, 10)} />
-      </S.Main>
+    <S.Container>
+      <S.Title>{roomName}</S.Title>
+      <S.Wrapper
+        initial={{ opacity: 0, scale: 0.9, y: 20 }}
+        animate={{ opacity: 1, scale: 1, y: 0 }}
+        exit={{ opacity: 0, scale: 0.9, y: 20 }}
+        transition={{ duration: 0.5 }}
+      >
+        <S.Main>
+          <Chat messages={messages} roomId={parseInt(id!, 10)} />
+        </S.Main>
+      </S.Wrapper>
     </S.Container>
   );
 };

@@ -40,7 +40,7 @@ const Chat = ({ messages, roomId }: ChatProps) => {
           setChatMessages(updatedMessages);
         }
       } catch (error) {
-        console.error("Failed to send message:", error);
+        console.error("error", error);
       } finally {
         setIsLoading(false);
       }
@@ -70,7 +70,7 @@ const Chat = ({ messages, roomId }: ChatProps) => {
                   animate={{ opacity: 1 }}
                   transition={{ duration: 0.5 }}
                 >
-                  {message.message}
+                  {getFormatText(message.message)}
                 </S.Message>
               </>
             ) : (
@@ -81,7 +81,7 @@ const Chat = ({ messages, roomId }: ChatProps) => {
                   animate={{ opacity: 1 }}
                   transition={{ duration: 0.5 }}
                 >
-                  {message.message}
+                  {getFormatText(message.message)}
                 </S.Message>
               </>
             )}
@@ -119,3 +119,58 @@ const Chat = ({ messages, roomId }: ChatProps) => {
 };
 
 export default Chat;
+
+const getFormatText = (text: string | null) => {
+  if (!text) return "";
+
+  const lines = text.split("\n");
+  let currentHeading = "";
+
+  return lines.map((line, index) => {
+    if (line.startsWith("#")) {
+      const hashes = line.match(/^#+/)?.[0];
+      const level = hashes ? hashes.length : 1;
+      const content = line.replace(/^#+\s*/, "");
+      currentHeading = content;
+      return (
+        <S.Heading key={index} level={level}>
+          {content}
+        </S.Heading>
+      );
+    }
+
+    if (line.startsWith("-")) {
+      const content = line.replace(/^-\s*/, "");
+      return (
+        <S.ListItem key={index} hasHeading={!!currentHeading}>
+          {content}
+        </S.ListItem>
+      );
+    }
+
+    const linkMatch = line.match(/\[(.*?)\]\((.*?)\)/);
+    if (linkMatch) {
+      const [_, text, url] = linkMatch;
+      return (
+        <S.LinkText
+          key={index}
+          href={url}
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          {text}
+        </S.LinkText>
+      );
+    }
+
+    if (line.startsWith("**") && line.endsWith("**")) {
+      return (
+        <S.StrongText key={index}>
+          {line.substring(2, line.length - 2)}
+        </S.StrongText>
+      );
+    }
+
+    return <div key={index}>{line}</div>;
+  });
+};

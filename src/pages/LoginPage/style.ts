@@ -95,5 +95,5 @@ export const ErrorText = styled.div`
   font-size: 17px;
   margin: 5px 0 0 20px;
   min-height: 34px;
-  font-weight: 600;
+  font-weight: 500;
 `;

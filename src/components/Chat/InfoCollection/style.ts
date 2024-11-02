@@ -1,20 +1,20 @@
 import styled from "@emotion/styled";
 import { css } from "@emotion/react";
 import { motion } from "framer-motion";
-import DatePicker from "react-datepicker";
 
 export const Container = styled(motion.div)`
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  height: 100%;
 `;
 
 export const Form = styled.form`
   border-radius: 35px;
   width: 770px;
   height: auto;
-  padding: 34px 32px;
+  padding: 0 32px 34px 32px;
   border: 1px solid #a5c6ff;
 `;
 
@@ -23,7 +23,7 @@ export const Title = styled.h2`
   justify-content: center;
   align-items: center;
   gap: 8px;
-  padding-bottom: 34px;
+  padding: 34px 0;
   margin: 0 -32px;
   border-bottom: 1px solid #a5c6ff;
 `;
@@ -42,29 +42,6 @@ export const Label = styled.label`
 
 export const Highlight = styled.span`
   color: #0f0f10;
-`;
-
-export const CustomDatePicker = styled(DatePicker)`
-  width: 340px;
-  height: 56px;
-  font-size: 16px;
-  padding: 10px;
-  border: 1px solid #c0cbd9;
-  border-radius: 12px;
-  background-color: #f6f8fb;
-  box-sizing: border-box;
-  &:focus {
-    outline: none;
-    border: 1px solid #0059ff;
-  }
-
-  &:-webkit-autofill,
-  &:-webkit-autofill:hover,
-  &:-webkit-autofill:focus,
-  &:-webkit-autofill:active {
-    transition: background-color 5000s ease-in-out 0s;
-    -webkit-text-fill-color: inherit !important;
-  }
 `;
 
 export const Input = styled.input`
@@ -182,7 +159,7 @@ export const StartButton = styled.button`
   color: #ffffff;
   font-size: 18px;
   padding: 15px 30px;
-  margin-top: 58px;
+  margin-top: 10px;
   width: 100%;
   height: 70px;
   box-sizing: border-box;
@@ -201,7 +178,7 @@ export const Footer = styled.footer`
   font-size: 12px;
   font-weight: 500;
   color: #808996;
-  margin-top: 20px;
+  margin-top: 12px;
 `;
 
 export const Logo = styled.img`

@@ -3,13 +3,13 @@ import { motion } from "framer-motion";
 
 export const Container = styled(motion.div)`
   display: flex;
-  height: 100vh;
+  height: 100%;
 `;
 
 export const Sidebar = styled.div`
   width: 260px;
-  border-right: 1px solid #c0cbd9;
-  margin: 20px 15px;
+  border-right: 1px solid #dddce3;
+  padding: 20px 0;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -54,7 +54,6 @@ export const UserContainer = styled.div`
   bottom: 20px;
   left: 20px;
   gap: 10px;
-  cursor: pointer;
 
   &:hover {
     color: black;
@@ -68,10 +67,14 @@ export const UserIcon = styled.img`
 `;
 
 export const ConsultationList = styled.div`
-  margin-top: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+
   flex: 1;
   height: 600px;
   overflow-y: auto;
+
   ::-webkit-scrollbar {
     width: 8px;
   }
@@ -89,8 +92,9 @@ export const ConsultationList = styled.div`
 export const ConsultationItem = styled.div`
   display: flex;
   align-items: center;
-  margin: 0 15px 10px 0;
+  justify-content: space-between;
   cursor: pointer;
+  position: relative;
 `;
 
 export const ConsultationItemText = styled.p`
@@ -104,12 +108,36 @@ export const ConsultationItemText = styled.p`
   line-height: 1.5;
 `;
 
+export const MenuSelect = styled.div`
+  display: flex;
+  width: 228px;
+  height: 48px;
+  padding: 12px 16px;
+  align-items: center;
+  gap: 8px;
+  box-sizing: border-box;
+  background-color: #f6f8fb;
+  border: 1px solid #e8ecf1;
+  border-radius: 12px;
+  cursor: pointer;
+`;
+
+export const MenuSelectText = styled.span`
+  border-radius: 12px;
+  font-size: 16px;
+  color: #808996;
+  font-weight: 500;
+`;
+
 export const ConsultationTitle = styled.h2`
-  font-size: 14px;
   font-weight: 500;
   color: #808996;
-  padding-top: 12px;
-  border-top: 1px solid #dddce3;
+  padding: 12px 0 20px 0;
+`;
+
+export const Line = styled.div`
+  height: 1px;
+  background-color: #dddce3;
 `;
 
 export const UserNameText = styled.p`
@@ -133,9 +161,8 @@ export const LogoutButton = styled.button`
   border-radius: 12px;
   position: absolute;
   bottom: 60px;
-  left: 20px;
+  left: 15px;
   gap: 10px;
-
   &:hover {
     background-color: #e8ecf1;
   }
@@ -151,4 +178,12 @@ export const OutletContainer = styled(motion.div)`
   display: flex;
   justify-content: center;
   align-items: center;
+`;
+
+export const MenuSelectIcon = styled.img`
+  padding: 2x;
+`;
+
+export const Paddding = styled.div`
+  padding: 0 15px;
 `;

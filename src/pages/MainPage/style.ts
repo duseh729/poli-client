@@ -3,9 +3,11 @@ import { motion } from "framer-motion";
 
 export const Container = styled(motion.div)`
   display: flex;
-  height: 100vh;
   justify-content: center;
   align-items: center;
+  width: 100%;
+  height: 100%;
+  overflow-y: auto;
 `;
 
 export const Main = styled.div`
