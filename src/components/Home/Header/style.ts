@@ -7,7 +7,7 @@ export const Container = styled.div`
   justify-content: space-between;
   align-items: center;
   margin: 0 auto;
-  padding: 0 16px;
+  padding: 0 60px;
 `;
 
 export const StyledLink = styled(Link)`
@@ -24,22 +24,22 @@ export const StyledLink = styled(Link)`
   }
 `;
 
-export const headerStyle = css`
+export const Header = css`
   width: 100%;
   margin-top: 30px;
 `;
 
-export const logoContainerStyle = css`
+export const LogoContainer = styled.div`
   display: flex;
   align-items: center;
 `;
 
-export const logoStyle = css`
-  height: 41px;
-  width: 41px;
+export const Logo = styled.img`
+  height: 30px;
+  width: 30px;
 `;
 
-export const logoTextStyle = css`
+export const LogoText = styled.span`
   font-size: 28px;
   height: 28px;
   width: 75px;

@@ -4,7 +4,6 @@ import { css } from "@emotion/react";
 export const Container = styled.div`
   display: flex;
   flex-direction: column;
-  align-items: center;
 `;
 
 export const LogoContainer = styled.div`
@@ -18,7 +17,6 @@ export const Subtitle = styled.p`
   color: #2e3034;
   font-weight: 500;
   line-height: 150%;
-  text-align: center;
 `;
 
 export const CardContainer = styled.div`
@@ -32,11 +30,13 @@ export const Card = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
-  width: 220px;
-  height: 220px;
+  width: 240px;
+  height: 256px;
   padding: 20px;
+  box-sizing: border-box;
   border: 1px solid #a5c6ff;
   border-radius: 32px;
+  cursor: pointer;
 `;
 
 export const CardIcon = styled.img`
@@ -67,6 +67,8 @@ export const StartButton = styled.button`
   padding: 15px 30px;
   margin-top: 58px;
   width: 100%;
+  height: 70px;
+  box-sizing: border-box;
   cursor: pointer;
   &:hover {
     background: linear-gradient(to right, #00c6ff, #0072ff);

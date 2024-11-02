@@ -1,8 +1,8 @@
 /** @jsxImportSource @emotion/react */
 import { css } from "@emotion/react";
-import Header from "@/components/home/Header.tsx";
-import Main from "@/components/home/Main.tsx";
-import LinkButton from "@/components/home/LinkButton.tsx";
+import Header from "@/components/Home/Header";
+import Main from "@/components/Home/Main";
+import LinkButton from "@/components/Home/LinkButton";
 
 const HomePage = () => {
   return (

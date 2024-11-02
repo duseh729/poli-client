@@ -33,7 +33,7 @@ export const InputWrapper = styled.div`
 `;
 
 export const Input = styled.input`
-  width: calc(100% - 40px);
+  width: 100%;
   padding: 20px;
   border: 1px solid #808996;
   border-radius: 35px;
@@ -77,24 +77,22 @@ export const Button = styled.button`
 `;
 
 export const Text = styled.p`
-  font-size: 18px;
+  font-size: 16px;
   color: #4e5867;
-  font-weight: 600;
+  font-weight: 500;
 `;
 
 export const StyledLink = styled(Link)`
   color: #0059ff;
-  font-size: 18px;
-  font-weight: 600;
-  &:hover {
-    text-decoration: underline;
-  }
+  font-size: 16px;
+  font-weight: 500;
+  text-decoration: none;
 `;
 
 export const ErrorText = styled.div`
   color: #f04443;
   font-size: 17px;
   margin: 5px 0 0 20px;
-  min-height: 34px;
   font-weight: 600;
+  min-height: 34px;
 `;

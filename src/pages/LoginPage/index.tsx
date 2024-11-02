@@ -3,10 +3,8 @@ import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import { isAxiosError } from "axios";
 import { yupResolver } from "@hookform/resolvers/yup";
-import * as S from "./LoginPage";
+import * as S from "./style";
 import { logIn } from "@/api/user";
-import poliMdLogo from "@/assets/poli-md-logo.svg";
-import poliSmText from "@/assets/poli-sm-text.svg";
 import { useUserStore } from "@/stores/index";
 import { LoginData } from "@/types/user";
 import { loginSchema } from "@/schemas/user";
@@ -30,19 +28,24 @@ const LoginPage = () => {
       const response = await logIn(data);
       if (response) {
         setUser(response);
-        navigate(ROUTES.CHAT);
+        navigate(ROUTES.MAIN);
       }
     } catch (error) {
-      if (isAxiosError(error)) {
-        if(error.response && error.response.status===HTTP_STATUS.UNAUTHORIZED){
-          setError("userId", {
-            type: "manual",
-            message: "존재하지 않는 회원입니다.",
-          });
-          console.log("error",error)
-        }
+      if (
+        isAxiosError(error) &&
+        error?.response?.status === HTTP_STATUS.UNAUTHORIZED
+      ) {
+        setError("userId", {
+          type: "manual",
+          message: "존재하지 않는 회원입니다.",
+        });
+        console.log("error", error);
       } else {
         console.error("error", error);
+        setError("userId", {
+          type: "manual",
+          message: "서버 오류가 발생했습니다. 잠시 후 다시 시도해 주세요.",
+        });
       }
     }
   };
@@ -50,13 +53,14 @@ const LoginPage = () => {
   return (
     <S.Container>
       <S.Form onSubmit={handleSubmit(onSubmit)}>
-        <S.LogoContainer>
-          <img src={poliMdLogo} alt="POLI" />
-          <img src={poliSmText} alt="POLI Text" />
-        </S.LogoContainer>
+        <S.Title>로그인</S.Title>
         <S.InputContainer>
           <S.InputWrapper>
-            <S.Input {...register("userId")} type="text" placeholder="아이디*" />
+            <S.Input
+              {...register("userId")}
+              type="text"
+              placeholder="아이디*"
+            />
             <S.FocusText className="focus-text">아이디*</S.FocusText>
             <S.ErrorText>{errors.userId?.message}</S.ErrorText>
           </S.InputWrapper>

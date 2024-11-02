@@ -1,6 +1,6 @@
 /** @jsxImportSource @emotion/react */
 import { useNavigate } from "react-router-dom";
-import * as S from "./LinkButton.ts";
+import * as S from "./style.ts";
 import blueRightArrow from "@/assets/blue-right-arrow.svg";
 import { ROUTES } from "@/constants/routes.ts";
 

@@ -19,13 +19,13 @@ export const Form = styled.form`
 `;
 
 export const Title = styled.h2`
-  font-size: 24px;
-  color: #0f0f10;
-  font-weight: 600;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
   padding-bottom: 34px;
   margin: 0 -32px;
   border-bottom: 1px solid #a5c6ff;
-  text-align: center;
 `;
 
 export const FormGroup = styled.div`
@@ -46,12 +46,13 @@ export const Highlight = styled.span`
 
 export const CustomDatePicker = styled(DatePicker)`
   width: 340px;
-  height: 36px;
+  height: 56px;
   font-size: 16px;
   padding: 10px;
   border: 1px solid #c0cbd9;
   border-radius: 12px;
   background-color: #f6f8fb;
+  box-sizing: border-box;
   &:focus {
     outline: none;
     border: 1px solid #0059ff;
@@ -64,17 +65,17 @@ export const CustomDatePicker = styled(DatePicker)`
     transition: background-color 5000s ease-in-out 0s;
     -webkit-text-fill-color: inherit !important;
   }
-
 `;
 
 export const Input = styled.input`
   width: 340px;
-  height: 36px;
+  height: 56px;
   padding: 10px;
   border: 1px solid #c0cbd9;
   border-radius: 12px;
   background-color: #f6f8fb;
   color: #0f0f10;
+  box-sizing: border-box;
 `;
 
 export const InputRow = styled.div`
@@ -88,11 +89,12 @@ export const textAreaStyle = (isMaxLength: boolean) => css`
   height: 140px;
   resize: none;
   padding: 20px;
-  border: 1px solid ${isMaxLength ? "#F04443" : "#c0cbd9"};
+  border: 1px solid ${isMaxLength ? "#F04443 !important" : "#c0cbd9"};
   border-radius: 12px;
   background-color: #f6f8fb;
   color: #0f0f10;
   font-weight: 600;
+  line-height: 24px;
   box-sizing: border-box;
   ::placeholder {
     color: #afafaf;
@@ -182,6 +184,8 @@ export const StartButton = styled.button`
   padding: 15px 30px;
   margin-top: 58px;
   width: 100%;
+  height: 70px;
+  box-sizing: border-box;
   cursor: pointer;
   &:hover {
     background: linear-gradient(to right, #00c6ff, #0072ff);
@@ -198,4 +202,27 @@ export const Footer = styled.footer`
   font-weight: 500;
   color: #808996;
   margin-top: 20px;
+`;
+
+export const Logo = styled.img`
+  height: 43px;
+  width: 43px;
+`;
+
+export const TitleText = styled.p`
+  font-size: 24px;
+  color: #0f0f10;
+  font-weight: 600;
+  text-align: center;
+`;
+
+export const Duplication = styled.div<{ bold?: boolean }>`
+  font-size: 14px;
+  font-weight: 600;
+  color: ${(props) => (props.bold ? "#0F0F10" : "#808996")};
+`;
+
+export const DuplicationWrapper = styled.div`
+  display: flex;
+  margin-bottom: 10px;
 `;

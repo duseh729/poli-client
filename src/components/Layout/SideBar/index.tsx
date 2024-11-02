@@ -1,7 +1,7 @@
 /** @jsxImportSource @emotion/react */
 import { useEffect, useState } from "react";
 import { Outlet, useNavigate, useLocation } from "react-router-dom";
-import * as S from "./LeftSideBar.ts";
+import * as S from "./style.ts";
 import poliSmBox from "@/assets/poli-sm-box.svg";
 import chatLogo from "@/assets/chat.svg";
 import userLogo from "@/assets/user.svg";
@@ -15,7 +15,7 @@ import { ROUTES } from "@/constants/routes.ts";
 
 const LeftSideBar = () => {
   const [consultations, setConsultations] = useState<ChatRoom[]>([]);
-  const { userId, clearUser } = useUserStore();
+  const { userName, clearUser, userId } = useUserStore();
   const { setChatRooms, clearChatRooms } = useChatRoomsStore();
   const navigate = useNavigate();
   const location = useLocation();
@@ -26,11 +26,9 @@ const LeftSideBar = () => {
 
   const fetchChatRooms = async () => {
     try {
-      if (userId) {
-        const response = await getChatRooms();
-        setChatRooms(response);
-        setConsultations(response);
-      }
+      const response = await getChatRooms();
+      setChatRooms(response);
+      setConsultations(response);
     } catch (error) {
       console.error("Failed to fetch chat rooms:", error);
     }
@@ -62,8 +60,13 @@ const LeftSideBar = () => {
           <S.ConsultationTitle>상담 목록</S.ConsultationTitle>
           <S.ConsultationList>
             {consultations?.map((consultation) => (
-              <S.ConsultationItem key={consultation.id} onClick={() => handleConsultationClick(consultation.id)}>
-                <S.ConsultationItemText>{consultation.roomName}</S.ConsultationItemText>
+              <S.ConsultationItem
+                key={consultation.id}
+                onClick={() => handleConsultationClick(consultation.id)}
+              >
+                <S.ConsultationItemText>
+                  {consultation.roomName}
+                </S.ConsultationItemText>
               </S.ConsultationItem>
             ))}
           </S.ConsultationList>
@@ -74,7 +77,7 @@ const LeftSideBar = () => {
         </S.LogoutButton>
         <S.UserContainer>
           <S.UserIcon src={userLogo} alt="User Icon" />
-          <S.UserNameText>{userId}</S.UserNameText>
+          <S.UserNameText>{userName}</S.UserNameText>
         </S.UserContainer>
       </S.Sidebar>
       <S.OutletContainer

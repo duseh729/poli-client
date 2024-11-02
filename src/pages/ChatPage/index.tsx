@@ -1,10 +1,10 @@
 /** @jsxImportSource @emotion/react */
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import * as S from "./ChatPage";
-import Chat from "@/components/chat/Chat.tsx";
+import * as S from "./style";
 import { getChatMessages } from "@/api/chat";
 import { ChatMessage } from "@/types/chat";
+import Chat from "@/components/Chat/Chat";
 
 const ChatPage = () => {
   const { id } = useParams<{ id: string }>();
@@ -15,7 +15,7 @@ const ChatPage = () => {
       try {
         const consultationId = parseInt(id!, 10);
         const chatMessages = await getChatMessages(consultationId);
-        setMessages(chatMessages.filter(message => message !== null));
+        setMessages(chatMessages.filter((message) => message !== null));
       } catch (error) {
         console.error("채팅방 메시지 조회 실패:", error);
       }

@@ -9,7 +9,7 @@ export const Container = styled(motion.div)`
 export const Sidebar = styled.div`
   width: 260px;
   border-right: 1px solid #c0cbd9;
-  margin: 20px 20px 20px 15px;
+  margin: 20px 15px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -29,6 +29,7 @@ export const SidebarButtonIcon = styled.img`
 
 export const SidebarButton = styled.button`
   display: flex;
+  align-items: center;
   border: none;
   border-radius: 10px;
   padding: 10px 20px;
@@ -37,12 +38,12 @@ export const SidebarButton = styled.button`
   color: #4e5867;
   font-weight: 700;
   cursor: pointer;
-  width: 100%;
+  width: 228px;
+  box-sizing: border-box;
   background-color: #f6f8fb;
 
   &:hover {
-    background-color: #0059ff;
-    color: #ffffff;
+    background-color: #e8ecf1;
   }
 `;
 
@@ -53,6 +54,12 @@ export const UserContainer = styled.div`
   bottom: 20px;
   left: 20px;
   gap: 10px;
+  cursor: pointer;
+
+  &:hover {
+    color: black;
+    background-color: #f6f8fb;
+  }
 `;
 
 export const UserIcon = styled.img`
@@ -63,6 +70,7 @@ export const UserIcon = styled.img`
 export const ConsultationList = styled.div`
   margin-top: 20px;
   flex: 1;
+  height: 600px;
   overflow-y: auto;
   ::-webkit-scrollbar {
     width: 8px;
@@ -81,7 +89,7 @@ export const ConsultationList = styled.div`
 export const ConsultationItem = styled.div`
   display: flex;
   align-items: center;
-  margin-bottom: 20px;
+  margin: 0 15px 10px 0;
   cursor: pointer;
 `;
 
@@ -90,16 +98,15 @@ export const ConsultationItemText = styled.p`
   align-items: center;
   font-size: 16px;
   color: #2e3034;
-  font-weight: 700;
+  font-weight: 500;
   margin: 5px;
-  white-space: nowrap;
   overflow: hidden;
-  text-overflow: ellipsis;
+  line-height: 1.5;
 `;
 
 export const ConsultationTitle = styled.h2`
-  font-size: 16px;
-  font-weight: 700;
+  font-size: 14px;
+  font-weight: 500;
   color: #808996;
   padding-top: 12px;
   border-top: 1px solid #dddce3;
@@ -115,8 +122,8 @@ export const LogoutButton = styled.button`
   display: flex;
   align-items: center;
   gap: 8px;
-  background: #F6F8FB;
-  border: 1px solid #E8ECF1;
+  background: #f6f8fb;
+  border: 1px solid #e8ecf1;
   cursor: pointer;
   color: #808996;
   font-size: 16px;
@@ -130,7 +137,7 @@ export const LogoutButton = styled.button`
   gap: 10px;
 
   &:hover {
-    color: black;
+    background-color: #e8ecf1;
   }
 `;
 

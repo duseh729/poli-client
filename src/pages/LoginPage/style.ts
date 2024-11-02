@@ -17,11 +17,12 @@ export const Form = styled.form`
   border-radius: 8px;
 `;
 
-export const LogoContainer = styled.div`
+export const Title = styled.header`
   display: flex;
-  width: 180px;
-  justify-content: space-between;
-  margin-bottom: 63px;
+  color: #2e3034;
+  font-weight: 700;
+  font-size: 40px;
+  margin-bottom: 32px;
 `;
 
 export const InputContainer = styled.div`
@@ -33,7 +34,7 @@ export const InputWrapper = styled.div`
 `;
 
 export const Input = styled.input`
-  width: calc(100% - 40px);
+  width: 100%;
   padding: 20px;
   border: 1px solid #808996;
   border-radius: 35px;
@@ -77,24 +78,22 @@ export const Button = styled.button`
 `;
 
 export const Text = styled.p`
-  font-size: 18px;
+  font-size: 16px;
   color: #4e5867;
-  font-weight: 600;
+  font-weight: 500;
 `;
 
 export const StyledLink = styled(Link)`
   color: #0059ff;
-  font-size: 18px;
-  font-weight: 600;
-  &:hover {
-    text-decoration: underline;
-  }
+  font-size: 16px;
+  font-weight: 500;
+  text-decoration: none;
 `;
 
 export const ErrorText = styled.div`
   color: #f04443;
   font-size: 17px;
   margin: 5px 0 0 20px;
-  font-weight: 600;
   min-height: 34px;
+  font-weight: 600;
 `;

@@ -4,12 +4,13 @@ import { useNavigate } from "react-router-dom";
 import "react-datepicker/dist/react-datepicker.css";
 import { registerLocale } from "react-datepicker";
 import { Locale, ko as localeKo } from "date-fns/locale";
-import * as S from "./InfoCollection.ts";
+import * as S from "./style.ts";
 import { useChatRoomsStore } from "@/stores";
 import { ChatRoom } from "@/types/chat";
 import { chatStream, getChatRooms } from "@/api/chat";
 import { ROUTES } from "@/constants/routes.ts";
 import { getDynamicPath } from "@/utils/routes.ts";
+import poliSmLogo from "@/assets/poli-sm-logo.svg";
 
 registerLocale("ko", localeKo as unknown as Locale);
 
@@ -18,9 +19,12 @@ const DESCRIPTION_MAX_LENGTH = 1000;
 type InfoCollectionProps = {
   setIsEnableNext: (param: boolean) => void;
   isEnableNext: boolean;
-}
+};
 
-const InfoCollection = ({ setIsEnableNext, isEnableNext }: InfoCollectionProps) => {
+const InfoCollection = ({
+  setIsEnableNext,
+  isEnableNext,
+}: InfoCollectionProps) => {
   const [selectedDate, setSelectedDate] = useState<Date | null>(null);
   const [selectedTime, setSelectedTime] = useState<Date | null>(null);
   const [situationDescription, setSituationDescription] = useState("");
@@ -51,7 +55,11 @@ const InfoCollection = ({ setIsEnableNext, isEnableNext }: InfoCollectionProps) 
   };
 
   const handleCheckBoxChange = (checkBoxNumber: number) => {
-    setSelectedCheckBox(checkBoxNumber);
+    if (selectedCheckBox === checkBoxNumber) {
+      setSelectedCheckBox(null);
+    } else {
+      setSelectedCheckBox(checkBoxNumber);
+    }
   };
 
   const handleSubmit = async (event: React.FormEvent) => {
@@ -79,7 +87,7 @@ const InfoCollection = ({ setIsEnableNext, isEnableNext }: InfoCollectionProps) 
 
         const newChatRoom = updatedChatRooms.find(
           (room: ChatRoom) =>
-            !chatRooms.some((existingRoom) => existingRoom.id === room.id),
+            !chatRooms.some((existingRoom) => existingRoom.id === room.id)
         );
 
         setChatRooms(updatedChatRooms);
@@ -103,7 +111,12 @@ const InfoCollection = ({ setIsEnableNext, isEnableNext }: InfoCollectionProps) 
       transition={{ duration: 0.5 }}
     >
       <S.Form>
-        <S.Title>상담을 시작하기에 앞서, 사건에 대한 정보를 입력해 주세요.</S.Title>
+        <S.Title>
+          <S.Logo src={poliSmLogo} alt="POLI" />
+          <S.TitleText>
+            상담을 시작하기에 앞서, 사건에 대한 정보를 입력해 주세요.
+          </S.TitleText>
+        </S.Title>
         <S.FormGroup>
           <S.Label>
             <S.Highlight>피해 장소 |</S.Highlight> 어디에서 피해를 겪으셨나요?
@@ -118,8 +131,8 @@ const InfoCollection = ({ setIsEnableNext, isEnableNext }: InfoCollectionProps) 
         </S.FormGroup>
         <S.FormGroup>
           <S.Label>
-            <S.Highlight>피해 일시 |</S.Highlight> 언제 피해를 겪으셨나요? 날짜와
-            시간을 선택해 주세요.
+            <S.Highlight>피해 일시 |</S.Highlight> 언제 피해를 겪으셨나요?
+            날짜와 시간을 선택해 주세요.
           </S.Label>
           <S.InputRow>
             <div>
@@ -157,7 +170,7 @@ const InfoCollection = ({ setIsEnableNext, isEnableNext }: InfoCollectionProps) 
           </S.ExampleText>
           <textarea
             css={S.textAreaStyle(
-              situationDescription.length === DESCRIPTION_MAX_LENGTH,
+              situationDescription.length >= DESCRIPTION_MAX_LENGTH
             )}
             value={situationDescription}
             onChange={handleTextAreaChange}
@@ -166,13 +179,19 @@ const InfoCollection = ({ setIsEnableNext, isEnableNext }: InfoCollectionProps) 
           />
           <div
             css={S.charCountStyle(
-              situationDescription.length === DESCRIPTION_MAX_LENGTH,
+              situationDescription.length === DESCRIPTION_MAX_LENGTH
             )}
           >
             {situationDescription.length}/{DESCRIPTION_MAX_LENGTH}
           </div>
         </S.FormGroup>
         <S.CheckBoxGroup>
+          <S.DuplicationWrapper>
+            <S.Duplication bold={true}>신고 중복 확인 &nbsp;|</S.Duplication>
+            <S.Duplication bold={false}>
+              &nbsp; 이미 신고가 이루어졌다면 아래 본인의 상황을 선택해 주세요
+            </S.Duplication>
+          </S.DuplicationWrapper>
           <S.CheckBoxLabel>
             <input
               type="checkbox"

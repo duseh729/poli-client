@@ -1,15 +1,12 @@
-
 import create from "zustand";
 import { persist } from "zustand/middleware";
 import { UserStore } from "@/types/user";
-
-
 
 export const useUserStore = create<UserStore>()(
   persist(
     (set) => ({
       userId: null,
-      email: null,
+      userName: null,
       createdAt: null,
       updatedAt: null,
       deleted: null,
@@ -17,7 +14,7 @@ export const useUserStore = create<UserStore>()(
       setUser: (user) =>
         set({
           userId: user.userId,
-          email: user.email,
+          userName: user.userName,
           createdAt: user.createdAt,
           updatedAt: user.updatedAt,
           deleted: user.deleted,
@@ -26,7 +23,7 @@ export const useUserStore = create<UserStore>()(
       clearUser: () =>
         set({
           userId: null,
-          email: null,
+          userName: null,
           createdAt: null,
           updatedAt: null,
           deleted: null,

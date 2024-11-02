@@ -3,13 +3,13 @@ import { css } from "@emotion/react";
 
 export const LogoContainer = styled.div`
   display: flex;
+  justify-content: center;
   align-items: center;
-  margin-bottom: 41px;
+  margin-bottom: 10px;
 `;
 
 export const TitleContainer = styled.div`
   height: 180px;
-  font-size: 49px;
 `;
 
 export const Title = styled.h1`
@@ -17,23 +17,16 @@ export const Title = styled.h1`
   color: #000;
   margin-bottom: 16px;
   line-height: 150%;
+  font-size: 48px;
 `;
 
 export const Subtitle = styled.p`
   font-weight: 600;
+  font-size: 48px;
   color: #000;
 `;
 
-export const mainStyle = css`
-  margin-top: 120px;
-`;
-
-export const logoStyle = css`
-  height: 150px;
-  width: 150px;
-`;
-
-export const textLogoStyle = css`
+export const TextLogo = css`
   height: 150px;
   width: 340px;
 `;

@@ -1,10 +1,10 @@
 /** @jsxImportSource @emotion/react */
 import { useState } from "react";
-import * as S from "./InfoCollectionPage";
-import Introduce from "@/components/chat/Introduce.tsx";
-import InfoCollection from "@/components/chat/InfoCollection.tsx";
+import * as S from "./style";
+import Introduce from "@/components/Chat/Introduce";
+import InfoCollection from "@/components/Chat/InfoCollection";
 
-const InfoCollectionPage = () => {
+const MainPage = () => {
   const [showNextScreen, setShowNextScreen] = useState(1);
   const [isEnableNext, setIsEnableNext] = useState(true);
 
@@ -24,7 +24,10 @@ const InfoCollectionPage = () => {
     >
       <S.Main>
         {showNextScreen === 1 ? (
-          <Introduce handleNextStep={handleNextStep} isEnableNext={isEnableNext} />
+          <Introduce
+            handleNextStep={handleNextStep}
+            isEnableNext={isEnableNext}
+          />
         ) : (
           <InfoCollection
             setIsEnableNext={setIsEnableNext}
@@ -34,6 +37,6 @@ const InfoCollectionPage = () => {
       </S.Main>
     </S.Container>
   );
-}
+};
 
-export default InfoCollectionPage;
+export default MainPage;

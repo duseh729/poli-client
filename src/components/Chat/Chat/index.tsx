@@ -1,12 +1,11 @@
 /** @jsxImportSource @emotion/react */
 import { useState, useRef, useEffect } from "react";
-import * as S from "./Chat";
+import * as S from "./style";
 import chatArrow from "@/assets/chat-arrow.svg";
 import userChat from "@/assets/user-chat-icon.svg";
 import { chatStream, getChatMessages } from "@/api/chat";
 import poliChat from "@/assets/poli-chat-icon.svg";
 import { ChatMessage } from "@/types/chat";
-
 
 type ChatProps = {
   messages: ChatMessage[];
@@ -36,7 +35,7 @@ const Chat = ({ messages, roomId }: ChatProps) => {
       try {
         const responseBody = { message: inputValue, initMessage: "{}", roomId };
         const response = await chatStream(responseBody);
-        if(response){
+        if (response) {
           const updatedMessages = await getChatMessages(roomId);
           setChatMessages(updatedMessages);
         }
@@ -103,13 +102,16 @@ const Chat = ({ messages, roomId }: ChatProps) => {
             }}
             disabled={isLoading}
           />
-          <S.SendButton onClick={handleSend} disabled={isLoading}>
+          <S.SendButton
+            onClick={handleSend}
+            disabled={isLoading || inputValue.length === 0}
+          >
             <img src={chatArrow} alt="send" />
           </S.SendButton>
         </S.InputWrapper>
         <S.DisclaimerText>
-          폴리가 제공한 법률상담에 대해 어떠한 민사, 형사상의 책임도 지지 않습니다.
-          최종 결정에는 반드시 변호사의 조력을 받으십시오.
+          폴리가 제공한 법률상담에 대해 어떠한 민사, 형사상의 책임도 지지
+          않습니다. 최종 결정에는 반드시 변호사의 조력을 받으십시오.
         </S.DisclaimerText>
       </S.InputContainer>
     </S.ChatContainer>
