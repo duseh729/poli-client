@@ -7,7 +7,7 @@ export type LoginRequest = Yup.InferType<typeof loginSchema>;
 export type SignUpResponse = {
   message: string;
   userId: string;
-  email: string;
+  userName: string;
 };
 
 export type LoginResponse = {
@@ -16,7 +16,7 @@ export type LoginResponse = {
   createdAt: string;
   updatedAt: string;
   userId: string;
-  email: string;
+  userName: string;
 };
 
 export type UserExistenceResponse = {
@@ -24,31 +24,31 @@ export type UserExistenceResponse = {
   exists: boolean;
 };
 
-export type SignUpData ={
+export type SignUpData = {
   userId: string;
-  email: string;
-}
+  userName: string;
+};
 
 export type LoginData = {
   userId: string;
-}
+};
 
 export type User = {
   userId: string;
-  email: string;
+  userName: string;
   createdAt: string;
   updatedAt: string;
   deleted: boolean;
   deletedAt: string | null;
-}
+};
 
 export type UserStore = {
   userId: string | null;
-  email: string | null;
+  userName: string | null;
   createdAt: string | null;
   updatedAt: string | null;
   deleted: boolean | null;
   deletedAt: string | null;
   setUser: (user: User) => void;
   clearUser: () => void;
-}
+};
