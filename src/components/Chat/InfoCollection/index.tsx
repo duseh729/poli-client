@@ -224,6 +224,9 @@ const InfoCollection = ({
                           textAlign: "center",
                           overflowY: "auto",
                           height: "200px",
+                          display: "flex",
+                          flexDirection: "column",
+                          alignItems: "center",
                           "::-webkit-scrollbar": {
                             width: "8px",
                           },
@@ -238,7 +241,13 @@ const InfoCollection = ({
                         "& .Mui-selected": {
                           backgroundColor: "#BDD5FF !important",
                           color: "#0F0F10",
+                          fontWeight: 700,
                           fontFamily: "Wanted Sans",
+                          width: "100%",
+                          display: "block",
+                          padding: "8px 12px",
+                          boxSizing: "border-box",
+                          borderRadius: "7px",
                         },
                         "& .MuiTypography-root": {
                           fontSize: "22px",
