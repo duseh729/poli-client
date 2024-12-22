@@ -240,8 +240,8 @@ const InfoCollection = ({
                         },
                         "& .Mui-selected": {
                           backgroundColor: "#BDD5FF !important",
-                          color: "#0F0F10",
-                          fontWeight: 700,
+                          color: "#0F0F10 !important",
+                          fontWeight: 600,
                           fontFamily: "Wanted Sans",
                           width: "100%",
                           display: "block",
@@ -252,7 +252,7 @@ const InfoCollection = ({
                         "& .MuiTypography-root": {
                           fontSize: "22px",
                           fontWeight: 500,
-                          color: "#0F0F10",
+                          color: "#0F0F10 !important",
                           fontFamily: "Wanted Sans",
                         },
                       },
