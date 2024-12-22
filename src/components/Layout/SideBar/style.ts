@@ -34,17 +34,22 @@ export const SidebarButton = styled.button`
   border-radius: 10px;
   padding: 10px 20px;
   margin-bottom: 20px;
-  font-size: 16px;
-  color: #4e5867;
-  font-weight: 700;
   cursor: pointer;
   width: 228px;
   box-sizing: border-box;
   background-color: #f6f8fb;
+  font-family: "Wanted Sans";
 
   &:hover {
     background-color: #e8ecf1;
   }
+`;
+
+export const SidebarText = styled.span`
+  font-size: 16px;
+  color: #4e5867;
+  font-weight: 700;
+  font-family: "Wanted Sans";
 `;
 
 export const UserContainer = styled.div`
@@ -64,6 +69,7 @@ export const UserContainer = styled.div`
 export const UserIcon = styled.img`
   width: 24px;
   height: 24px;
+  cursor: pointer;
 `;
 
 export const ConsultationList = styled.div`
@@ -98,13 +104,15 @@ export const ConsultationItem = styled.div`
 `;
 
 export const ConsultationItemText = styled.p`
-  display: flex;
-  align-items: center;
-  font-size: 16px;
+  display: inline-block;
+  max-width: 100%;
+  font-size: 14px;
   color: #2e3034;
   font-weight: 500;
   margin: 5px;
   overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
   line-height: 1.5;
 `;
 
@@ -146,7 +154,7 @@ export const UserNameText = styled.p`
   color: #4e5867;
 `;
 
-export const LogoutButton = styled.button`
+export const LogoutButton = styled(motion.button)`
   display: flex;
   align-items: center;
   gap: 8px;
@@ -163,6 +171,8 @@ export const LogoutButton = styled.button`
   bottom: 60px;
   left: 15px;
   gap: 10px;
+  z-index: 100;
+  font-family: "Wanted Sans";
   &:hover {
     background-color: #e8ecf1;
   }

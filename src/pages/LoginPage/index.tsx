@@ -60,8 +60,11 @@ const LoginPage = () => {
               {...register("userId")}
               type="text"
               placeholder="아이디*"
+              hasError={!!errors.userId}
             />
-            <S.FocusText className="focus-text">아이디*</S.FocusText>
+            <S.FocusText className="focus-text" hasError={!!errors.userId}>
+              아이디*
+            </S.FocusText>
             <S.ErrorText>{errors.userId?.message}</S.ErrorText>
           </S.InputWrapper>
           <S.Button type="submit">로그인</S.Button>

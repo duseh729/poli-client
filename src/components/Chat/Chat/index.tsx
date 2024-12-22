@@ -1,11 +1,15 @@
 /** @jsxImportSource @emotion/react */
 import { useState, useRef, useEffect } from "react";
+import ReactMarkdown from "react-markdown";
+import remarkGfm from "remark-gfm";
+import rehypeHighlight from "rehype-highlight";
 import * as S from "./style";
 import chatArrow from "@/assets/chat-arrow.svg";
 import userChat from "@/assets/user-chat-icon.svg";
 import { chatStream, getChatMessages } from "@/api/chat";
 import poliChat from "@/assets/poli-chat-icon.svg";
 import { ChatMessage } from "@/types/chat";
+import "highlight.js/styles/github.css";
 
 type ChatProps = {
   messages: ChatMessage[];
@@ -13,9 +17,9 @@ type ChatProps = {
 };
 
 const Chat = ({ messages, roomId }: ChatProps) => {
-  const [inputValue, setInputValue] = useState("");
+  const [inputValue, setInputValue] = useState<string>("");
   const [chatMessages, setChatMessages] = useState<ChatMessage[]>([]);
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
   const chatWindowRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -57,6 +61,34 @@ const Chat = ({ messages, roomId }: ChatProps) => {
     (a, b) => new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime()
   );
 
+  const markdownComponents = {
+    h1: ({ children }: any) => <S.Heading level={1}>{children}</S.Heading>,
+    h2: ({ children }: any) => <S.Heading level={2}>{children}</S.Heading>,
+    h3: ({ children }: any) => <S.Heading level={3}>{children}</S.Heading>,
+    h4: ({ children }: any) => <S.Heading level={4}>{children}</S.Heading>,
+    h5: ({ children }: any) => <S.Heading level={5}>{children}</S.Heading>,
+    h6: ({ children }: any) => <S.Heading level={6}>{children}</S.Heading>,
+    strong: ({ children }: any) => <S.StrongText>{children}</S.StrongText>,
+    p: ({ children }: any) => <p>{children}</p>,
+    code: ({ inline, className, children, ...props }: any) => {
+      const match = /language-(\w+)/.exec(className || "");
+      return !inline && match ? (
+        <S.PreformattedCode>
+          <code className={className} {...props}>
+            {children}
+          </code>
+        </S.PreformattedCode>
+      ) : (
+        <S.InlineCode {...props}>{children}</S.InlineCode>
+      );
+    },
+    ul: ({ children }: any) => <S.UnorderedList>{children}</S.UnorderedList>,
+    ol: ({ children }: any) => <S.OrderedList>{children}</S.OrderedList>,
+    li: ({ children }: any) => (
+      <S.ListItem hasHeading={false}>{children}</S.ListItem>
+    ),
+  };
+
   return (
     <S.ChatContainer>
       <S.ChatWindow ref={chatWindowRef}>
@@ -70,7 +102,13 @@ const Chat = ({ messages, roomId }: ChatProps) => {
                   animate={{ opacity: 1 }}
                   transition={{ duration: 0.5 }}
                 >
-                  {getFormatText(message.message)}
+                  <ReactMarkdown
+                    remarkPlugins={[remarkGfm]}
+                    rehypePlugins={[rehypeHighlight]}
+                    components={markdownComponents}
+                  >
+                    {message.message || ""}
+                  </ReactMarkdown>
                 </S.Message>
               </>
             ) : (
@@ -81,7 +119,13 @@ const Chat = ({ messages, roomId }: ChatProps) => {
                   animate={{ opacity: 1 }}
                   transition={{ duration: 0.5 }}
                 >
-                  {getFormatText(message.message)}
+                  <ReactMarkdown
+                    remarkPlugins={[remarkGfm]}
+                    rehypePlugins={[rehypeHighlight]}
+                    components={markdownComponents}
+                  >
+                    {message.message || ""}
+                  </ReactMarkdown>
                 </S.Message>
               </>
             )}
@@ -119,58 +163,3 @@ const Chat = ({ messages, roomId }: ChatProps) => {
 };
 
 export default Chat;
-
-const getFormatText = (text: string | null) => {
-  if (!text) return "";
-
-  const lines = text.split("\n");
-  let currentHeading = "";
-
-  return lines.map((line, index) => {
-    if (line.startsWith("#")) {
-      const hashes = line.match(/^#+/)?.[0];
-      const level = hashes ? hashes.length : 1;
-      const content = line.replace(/^#+\s*/, "");
-      currentHeading = content;
-      return (
-        <S.Heading key={index} level={level}>
-          {content}
-        </S.Heading>
-      );
-    }
-
-    if (line.startsWith("-")) {
-      const content = line.replace(/^-\s*/, "");
-      return (
-        <S.ListItem key={index} hasHeading={!!currentHeading}>
-          {content}
-        </S.ListItem>
-      );
-    }
-
-    const linkMatch = line.match(/\[(.*?)\]\((.*?)\)/);
-    if (linkMatch) {
-      const [_, text, url] = linkMatch;
-      return (
-        <S.LinkText
-          key={index}
-          href={url}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          {text}
-        </S.LinkText>
-      );
-    }
-
-    if (line.startsWith("**") && line.endsWith("**")) {
-      return (
-        <S.StrongText key={index}>
-          {line.substring(2, line.length - 2)}
-        </S.StrongText>
-      );
-    }
-
-    return <div key={index}>{line}</div>;
-  });
-};

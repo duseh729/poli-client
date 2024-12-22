@@ -32,15 +32,15 @@ export const InputWrapper = styled.div`
   position: relative;
 `;
 
-export const Input = styled.input`
+export const Input = styled.input<{ hasError?: boolean }>`
   width: 100%;
   padding: 20px;
-  border: 1px solid #808996;
+  border: 1px solid ${({ hasError }) => (hasError ? "#f04443" : "#808996")};
   border-radius: 35px;
   font-size: 16px;
   &:focus {
     outline: none;
-    border-color: #3b82f6;
+    border-color: ${({ hasError }) => (hasError ? "#f04443" : "#3b82f6")};
   }
   &:focus + .focus-text {
     opacity: 1;
@@ -48,13 +48,13 @@ export const Input = styled.input`
   }
 `;
 
-export const FocusText = styled.span`
+export const FocusText = styled.span<{ hasError?: boolean }>`
   position: absolute;
   top: 50%;
   left: 20px;
   transform: translateY(-50%);
   font-size: 14px;
-  color: #3b82f6;
+  color: ${({ hasError }) => (hasError ? "#f04443" : "#3b82f6")};
   opacity: 0;
   transition: all 0.2s ease;
   background-color: white;
@@ -71,6 +71,7 @@ export const Button = styled.button`
   font-weight: bold;
   cursor: pointer;
   margin-bottom: 48px;
+  font-family: "Wanted Sans";
   &:hover {
     background-color: #3b82f6;
   }

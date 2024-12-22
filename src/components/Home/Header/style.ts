@@ -32,6 +32,7 @@ export const Header = css`
 export const LogoContainer = styled.div`
   display: flex;
   align-items: center;
+  gap: 3px;
 `;
 
 export const Logo = styled.img`

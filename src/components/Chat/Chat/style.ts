@@ -104,6 +104,7 @@ export const Textarea = styled(TextareaAutosize)`
   max-height: 150px;
   overflow: auto !important;
   color: black;
+  font-weight: 500;
   &::placeholder {
     color: #808996;
     opacity: 1;
@@ -127,6 +128,7 @@ export const SendButton = styled.button`
   display: flex;
   align-items: center;
   justify-content: center;
+  font-family: "Wanted Sans";
 
   &:hover {
     background-color: #0059ff;
@@ -201,4 +203,38 @@ export const ListItem = styled.div<ListItemProps>`
     left: -15px;
     color: #808996;
   }
+`;
+
+export const UnorderedList = styled.ul`
+  padding-left: 20px;
+  list-style-type: none;
+  margin: 0;
+  padding-top: 8px;
+`;
+
+export const OrderedList = styled.ol`
+  padding-left: 20px;
+  margin: 0;
+  padding-top: 8px;
+  list-style-position: inside;
+`;
+
+export const PreformattedCode = styled.pre`
+  background-color: #f6f8fa;
+  border: 1px solid #e1e4e8;
+  padding: 12px;
+  border-radius: 8px;
+  overflow: auto;
+  font-size: 14px;
+  font-family: "Wanted Sans";
+  font-weight: 500;
+`;
+
+export const InlineCode = styled.code`
+  background-color: #f3f3f3;
+  padding: 0.2em 0.4em;
+  border-radius: 3px;
+  font-size: 14px;
+  font-family: "Wanted Sans";
+  font-weight: 500;
 `;
