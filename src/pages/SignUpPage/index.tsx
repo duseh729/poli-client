@@ -51,8 +51,11 @@ const SignUpPage = () => {
               {...register("userId")}
               type="text"
               placeholder="아이디*"
+              hasError={!!errors.userId}
             />
-            <S.FocusText className="focus-text">아이디*</S.FocusText>
+            <S.FocusText className="focus-text" hasError={!!errors.userId}>
+              아이디*
+            </S.FocusText>
             <S.ErrorText>{errors.userId && errors.userId.message}</S.ErrorText>
           </S.InputWrapper>
           <S.InputWrapper>
@@ -60,8 +63,11 @@ const SignUpPage = () => {
               {...register("userName")}
               type="text"
               placeholder="이름*"
+              hasError={!!errors.userName}
             />
-            <S.FocusText className="focus-text">이름*</S.FocusText>
+            <S.FocusText className="focus-text" hasError={!!errors.userName}>
+              이름*
+            </S.FocusText>
             <S.ErrorText>
               {errors.userName && errors.userName.message}
             </S.ErrorText>
