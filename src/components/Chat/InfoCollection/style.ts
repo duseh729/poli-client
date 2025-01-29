@@ -67,24 +67,20 @@ export const textAreaStyle = (isMaxLength: boolean) => css`
   resize: none;
   padding: 20px;
   border: 1px solid ${isMaxLength ? "#F04443 !important" : "#c0cbd9"};
-  border-radius: 12px;
+  border-radius: 10px;
   background-color: #f6f8fb;
   color: #0f0f10;
-  font-weight: 600;
+  font-weight: 500;
   line-height: 24px;
-  box-sizing: border-box;
+  letter-spacing: -2px;
+  overflow-y: scroll;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
   ::placeholder {
     color: #afafaf;
   }
   ::-webkit-scrollbar {
-    width: 8px;
-  }
-  ::-webkit-scrollbar-thumb {
-    background-color: #c0cbd9;
-    border-radius: 10px;
-  }
-  ::-webkit-scrollbar-track {
-    background: #f6f8fb;
+    display: none;
   }
 `;
 

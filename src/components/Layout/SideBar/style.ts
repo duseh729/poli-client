@@ -9,7 +9,7 @@ export const Container = styled(motion.div)`
 export const Sidebar = styled.div`
   width: 260px;
   border-right: 1px solid #dddce3;
-  padding: 20px 0;
+  padding: 20px 0 0 0;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -55,10 +55,8 @@ export const SidebarText = styled.span`
 export const UserContainer = styled.div`
   display: flex;
   align-items: center;
-  position: absolute;
-  bottom: 20px;
-  left: 20px;
-  gap: 10px;
+  padding: 0 20px;
+  height: 56px;
 
   &:hover {
     color: black;
@@ -141,6 +139,7 @@ export const ConsultationTitle = styled.h2`
   font-weight: 500;
   color: #808996;
   padding: 12px 0 20px 0;
+  font-size: 14px;
 `;
 
 export const Line = styled.div`

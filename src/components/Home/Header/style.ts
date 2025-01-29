@@ -13,7 +13,7 @@ export const Container = styled.div`
 export const StyledLink = styled(Link)`
   color: #2e3034;
   font-family: "Wanted Sans";
-  font-size: 20px;
+  font-size: 24px;
   font-style: normal;
   font-weight: 700;
   line-height: 150%;
@@ -33,17 +33,4 @@ export const LogoContainer = styled.div`
   display: flex;
   align-items: center;
   gap: 3px;
-`;
-
-export const Logo = styled.img`
-  height: 30px;
-  width: 30px;
-`;
-
-export const LogoText = styled.span`
-  font-size: 28px;
-  height: 28px;
-  width: 75px;
-  font-weight: bold;
-  color: black;
 `;
