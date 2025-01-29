@@ -57,6 +57,7 @@ export const UserContainer = styled.div`
   align-items: center;
   padding: 0 20px;
   height: 56px;
+  gap: 10px;
 
   &:hover {
     color: black;
