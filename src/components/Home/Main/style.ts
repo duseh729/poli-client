@@ -5,7 +5,6 @@ export const LogoContainer = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  margin-bottom: 10px;
 `;
 
 export const TitleContainer = styled.div`
@@ -29,4 +28,8 @@ export const Subtitle = styled.p`
 export const TextLogo = css`
   height: 150px;
   width: 340px;
+`;
+
+export const Container = styled.main`
+  margin-top: 50px;
 `;

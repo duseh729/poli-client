@@ -93,11 +93,13 @@ export const InputWrapper = styled.div`
 
 export const Textarea = styled(TextareaAutosize)`
   flex: 1;
-  padding: 20px 25px;
+  padding: 20px 35px 20px 25px;
   border: 1px solid #a5c6ff;
   border-radius: 30px;
   font-size: 16px;
   background-color: #f6f8fb;
+  font-weight: 300;
+  letter-spacing: -2px;
   outline: none;
   resize: none;
   min-height: 30px;
@@ -105,9 +107,18 @@ export const Textarea = styled(TextareaAutosize)`
   overflow: auto !important;
   color: black;
   font-weight: 500;
+
+  overflow-y: scroll;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+
   &::placeholder {
     color: #808996;
     opacity: 1;
+  }
+
+  ::-webkit-scrollbar {
+    display: none;
   }
 `;
 
@@ -190,19 +201,13 @@ export const Heading = styled.div<HeadingProps>`
 `;
 
 export const ListItem = styled.div<ListItemProps>`
-  margin-left: 20px;
-  position: relative;
+  margin-left: -20px;
   color: #4e5867;
   font-size: 14px;
   line-height: 1.5;
   margin-top: 4px;
-
-  &::before {
-    content: "•";
-    position: absolute;
-    left: -15px;
-    color: #808996;
-  }
+  display: flex;
+  align-items: center;
 `;
 
 export const UnorderedList = styled.ul`
