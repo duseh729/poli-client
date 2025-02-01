@@ -1,12 +1,20 @@
 /** @jsxImportSource @emotion/react */
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useLocation } from "react-router-dom";
 import * as S from "./style";
 import Introduce from "@/components/Chat/Introduce";
 import InfoCollection from "@/components/Chat/InfoCollection";
 
 const MainPage = () => {
+  const location = useLocation();
   const [showNextScreen, setShowNextScreen] = useState(1);
   const [isEnableNext, setIsEnableNext] = useState(true);
+
+  useEffect(() => {
+    if (location.state?.showNextScreen) {
+      setShowNextScreen(location.state.showNextScreen);
+    }
+  }, [location.state]);
 
   const handleNextStep = () => {
     if (showNextScreen === 1) {

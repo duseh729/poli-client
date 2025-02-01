@@ -19,6 +19,7 @@ export const LogoImage = styled.img`
   width: 40px;
   height: 40px;
   margin-bottom: 40px;
+  cursor: pointer;
 `;
 
 export const SidebarButtonIcon = styled.img`
