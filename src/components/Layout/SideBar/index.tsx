@@ -133,8 +133,18 @@ const LeftSideBar = () => {
       <S.Sidebar>
         <div>
           <S.Paddding>
-            <S.LogoImage src={poliSmBox} alt="POLI Small Box Logo" />
-            <S.SidebarButton onClick={() => navigate("/chat")}>
+            <S.LogoImage
+              src={poliSmBox}
+              alt="POLI Small Box Logo"
+              onClick={() =>
+                navigate(ROUTES.MAIN, { state: { showNextScreen: 1 } })
+              }
+            />
+            <S.SidebarButton
+              onClick={() =>
+                navigate(ROUTES.MAIN, { state: { showNextScreen: 2 } })
+              }
+            >
               <S.SidebarButtonIcon src={chatLogo} alt="Chat Icon" />
               <S.SidebarText>새 상담 시작</S.SidebarText>
             </S.SidebarButton>
