@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { Outlet, useNavigate, useLocation } from "react-router-dom";
+import toast from "react-hot-toast";
 import * as S from "./style.ts";
 import poliSmBox from "@/assets/poli-sm-box.svg";
 import chatLogo from "@/assets/chat.svg";
@@ -111,6 +112,16 @@ const LeftSideBar = () => {
 
   const handleLogout = () => {
     clearUser();
+
+    toast.success("로그아웃에 성공했습니다", {
+      duration: 2000,
+      style: {
+        background: "#28a745",
+        color: "#fff",
+        fontSize: "16px",
+      },
+    });
+
     navigate(ROUTES.HOME);
   };
 

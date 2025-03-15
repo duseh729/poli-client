@@ -7,6 +7,7 @@ import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import { TimePicker } from "@mui/x-date-pickers/TimePicker";
 import "dayjs/locale/ko";
 import dayjs, { Dayjs } from "dayjs";
+import toast from "react-hot-toast";
 import * as S from "./style.ts";
 import { useChatRoomsStore } from "@/stores";
 import { ChatRoom } from "@/types/chat";
@@ -92,6 +93,16 @@ const InfoCollection = ({
 
     try {
       await chatStream(requestBody);
+
+      toast.success("사건제출이 완료되었습니다", {
+        duration: 2000,
+        style: {
+          background: "#28a745",
+          color: "#fff",
+          fontSize: "16px",
+        },
+      });
+
       const updatedRooms = await refetchChatRooms();
 
       if (updatedRooms.data) {
