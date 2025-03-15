@@ -1,4 +1,5 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import toast from "react-hot-toast";
 import API from "./axios.ts";
 import {
   ChatMessage,
@@ -21,8 +22,27 @@ export const useChatStream = () => {
       return response;
     },
     onSuccess: (_, variables) => {
+      toast.success("사건제출이 완료되었습니다", {
+        duration: 2000,
+        style: {
+          background: "#28a745",
+          color: "#fff",
+          fontSize: "16px",
+        },
+      });
+
       queryClient.invalidateQueries({
         queryKey: [CHAT_KEY.CHAT_MESSAGES, variables.roomId],
+      });
+    },
+    onError: (error: Error) => {
+      toast.error(error.message, {
+        duration: 2000,
+        style: {
+          background: "#dc3545",
+          color: "#fff",
+          fontSize: "16px",
+        },
       });
     },
   });
@@ -61,7 +81,25 @@ export const useRemoveChatRoom = () => {
       return response.data;
     },
     onSuccess: () => {
+      toast.success("선택한 채팅방이 삭제되었습니다", {
+        duration: 2000,
+        style: {
+          background: "#28a745",
+          color: "#fff",
+          fontSize: "16px",
+        },
+      });
       queryClient.invalidateQueries({ queryKey: [CHAT_KEY.CAHT_ROOMS] });
+    },
+    onError: (error: Error) => {
+      toast.error(error.message, {
+        duration: 2000,
+        style: {
+          background: "#dc3545",
+          color: "#fff",
+          fontSize: "16px",
+        },
+      });
     },
   });
 };
