@@ -93,20 +93,32 @@ export const InputWrapper = styled.div`
 
 export const Textarea = styled(TextareaAutosize)`
   flex: 1;
-  padding: 20px 25px;
+  padding: 20px 35px 20px 25px;
   border: 1px solid #a5c6ff;
   border-radius: 30px;
   font-size: 16px;
   background-color: #f6f8fb;
+  font-weight: 300;
+  letter-spacing: -2px;
   outline: none;
   resize: none;
   min-height: 30px;
   max-height: 150px;
   overflow: auto !important;
   color: black;
+  font-weight: 500;
+
+  overflow-y: scroll;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+
   &::placeholder {
     color: #808996;
     opacity: 1;
+  }
+
+  ::-webkit-scrollbar {
+    display: none;
   }
 `;
 
@@ -127,6 +139,7 @@ export const SendButton = styled.button`
   display: flex;
   align-items: center;
   justify-content: center;
+  font-family: "Wanted Sans";
 
   &:hover {
     background-color: #0059ff;
@@ -188,17 +201,45 @@ export const Heading = styled.div<HeadingProps>`
 `;
 
 export const ListItem = styled.div<ListItemProps>`
-  margin-left: 20px;
-  position: relative;
+  margin-left: -20px;
   color: #4e5867;
   font-size: 14px;
   line-height: 1.5;
   margin-top: 4px;
+  display: flex;
+  align-items: center;
+`;
 
-  &::before {
-    content: "•";
-    position: absolute;
-    left: -15px;
-    color: #808996;
-  }
+export const UnorderedList = styled.ul`
+  padding-left: 20px;
+  list-style-type: none;
+  margin: 0;
+  padding-top: 8px;
+`;
+
+export const OrderedList = styled.ol`
+  padding-left: 20px;
+  margin: 0;
+  padding-top: 8px;
+  list-style-position: inside;
+`;
+
+export const PreformattedCode = styled.pre`
+  background-color: #f6f8fa;
+  border: 1px solid #e1e4e8;
+  padding: 12px;
+  border-radius: 8px;
+  overflow: auto;
+  font-size: 14px;
+  font-family: "Wanted Sans";
+  font-weight: 500;
+`;
+
+export const InlineCode = styled.code`
+  background-color: #f3f3f3;
+  padding: 0.2em 0.4em;
+  border-radius: 3px;
+  font-size: 14px;
+  font-family: "Wanted Sans";
+  font-weight: 500;
 `;

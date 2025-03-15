@@ -70,6 +70,8 @@ export const StartButton = styled.button`
   height: 70px;
   box-sizing: border-box;
   cursor: pointer;
+  font-family: "Wanted Sans";
+
   &:hover {
     background: linear-gradient(to right, #00c6ff, #0072ff);
   }

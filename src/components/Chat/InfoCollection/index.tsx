@@ -163,13 +163,21 @@ const InfoCollection = ({
                         },
                       },
                     },
+                    popper: {
+                      sx: {
+                        "& .MuiPaper-root": {
+                          width: "340px",
+                          borderRadius: "10px",
+                        },
+                      },
+                    },
                   }}
                   sx={{
                     width: "340px",
                     "& .MuiOutlinedInput-root": {
                       height: "56px",
                       backgroundColor: "#f6f8fb",
-                      borderRadius: "12px",
+                      borderRadius: "10px",
                       "& fieldset": {
                         borderColor: "#c0cbd9",
                       },
@@ -202,13 +210,60 @@ const InfoCollection = ({
                         },
                       },
                     },
+                    popper: {
+                      sx: {
+                        "& .MuiPaper-root": {
+                          width: "340px",
+                          borderRadius: "10px",
+                        },
+                        "& .MuiMultiSectionDigitalClock-root": {
+                          display: "flex",
+                        },
+                        "& .MuiMultiSectionDigitalClockSection-root": {
+                          flex: "1 1 33.33%",
+                          textAlign: "center",
+                          overflowY: "auto",
+                          height: "200px",
+                          display: "flex",
+                          flexDirection: "column",
+                          alignItems: "center",
+                          "::-webkit-scrollbar": {
+                            width: "8px",
+                          },
+                          "::-webkit-scrollbar-thumb": {
+                            backgroundColor: "#c0cbd9",
+                            borderRadius: "10px",
+                          },
+                          "::-webkit-scrollbar-track": {
+                            background: "#f6f8fb",
+                          },
+                        },
+                        "& .Mui-selected": {
+                          backgroundColor: "#BDD5FF !important",
+                          color: "#0F0F10 !important",
+                          fontWeight: 600,
+                          fontFamily: "Wanted Sans",
+                          width: "100%",
+                          display: "block",
+                          padding: "8px 12px",
+                          boxSizing: "border-box",
+                          borderRadius: "7px",
+                        },
+                        "& .MuiTypography-root": {
+                          fontSize: "22px",
+                          fontWeight: 500,
+                          color: "#0F0F10 !important",
+                          fontFamily: "Wanted Sans",
+                        },
+                      },
+                    },
                   }}
                   sx={{
                     width: "340px",
                     "& .MuiOutlinedInput-root": {
                       height: "56px",
                       backgroundColor: "#f6f8fb",
-                      borderRadius: "12px",
+                      borderRadius: "10px",
                       "& fieldset": {
                         borderColor: "#c0cbd9",
                       },

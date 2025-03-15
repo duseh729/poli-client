@@ -9,7 +9,7 @@ export const Container = styled(motion.div)`
 export const Sidebar = styled.div`
   width: 260px;
   border-right: 1px solid #dddce3;
-  padding: 20px 0;
+  padding: 20px 0 0 0;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -19,6 +19,7 @@ export const LogoImage = styled.img`
   width: 40px;
   height: 40px;
   margin-bottom: 40px;
+  cursor: pointer;
 `;
 
 export const SidebarButtonIcon = styled.img`
@@ -34,25 +35,29 @@ export const SidebarButton = styled.button`
   border-radius: 10px;
   padding: 10px 20px;
   margin-bottom: 20px;
-  font-size: 16px;
-  color: #4e5867;
-  font-weight: 700;
   cursor: pointer;
   width: 228px;
   box-sizing: border-box;
   background-color: #f6f8fb;
+  font-family: "Wanted Sans";
 
   &:hover {
     background-color: #e8ecf1;
   }
 `;
 
+export const SidebarText = styled.span`
+  font-size: 16px;
+  color: #4e5867;
+  font-weight: 700;
+  font-family: "Wanted Sans";
+`;
+
 export const UserContainer = styled.div`
   display: flex;
   align-items: center;
-  position: absolute;
-  bottom: 20px;
-  left: 20px;
+  padding: 0 20px;
+  height: 56px;
   gap: 10px;
 
   &:hover {
@@ -64,6 +69,7 @@ export const UserContainer = styled.div`
 export const UserIcon = styled.img`
   width: 24px;
   height: 24px;
+  cursor: pointer;
 `;
 
 export const ConsultationList = styled.div`
@@ -98,13 +104,15 @@ export const ConsultationItem = styled.div`
 `;
 
 export const ConsultationItemText = styled.p`
-  display: flex;
-  align-items: center;
-  font-size: 16px;
+  display: inline-block;
+  max-width: 100%;
+  font-size: 14px;
   color: #2e3034;
   font-weight: 500;
   margin: 5px;
   overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
   line-height: 1.5;
 `;
 
@@ -133,6 +141,7 @@ export const ConsultationTitle = styled.h2`
   font-weight: 500;
   color: #808996;
   padding: 12px 0 20px 0;
+  font-size: 14px;
 `;
 
 export const Line = styled.div`
@@ -146,7 +155,7 @@ export const UserNameText = styled.p`
   color: #4e5867;
 `;
 
-export const LogoutButton = styled.button`
+export const LogoutButton = styled(motion.button)`
   display: flex;
   align-items: center;
   gap: 8px;
@@ -163,6 +172,8 @@ export const LogoutButton = styled.button`
   bottom: 60px;
   left: 15px;
   gap: 10px;
+  z-index: 100;
+  font-family: "Wanted Sans";
   &:hover {
     background-color: #e8ecf1;
   }

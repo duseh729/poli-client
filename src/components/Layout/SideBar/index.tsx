@@ -19,6 +19,8 @@ import MenuPortal from "@/components/MenuPortal/index.tsx";
 const LeftSideBar = () => {
   const [consultations, setConsultations] = useState<ChatRoom[]>([]);
   const [selectedRoomId, setSelectedRoomId] = useState<number | null>(null);
+  const [isLogoutVisible, setIsLogoutVisible] = useState<boolean>(false);
+
   const { userName, clearUser, userId } = useUserStore();
   const { setChatRooms, clearChatRooms } = useChatRoomsStore();
   const navigate = useNavigate();
@@ -49,6 +51,26 @@ const LeftSideBar = () => {
       document.removeEventListener("scroll", handleScroll, true);
     };
   }, [setMenuPosition]);
+
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (!(event.target as HTMLElement).closest(".user-icon-container")) {
+        handleHideLogout();
+      }
+    };
+
+    document.addEventListener("click", handleClickOutside);
+    return () => document.removeEventListener("click", handleClickOutside);
+  }, []);
+
+  const hanldeToggleLogoutVisibility = (event: React.MouseEvent) => {
+    event.stopPropagation();
+    setIsLogoutVisible((prev) => !prev);
+  };
+
+  const handleHideLogout = () => {
+    setIsLogoutVisible(false);
+  };
 
   const handleMenuClick = (event: React.MouseEvent, roomId: number) => {
     event.stopPropagation();
@@ -111,9 +133,20 @@ const LeftSideBar = () => {
       <S.Sidebar>
         <div>
           <S.Paddding>
-            <S.LogoImage src={poliSmBox} alt="POLI Small Box Logo" />
-            <S.SidebarButton onClick={() => navigate("/chat")}>
-              <S.SidebarButtonIcon src={chatLogo} alt="Chat Icon" />새 상담 시작
+            <S.LogoImage
+              src={poliSmBox}
+              alt="POLI Small Box Logo"
+              onClick={() =>
+                navigate(ROUTES.MAIN, { state: { showNextScreen: 1 } })
+              }
+            />
+            <S.SidebarButton
+              onClick={() =>
+                navigate(ROUTES.MAIN, { state: { showNextScreen: 2 } })
+              }
+            >
+              <S.SidebarButtonIcon src={chatLogo} alt="Chat Icon" />
+              <S.SidebarText>새 상담 시작</S.SidebarText>
             </S.SidebarButton>
           </S.Paddding>
           <S.Line />
@@ -138,12 +171,24 @@ const LeftSideBar = () => {
             </S.ConsultationList>
           </S.Paddding>
         </div>
-        <S.LogoutButton onClick={handleLogout}>
-          <S.LogoutIcon src={logoutLogo} alt="Logout Icon" />
-          로그아웃
-        </S.LogoutButton>
+        {isLogoutVisible && (
+          <S.LogoutButton
+            initial={{ opacity: 0, scale: 0.9, y: 10 }}
+            animate={{ opacity: 1, scale: 1, y: 0 }}
+            exit={{ opacity: 0, scale: 0.9, y: 10 }}
+            transition={{ duration: 0.3 }}
+            onClick={handleLogout}
+          >
+            <S.LogoutIcon src={logoutLogo} alt="Logout Icon" />
+            로그아웃
+          </S.LogoutButton>
+        )}
         <S.UserContainer>
-          <S.UserIcon src={userLogo} alt="User Icon" />
+          <S.UserIcon
+            src={userLogo}
+            alt="User Icon"
+            onClick={hanldeToggleLogoutVisibility}
+          />
           <S.UserNameText>{userName}</S.UserNameText>
         </S.UserContainer>
       </S.Sidebar>
