@@ -22,15 +22,6 @@ export const useChatStream = () => {
       return response;
     },
     onSuccess: (_, variables) => {
-      toast.success("사건제출이 완료되었습니다", {
-        duration: 2000,
-        style: {
-          background: "#28a745",
-          color: "#fff",
-          fontSize: "16px",
-        },
-      });
-
       queryClient.invalidateQueries({
         queryKey: [CHAT_KEY.CHAT_MESSAGES, variables.roomId],
       });
