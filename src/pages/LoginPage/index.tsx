@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { isAxiosError } from "axios";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as S from "./style";
-import { logIn } from "@/api/user";
+import { useLogIn } from "@/api/user";
 import { useUserStore } from "@/stores/index";
 import { LoginData } from "@/types/user";
 import { loginSchema } from "@/schemas/user";
@@ -23,13 +23,17 @@ const LoginPage = () => {
   });
   const navigate = useNavigate();
 
+  const { mutateAsync: logIn, isPending } = useLogIn();
+
   const onSubmit = async (data: LoginData) => {
+    if (isPending) {
+      return;
+    }
+
     try {
       const response = await logIn(data);
-      if (response) {
-        setUser(response);
-        navigate(ROUTES.MAIN);
-      }
+      setUser(response);
+      navigate(ROUTES.MAIN);
     } catch (error) {
       if (
         isAxiosError(error) &&
@@ -39,7 +43,6 @@ const LoginPage = () => {
           type: "manual",
           message: "존재하지 않는 회원입니다.",
         });
-        console.log("error", error);
       } else {
         console.error("error", error);
         setError("userId", {
@@ -67,7 +70,9 @@ const LoginPage = () => {
             </S.FocusText>
             <S.ErrorText>{errors.userId?.message}</S.ErrorText>
           </S.InputWrapper>
-          <S.Button type="submit">로그인</S.Button>
+          <S.Button type="submit" disabled={isPending}>
+            {isPending ? "로그인 중..." : "로그인"}
+          </S.Button>
         </S.InputContainer>
         <S.Text>
           계정이 없으신가요? <S.StyledLink to="/signup">회원가입</S.StyledLink>

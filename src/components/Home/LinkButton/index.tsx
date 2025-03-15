@@ -2,7 +2,7 @@
 import { useNavigate } from "react-router-dom";
 import * as S from "./style.ts";
 import blueRightArrow from "@/assets/blue-right-arrow.svg";
-import { ROUTES } from "@/constants/routes.ts";
+import { ROUTES } from "@/constants/routes.tsx";
 
 const LinkButton = () => {
   const navigate = useNavigate();

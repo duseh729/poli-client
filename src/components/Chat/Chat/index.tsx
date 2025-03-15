@@ -1,4 +1,3 @@
-/** @jsxImportSource @emotion/react */
 import { useState, useRef, useEffect } from "react";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
@@ -6,8 +5,9 @@ import rehypeHighlight from "rehype-highlight";
 import * as S from "./style";
 import chatArrow from "@/assets/chat-arrow.svg";
 import userChat from "@/assets/user-chat-icon.svg";
-import { chatStream, getChatMessages } from "@/api/chat";
+import { useChatStream, useChatMessages } from "@/api/chat";
 import poliChat from "@/assets/poli-chat-icon.svg";
+import progressOn from "@/assets/progress-on.svg";
 import { ChatMessage } from "@/types/chat";
 import "highlight.js/styles/github.css";
 
@@ -16,15 +16,35 @@ type ChatProps = {
   roomId: number;
 };
 
-const Chat = ({ messages, roomId }: ChatProps) => {
+const Chat = ({ messages: initialMessages, roomId }: ChatProps) => {
   const [inputValue, setInputValue] = useState<string>("");
   const [chatMessages, setChatMessages] = useState<ChatMessage[]>([]);
-  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [progress, setProgress] = useState<number>(0);
+  const [showProgress, setShowProgress] = useState<boolean>(false);
   const chatWindowRef = useRef<HTMLDivElement>(null);
 
+  const { mutateAsync: chatStream, isPending } = useChatStream();
+  const { data: messagesData, isLoading } = useChatMessages(roomId);
+
   useEffect(() => {
-    setChatMessages(messages);
-  }, [messages]);
+    setShowProgress(false);
+    setProgress(0);
+  }, [roomId]);
+
+  useEffect(() => {
+    setChatMessages(initialMessages);
+  }, [initialMessages]);
+
+  useEffect(() => {
+    if (!isLoading && messagesData) {
+      setChatMessages(messagesData);
+
+      if (chatWindowRef.current) {
+        chatWindowRef.current.scrollTop = chatWindowRef.current.scrollHeight;
+        setProgress(100);
+      }
+    }
+  }, [isLoading, messagesData]);
 
   const handleSend = async () => {
     if (inputValue.trim() !== "") {
@@ -35,19 +55,27 @@ const Chat = ({ messages, roomId }: ChatProps) => {
       };
       setChatMessages((prevMessages) => [...prevMessages, userMessage]);
       setInputValue("");
+      setShowProgress(true);
+      setProgress(0);
+
+      const progressInterval = setInterval(() => {
+        setProgress((prev) => {
+          if (prev >= 100) {
+            clearInterval(progressInterval);
+            return 100;
+          }
+          return prev + 5;
+        });
+      }, 200);
 
       try {
         const responseBody = { message: inputValue, initMessage: "{}", roomId };
-        const response = await chatStream(responseBody);
-        if (response) {
-          const updatedMessages = await getChatMessages(roomId);
-          setChatMessages(updatedMessages);
-        }
+        await chatStream(responseBody);
       } catch (error) {
         console.error("error", error);
-      } finally {
-        setIsLoading(false);
       }
+
+      return () => clearInterval(progressInterval);
     }
   };
 
@@ -132,6 +160,16 @@ const Chat = ({ messages, roomId }: ChatProps) => {
           </S.MessageContainer>
         ))}
       </S.ChatWindow>
+      {showProgress && (
+        <S.ProgrssWrapper>
+          <S.ProgressBox progress={progress}>
+            {progress === 100 && <img src={progressOn} alt="progress-on" />}
+            <S.ProgressText
+              progress={progress}
+            >{`진정서 확인  ${progress}%`}</S.ProgressText>
+          </S.ProgressBox>
+        </S.ProgrssWrapper>
+      )}
       <S.InputContainer>
         <S.InputWrapper>
           <S.Textarea
@@ -139,16 +177,16 @@ const Chat = ({ messages, roomId }: ChatProps) => {
             placeholder="친구에게 말하듯이 편하게, 사건에 대해 말해 주세요."
             onChange={(e) => setInputValue(e.target.value)}
             onKeyPress={(e) => {
-              if (e.key === "Enter" && !e.shiftKey && !isLoading) {
+              if (e.key === "Enter" && !e.shiftKey && !isPending) {
                 e.preventDefault();
                 handleSend();
               }
             }}
-            disabled={isLoading}
+            disabled={isPending}
           />
           <S.SendButton
             onClick={handleSend}
-            disabled={isLoading || inputValue.length === 0}
+            disabled={isPending || inputValue.length === 0}
           >
             <img src={chatArrow} alt="send" />
           </S.SendButton>

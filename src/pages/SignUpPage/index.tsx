@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as S from "./style";
-import { checkUserExistence, signUp } from "@/api/user";
+import { useCheckUserExistence, useSignUp } from "@/api/user";
 import poliMdLogo from "@/assets/poli-md-logo.svg";
 import poliSmText from "@/assets/poli-sm-text.svg";
 import { SignUpData } from "@/types/user";
@@ -21,7 +21,18 @@ const SignUpPage = () => {
   });
   const navigate = useNavigate();
 
+  const { mutateAsync: checkUserExistence, isPending: isCheckingUserPending } =
+    useCheckUserExistence();
+
+  const { mutateAsync: signUp, isPending: isSigningUpPending } = useSignUp();
+
+  const isPending = isCheckingUserPending || isSigningUpPending;
+
   const onSubmit = async (data: SignUpData) => {
+    if (isPending) {
+      return;
+    }
+
     try {
       const { exists } = await checkUserExistence(data.userId);
       if (exists) {

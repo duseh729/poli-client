@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 /** @jsxImportSource @emotion/react */
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
@@ -8,11 +7,12 @@ import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import { TimePicker } from "@mui/x-date-pickers/TimePicker";
 import "dayjs/locale/ko";
 import dayjs, { Dayjs } from "dayjs";
+import toast from "react-hot-toast";
 import * as S from "./style.ts";
 import { useChatRoomsStore } from "@/stores";
 import { ChatRoom } from "@/types/chat";
-import { chatStream, getChatRooms } from "@/api/chat";
-import { ROUTES } from "@/constants/routes.ts";
+import { useChatStream, useChatRooms } from "@/api/chat";
+import { ROUTES } from "@/constants/routes.tsx";
 import { getDynamicPath } from "@/utils/routes.ts";
 import poliSmLogo from "@/assets/poli-sm-logo.svg";
 
@@ -32,9 +32,11 @@ const InfoCollection = ({
   const [situationDescription, setSituationDescription] = useState("");
   const [selectedCheckBox, setSelectedCheckBox] = useState<number | null>(null);
   const [place, setPlace] = useState("");
-  const [loading, setLoading] = useState(false);
   const { chatRooms, setChatRooms } = useChatRoomsStore();
   const navigate = useNavigate();
+
+  const { mutateAsync: chatStream, isPending } = useChatStream();
+  const { data: currentChatRooms, refetch: refetchChatRooms } = useChatRooms();
 
   useEffect(() => {
     if (place && selectedDate && selectedTime && situationDescription) {
@@ -49,6 +51,12 @@ const InfoCollection = ({
     situationDescription,
     setIsEnableNext,
   ]);
+
+  useEffect(() => {
+    if (currentChatRooms) {
+      setChatRooms(currentChatRooms);
+    }
+  }, [currentChatRooms, setChatRooms]);
 
   const handleTextAreaChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     const value = e.target.value;
@@ -67,7 +75,6 @@ const InfoCollection = ({
 
   const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
-    setLoading(true);
 
     const initMessage = {
       place,
@@ -85,16 +92,24 @@ const InfoCollection = ({
     };
 
     try {
-      const response = await chatStream(requestBody);
-      if (response) {
-        const updatedChatRooms = await getChatRooms();
+      await chatStream(requestBody);
 
-        const newChatRoom = updatedChatRooms.find(
+      toast.success("사건제출이 완료되었습니다", {
+        duration: 2000,
+        style: {
+          background: "#28a745",
+          color: "#fff",
+          fontSize: "16px",
+        },
+      });
+
+      const updatedRooms = await refetchChatRooms();
+
+      if (updatedRooms.data) {
+        const newChatRoom = updatedRooms.data.find(
           (room: ChatRoom) =>
             !chatRooms.some((existingRoom) => existingRoom.id === room.id)
         );
-
-        setChatRooms(updatedChatRooms);
 
         if (newChatRoom) {
           navigate(getDynamicPath(ROUTES.CHAT_ID, { id: newChatRoom.id }), {
@@ -108,8 +123,6 @@ const InfoCollection = ({
       }
     } catch (error) {
       console.error("AI 대화 생성 실패:", error);
-    } finally {
-      setLoading(false);
     }
   };
 
@@ -338,7 +351,7 @@ const InfoCollection = ({
         </S.Form>
         <S.StartButton
           onClick={handleSubmit}
-          disabled={!isEnableNext || loading}
+          disabled={!isEnableNext || isPending}
         >
           사건 제출하기
         </S.StartButton>
