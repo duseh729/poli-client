@@ -32,7 +32,11 @@ const ChatPage = () => {
         transition={{ duration: 0.5 }}
       >
         <S.Main>
-          <Chat messages={messages} roomId={parseInt(id!, 10)} />
+          <Chat
+            messages={messages}
+            roomId={parseInt(id!, 10)}
+            key={parseInt(id!, 10)}
+          />
         </S.Main>
       </S.Wrapper>
     </S.Container>
