@@ -243,3 +243,31 @@ export const InlineCode = styled.code`
   font-family: "Wanted Sans";
   font-weight: 500;
 `;
+
+export const ProgrssWrapper = styled.div`
+  display: flex;
+  justify-content: center;
+  margin-bottom: 5px;
+`;
+
+export const ProgressBox = styled.div<{ progress: number }>`
+  border: ${(props) => (props.progress === 100 ? "#004EDF" : "#c0cbd9")};
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 190px;
+  height: 44px;
+  border-radius: 45px;
+  gap: 10px;
+  background-color: ${(props) =>
+    props.progress === 100 ? "#E9F1FF" : "transparent"};
+
+  border: ${(props) =>
+    props.progress === 100 ? "1px solid #004EDF" : "1px solid #c0cbd9"};
+`;
+
+export const ProgressText = styled.span<{ progress: number }>`
+  color: ${(props) => (props.progress === 100 ? "#0059FF" : "#2e3034")};
+  font-weight: 600;
+  font-size: 14px;
+`;

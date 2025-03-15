@@ -1,4 +1,3 @@
-/** @jsxImportSource @emotion/react */
 import { useState, useRef, useEffect } from "react";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
@@ -8,6 +7,7 @@ import chatArrow from "@/assets/chat-arrow.svg";
 import userChat from "@/assets/user-chat-icon.svg";
 import { useChatStream, useChatMessages } from "@/api/chat";
 import poliChat from "@/assets/poli-chat-icon.svg";
+import progressOn from "@/assets/progress-on.svg";
 import { ChatMessage } from "@/types/chat";
 import "highlight.js/styles/github.css";
 
@@ -19,20 +19,32 @@ type ChatProps = {
 const Chat = ({ messages: initialMessages, roomId }: ChatProps) => {
   const [inputValue, setInputValue] = useState<string>("");
   const [chatMessages, setChatMessages] = useState<ChatMessage[]>([]);
+  const [progress, setProgress] = useState<number>(0);
+  const [showProgress, setShowProgress] = useState<boolean>(false);
   const chatWindowRef = useRef<HTMLDivElement>(null);
 
   const { mutateAsync: chatStream, isPending } = useChatStream();
-  const { data: messagesData } = useChatMessages(roomId);
+  const { data: messagesData, isLoading } = useChatMessages(roomId);
+
+  useEffect(() => {
+    setShowProgress(false);
+    setProgress(0);
+  }, [roomId]);
 
   useEffect(() => {
     setChatMessages(initialMessages);
   }, [initialMessages]);
 
   useEffect(() => {
-    if (messagesData) {
+    if (!isLoading && messagesData) {
       setChatMessages(messagesData);
+
+      if (chatWindowRef.current) {
+        chatWindowRef.current.scrollTop = chatWindowRef.current.scrollHeight;
+        setProgress(100);
+      }
     }
-  }, [messagesData]);
+  }, [isLoading, messagesData]);
 
   const handleSend = async () => {
     if (inputValue.trim() !== "") {
@@ -43,6 +55,18 @@ const Chat = ({ messages: initialMessages, roomId }: ChatProps) => {
       };
       setChatMessages((prevMessages) => [...prevMessages, userMessage]);
       setInputValue("");
+      setShowProgress(true);
+      setProgress(0);
+
+      const progressInterval = setInterval(() => {
+        setProgress((prev) => {
+          if (prev >= 100) {
+            clearInterval(progressInterval);
+            return 100;
+          }
+          return prev + 5;
+        });
+      }, 200);
 
       try {
         const responseBody = { message: inputValue, initMessage: "{}", roomId };
@@ -50,6 +74,8 @@ const Chat = ({ messages: initialMessages, roomId }: ChatProps) => {
       } catch (error) {
         console.error("error", error);
       }
+
+      return () => clearInterval(progressInterval);
     }
   };
 
@@ -134,6 +160,16 @@ const Chat = ({ messages: initialMessages, roomId }: ChatProps) => {
           </S.MessageContainer>
         ))}
       </S.ChatWindow>
+      {showProgress && (
+        <S.ProgrssWrapper>
+          <S.ProgressBox progress={progress}>
+            {progress === 100 && <img src={progressOn} alt="progress-on" />}
+            <S.ProgressText
+              progress={progress}
+            >{`진정서 확인  ${progress}%`}</S.ProgressText>
+          </S.ProgressBox>
+        </S.ProgrssWrapper>
+      )}
       <S.InputContainer>
         <S.InputWrapper>
           <S.Textarea
