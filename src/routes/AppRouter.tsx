@@ -6,30 +6,14 @@ import {
   Navigate,
 } from "react-router-dom";
 import ProtectedRoute from "./ProtectedRoute";
-import { ROUTES } from "@/constants/routes";
-import HomePage from "@/pages/HomePage";
-import LoginPage from "@/pages/LoginPage";
-import SignUpPage from "@/pages/SignUpPage";
-import MainPage from "@/pages/MainPage";
-import ChatPage from "@/pages/ChatPage";
+import { PRIVATE_ROUTES, PUBLIC_ROUTES, ROUTES } from "@/constants/routes";
 import LeftSideBar from "@/components/Layout/SideBar";
-
-const publicRoutes = [
-  { path: ROUTES.HOME, element: <HomePage /> },
-  { path: ROUTES.LOGIN, element: <LoginPage /> },
-  { path: ROUTES.SIGNUP, element: <SignUpPage /> },
-];
-
-const protectedRoutes = [
-  { path: ROUTES.MAIN, element: <MainPage /> },
-  { path: ROUTES.CHAT_ID, element: <ChatPage /> },
-];
 
 function AppRouter() {
   return (
     <Router>
       <Routes>
-        {publicRoutes.map(({ path, element }) => (
+        {PUBLIC_ROUTES.map(({ path, element }) => (
           <Route
             key={path}
             path={path}
@@ -39,7 +23,7 @@ function AppRouter() {
           />
         ))}
         <Route element={<LeftSideBar />}>
-          {protectedRoutes.map(({ path, element }) => (
+          {PRIVATE_ROUTES.map(({ path, element }) => (
             <Route
               key={path}
               path={path}

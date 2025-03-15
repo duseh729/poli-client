@@ -1,30 +1,26 @@
 /** @jsxImportSource @emotion/react */
-import { useEffect, useState } from "react";
-import { useLocation, useParams } from "react-router-dom";
+import { useParams, useLocation } from "react-router-dom";
 import * as S from "./style";
-import { getChatMessages } from "@/api/chat";
-import { ChatMessage } from "@/types/chat";
+import { useChatMessages } from "@/api/chat";
 import Chat from "@/components/Chat/Chat";
 
 const ChatPage = () => {
-  const location = useLocation();
-  const { roomName } = location?.state || { roomName: "" };
+  const { roomName } = useLocation()?.state || { roomName: "" };
   const { id } = useParams<{ id: string }>();
-  const [messages, setMessages] = useState<ChatMessage[]>([]);
 
-  useEffect(() => {
-    const fetchMessages = async () => {
-      try {
-        const consultationId = parseInt(id!, 10);
-        const chatMessages = await getChatMessages(consultationId);
-        setMessages(chatMessages.filter((message) => message !== null));
-      } catch (error) {
-        console.error("채팅방 메시지 조회 실패:", error);
-      }
-    };
+  const {
+    data: messages = [],
+    error,
+    isLoading,
+  } = useChatMessages(parseInt(id!, 10));
 
-    fetchMessages();
-  }, [id]);
+  if (isLoading) {
+    return null;
+  }
+
+  if (error instanceof Error) {
+    return <div>error</div>;
+  }
 
   return (
     <S.Container>

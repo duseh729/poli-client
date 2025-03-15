@@ -1,4 +1,3 @@
-/** @jsxImportSource @emotion/react */
 import { useEffect, useState } from "react";
 import { Outlet, useNavigate, useLocation } from "react-router-dom";
 import * as S from "./style.ts";
@@ -9,28 +8,25 @@ import logoutLogo from "@/assets/logout.svg";
 import trash from "@/assets/trash.svg";
 import menuSelect from "@/assets/menu-select.svg";
 import { useUserStore } from "@/stores/user";
-import { getChatRooms, removeChatRoom } from "@/api/chat";
-import { useChatRoomsStore, useMenuStore } from "@/stores";
+import { useChatRooms, useRemoveChatRoom } from "@/api/chat";
+import { useMenuStore } from "@/stores";
 import { ChatRoom } from "@/types/chat.ts";
 import { getDynamicPath } from "@/utils/routes.ts";
-import { ROUTES } from "@/constants/routes.ts";
+import { ROUTES } from "@/constants/routes.tsx";
 import MenuPortal from "@/components/MenuPortal/index.tsx";
 
 const LeftSideBar = () => {
-  const [consultations, setConsultations] = useState<ChatRoom[]>([]);
   const [selectedRoomId, setSelectedRoomId] = useState<number | null>(null);
   const [isLogoutVisible, setIsLogoutVisible] = useState<boolean>(false);
 
-  const { userName, clearUser, userId } = useUserStore();
-  const { setChatRooms, clearChatRooms } = useChatRoomsStore();
+  const { userName, clearUser } = useUserStore();
   const navigate = useNavigate();
   const location = useLocation();
 
-  const { setMenuPosition } = useMenuStore();
+  const { data: consultations = [] } = useChatRooms();
+  const { mutate: removeChatRoom, isPending } = useRemoveChatRoom();
 
-  useEffect(() => {
-    fetchChatRooms();
-  }, [userId, location]);
+  const { setMenuPosition } = useMenuStore();
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
@@ -82,16 +78,6 @@ const LeftSideBar = () => {
     });
   };
 
-  const fetchChatRooms = async () => {
-    try {
-      const response = await getChatRooms();
-      setChatRooms(response);
-      setConsultations(response);
-    } catch (error) {
-      console.error("error:", error);
-    }
-  };
-
   const handleConsultationClick = (consulation: ChatRoom) => {
     navigate(getDynamicPath(ROUTES.CHAT_ID, { id: consulation.id }), {
       state: {
@@ -100,16 +86,22 @@ const LeftSideBar = () => {
     });
   };
 
-  const handleDeleteRoom = async () => {
-    if (selectedRoomId === null) return;
+  const handleDeleteRoom = () => {
+    if (isPending) {
+      return;
+    }
+
+    if (selectedRoomId === null) {
+      return;
+    }
+
     try {
       const currentPathId = Number(location.pathname.split("/").pop());
       if (currentPathId === selectedRoomId) {
         navigate(ROUTES.MAIN);
       }
 
-      await removeChatRoom(selectedRoomId);
-      await fetchChatRooms();
+      removeChatRoom(selectedRoomId);
       setMenuPosition(null);
       setSelectedRoomId(null);
     } catch (error) {
@@ -119,7 +111,6 @@ const LeftSideBar = () => {
 
   const handleLogout = () => {
     clearUser();
-    clearChatRooms();
     navigate(ROUTES.HOME);
   };
 
