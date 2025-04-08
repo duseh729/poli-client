@@ -99,7 +99,7 @@ export const Textarea = styled(TextareaAutosize)`
   font-size: 16px;
   background-color: #f6f8fb;
   font-weight: 300;
-  letter-spacing: -2px;
+  letter-spacing: -1px;
   outline: none;
   resize: none;
   min-height: 30px;
