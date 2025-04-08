@@ -89,49 +89,6 @@ const Chat = ({ messages: initialMessages, roomId }: ChatProps) => {
     (a, b) => new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime()
   );
 
-  const markdownComponents = {
-    h1: ({ children }: any) => <S.Heading level={1}>{children}</S.Heading>,
-    h2: ({ children }: any) => <S.Heading level={2}>{children}</S.Heading>,
-    h3: ({ children }: any) => <S.Heading level={3}>{children}</S.Heading>,
-    h4: ({ children }: any) => <S.Heading level={4}>{children}</S.Heading>,
-    h5: ({ children }: any) => <S.Heading level={5}>{children}</S.Heading>,
-    h6: ({ children }: any) => <S.Heading level={6}>{children}</S.Heading>,
-    strong: ({ children }: any) => <S.StrongText>{children}</S.StrongText>,
-    p: ({ children }: any) => <p>{children}</p>,
-    code: ({ inline, className, children, ...props }: any) => {
-      const match = /language-(\w+)/.exec(className || "");
-      return !inline && match ? (
-        <S.PreformattedCode>
-          <code className={className} {...props}>
-            {children}
-          </code>
-        </S.PreformattedCode>
-      ) : (
-        <S.InlineCode {...props}>{children}</S.InlineCode>
-      );
-    },
-    ul: ({ children }: any) => (
-      <S.UnorderedList
-        style={{
-          listStyleType: "disc",
-        }}
-      >
-        {children}
-      </S.UnorderedList>
-    ),
-    ol: ({ children }: any) => <S.OrderedList>{children}</S.OrderedList>,
-    li: ({ children }: any) => (
-      <S.ListItem
-        hasHeading={false}
-        style={{
-          display: "list-item",
-        }}
-      >
-        {children}
-      </S.ListItem>
-    ),
-  };
-
   return (
     <S.ChatContainer>
       <S.ChatWindow ref={chatWindowRef}>
@@ -148,7 +105,6 @@ const Chat = ({ messages: initialMessages, roomId }: ChatProps) => {
                   <ReactMarkdown
                     remarkPlugins={[remarkGfm]}
                     rehypePlugins={[rehypeHighlight]}
-                    components={markdownComponents}
                   >
                     {message.message || ""}
                   </ReactMarkdown>
@@ -165,7 +121,6 @@ const Chat = ({ messages: initialMessages, roomId }: ChatProps) => {
                   <ReactMarkdown
                     remarkPlugins={[remarkGfm]}
                     rehypePlugins={[rehypeHighlight]}
-                    components={markdownComponents}
                   >
                     {message.message || ""}
                   </ReactMarkdown>
