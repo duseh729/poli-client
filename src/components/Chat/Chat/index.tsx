@@ -110,10 +110,25 @@ const Chat = ({ messages: initialMessages, roomId }: ChatProps) => {
         <S.InlineCode {...props}>{children}</S.InlineCode>
       );
     },
-    ul: ({ children }: any) => <S.UnorderedList>{children}</S.UnorderedList>,
+    ul: ({ children }: any) => (
+      <S.UnorderedList
+        style={{
+          listStyleType: "disc",
+        }}
+      >
+        {children}
+      </S.UnorderedList>
+    ),
     ol: ({ children }: any) => <S.OrderedList>{children}</S.OrderedList>,
     li: ({ children }: any) => (
-      <S.ListItem hasHeading={false}>{children}</S.ListItem>
+      <S.ListItem
+        hasHeading={false}
+        style={{
+          display: "list-item",
+        }}
+      >
+        {children}
+      </S.ListItem>
     ),
   };
 

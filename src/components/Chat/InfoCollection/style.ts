@@ -72,7 +72,7 @@ export const textAreaStyle = (isMaxLength: boolean) => css`
   color: #0f0f10;
   font-weight: 500;
   line-height: 24px;
-  letter-spacing: -2px;
+  letter-spacing: -1px;
   overflow-y: scroll;
   scrollbar-width: none;
   -ms-overflow-style: none;
