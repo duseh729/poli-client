@@ -87,9 +87,6 @@ importers:
       '@tanstack/react-query-devtools':
         specifier: ^5.68.0
         version: 5.82.0(@tanstack/react-query@5.82.0(react@18.3.1))(react@18.3.1)
-      '@types/axios':
-        specifier: ^0.14.0
-        version: 0.14.4
       '@types/react':
         specifier: ^18.2.66
         version: 18.3.23
@@ -934,10 +931,6 @@ packages:
     resolution: {integrity: sha512-mnk8/ofKEthFeMdhV1dV8YXRf+9HqvXAcciXkoo755d/ocfWq7N/Y9jGOzS3h7ZW9dDGwSIhs3/HANWUBsyqYg==}
     peerDependencies:
       react: ^18 || ^19
-
-  '@types/axios@0.14.4':
-    resolution: {integrity: sha512-9JgOaunvQdsQ/qW2OPmE5+hCeUB52lQSolecrFrthct55QekhmXEwT203s20RL+UHtCQc15y3VXpby9E7Kkh/g==}
-    deprecated: This is a stub types definition. axios provides its own type definitions, so you do not need this installed.
 
   '@types/babel__core@7.20.5':
     resolution: {integrity: sha512-qoQprZvz5wQFJwMDqeseRXWv3rqMvhgpbXFfVyWhbx9X47POIA6i/+dXefEmZKoAgOaTdaIgNSMqMIU61yRyzA==}
@@ -3609,12 +3602,6 @@ snapshots:
     dependencies:
       '@tanstack/query-core': 5.82.0
       react: 18.3.1
-
-  '@types/axios@0.14.4':
-    dependencies:
-      axios: 1.10.0
-    transitivePeerDependencies:
-      - debug
 
   '@types/babel__core@7.20.5':
     dependencies:
