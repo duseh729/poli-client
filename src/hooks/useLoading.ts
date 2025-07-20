@@ -6,7 +6,7 @@ const useLoading = () => {
 	const [showLoader, setShowLoader] = useState(false);
 
 	useEffect(() => {
-		let timer: NodeJS.Timeout;
+		let timer: ReturnType<typeof setTimeout>;
 
 		if (isLoading) {
 			timer = setTimeout(() => {
