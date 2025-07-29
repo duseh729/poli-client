@@ -1,6 +1,7 @@
 import styled from "@emotion/styled";
 import { css } from "@emotion/react";
 import { motion } from "framer-motion";
+import { COLORS } from "@/constants/color";
 
 export const Container = styled(motion.div)`
   display: flex;
@@ -14,7 +15,7 @@ export const Form = styled.form`
   border-radius: 35px;
   width: 770px;
   height: auto;
-  padding: 0 32px 34px 32px;
+  padding: 0 30px 32px 30px;
   border: 1px solid #a5c6ff;
 `;
 
@@ -22,20 +23,21 @@ export const Title = styled.h2`
   display: flex;
   align-items: center;
   gap: 8px;
-  padding: 34px 32px;
+  padding: 24px 32px;
   margin: 0 -32px;
   border-bottom: 1px solid #a5c6ff;
 `;
 
 export const FormGroup = styled.div`
-  margin-bottom: 20px;
+  margin-top: 32px;
+  margin-bottom: 34px;
 `;
 
 export const Label = styled.label`
   display: block;
   font-size: 16px;
   color: #808996;
-  margin: 42px 0 16px 0;
+  margin: 0 0 16px 0;
   font-weight: 500;
 `;
 
@@ -133,7 +135,7 @@ export const customCheckboxStyles = css`
     width: 10px;
     height: 10px;
     border-radius: 50%;
-    background: var(--grey-6, #4e5867);
+    background: var(--grey-6, ${COLORS.PRIMARY});
     position: absolute;
     top: 50%;
     left: 50%;
