@@ -15,7 +15,6 @@ const Introduce = ({ handleNextStep, isEnableNext }: IntroduceProps) => {
   return (
     <S.Container>
       <S.LogoContainer>
-        <img src={poliMdLogo} alt="POLI Logo" css={S.logoStyle} />
         <img src={poliLgText} alt="POLI Text" css={S.textLogoStyle} />
       </S.LogoContainer>
       <S.Subtitle>
@@ -52,7 +51,10 @@ const Introduce = ({ handleNextStep, isEnableNext }: IntroduceProps) => {
         </S.Card>
       </S.CardContainer>
       <S.StartButton onClick={handleNextStep} disabled={!isEnableNext}>
-        시작하기
+        <span>시작하기</span>
+        {/* <S.StartButtonCircle />
+        <S.StartButtonCircle2 />
+        <S.StartButtonCircle3 /> */}
       </S.StartButton>
       <S.Footer>
         폴리가 제공한 법률상담에 대해 어떠한 민사, 형사상의 책임도 지지

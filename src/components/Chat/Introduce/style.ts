@@ -9,7 +9,7 @@ export const Container = styled.div`
 export const LogoContainer = styled.div`
   display: flex;
   align-items: center;
-  margin: 30px 0;
+  margin: 122px 0 28px 0;
 `;
 
 export const Subtitle = styled.p`
@@ -23,7 +23,7 @@ export const CardContainer = styled.div`
   display: flex;
   justify-content: center;
   gap: 36px;
-  margin: 100px 0 200px 0;
+  margin: 32px 0 80px 0;
 `;
 
 export const Card = styled.div`
@@ -60,17 +60,19 @@ export const CardText = styled.p`
 
 export const StartButton = styled.button`
   background: linear-gradient(to right, #0072ff, #00c6ff);
+  /* background: #bdd5ff; */
   border: none;
   border-radius: 30px;
   color: #ffffff;
   font-size: 18px;
   padding: 15px 30px;
-  margin-top: 58px;
   width: 100%;
   height: 70px;
   box-sizing: border-box;
   cursor: pointer;
   font-family: "Wanted Sans";
+  position: relative;
+  overflow: hidden;
 
   &:hover {
     background: linear-gradient(to right, #00c6ff, #0072ff);
@@ -79,6 +81,41 @@ export const StartButton = styled.button`
     background: #c0cbd9;
     cursor: not-allowed;
   }
+  & > span {
+    position: relative;
+    z-index: 2;
+  }
+`;
+
+export const StartButtonCircle = styled.div`
+  position: absolute;
+  filter: blur(70px);
+  top: -150px;
+  right: 25%;
+  width: 250px;
+  height: 250px;
+  border-radius: 50%;
+  background: #764a86;
+`;
+export const StartButtonCircle2 = styled.div`
+  position: absolute;
+  filter: blur(40px);
+  bottom: -130px;
+  left: 20px;
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  background: #764a86;
+`;
+export const StartButtonCircle3 = styled.div`
+  position: absolute;
+  filter: blur(1000px);
+  top: -250px;
+  left: 0;
+  width: 100%;
+  height: 500px;
+  border-radius: 50%;
+  background: #00FFFF;
 `;
 
 export const Footer = styled.footer`
