@@ -8,7 +8,7 @@ import {
   useChatStream,
 } from "@/api/chat";
 import chatArrow from "@/assets/chat-arrow.svg";
-import poliChat from "@/assets/poli-chat-icon.svg";
+import poliChat from "@/assets/poli-chat-icon-sm.svg";
 import progressOn from "@/assets/progress-on.svg";
 import userChat from "@/assets/user-chat-icon.svg";
 import type { ChatMessage } from "@/types/chat";
