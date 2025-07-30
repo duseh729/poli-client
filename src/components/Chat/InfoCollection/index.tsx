@@ -94,15 +94,6 @@ const InfoCollection = ({
     try {
       await chatStream(requestBody);
 
-      toast.success("사건제출이 완료되었습니다", {
-        duration: 2000,
-        style: {
-          background: "#28a745",
-          color: "#fff",
-          fontSize: "16px",
-        },
-      });
-
       const updatedRooms = await refetchChatRooms();
 
       if (updatedRooms.data) {
