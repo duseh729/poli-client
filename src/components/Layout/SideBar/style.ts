@@ -124,10 +124,13 @@ export const MenuSelect = styled.div`
   align-items: center;
   gap: 8px;
   box-sizing: border-box;
-  background-color: #f6f8fb;
+  background-color: #F6F8FB;
   border: 1px solid #e8ecf1;
   border-radius: 12px;
   cursor: pointer;
+  &:hover{
+    background-color: #e8ecf1;
+  }
 `;
 
 export const MenuSelectText = styled.span`
