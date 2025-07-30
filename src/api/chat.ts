@@ -1,5 +1,3 @@
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import toast from "react-hot-toast";
 import { CHAT_KEY } from "@/constants/queryKey.ts";
 import type {
   ChatMessage,
@@ -8,6 +6,8 @@ import type {
   ChatRoom,
   ChatRoomsResponse,
 } from "@/types/chat";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import toast from "react-hot-toast";
 import API from "./axios.ts";
 
 export const useChatStream = () => {
