@@ -106,7 +106,6 @@ export const Textarea = styled(TextareaAutosize)`
   max-height: 150px;
   overflow: auto !important;
   color: black;
-  font-weight: 500;
 
   overflow-y: scroll;
   scrollbar-width: none;
