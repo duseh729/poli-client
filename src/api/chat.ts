@@ -29,7 +29,7 @@ export const useChatStream = () => {
     },
     onSuccess: (_, variables) => {
       queryClient.invalidateQueries({
-        queryKey: [CHAT_KEY.CHAT_MESSAGES, variables.roomId],
+        queryKey: [CHAT_KEY.CHAT_MESSAGES, variables.requestBody.roomId],
       });
     },
     onError: (error: Error) => {

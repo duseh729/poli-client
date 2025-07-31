@@ -55,7 +55,7 @@ const Chat = ({ messages: initialMessages, roomId }: ChatProps) => {
       setInputValue("");
 
       try {
-        const responseBody = { message: inputValue, initMessage: "{}", roomId };
+        const responseBody = { message: inputValue, initMessage: "{}" };
         await chatStream({
           requestBody: responseBody,
           config: { meta: { skipLoading: true } },
