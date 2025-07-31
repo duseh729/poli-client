@@ -56,7 +56,10 @@ const Chat = ({ messages: initialMessages, roomId }: ChatProps) => {
 
       try {
         const responseBody = { message: inputValue, initMessage: "{}", roomId };
-        await chatStream(responseBody);
+        await chatStream({
+          requestBody: responseBody,
+          config: { meta: { skipLoading: true } },
+        });
       } catch (error) {
         console.error("error", error);
       }
@@ -121,7 +124,8 @@ const Chat = ({ messages: initialMessages, roomId }: ChatProps) => {
               animate={{ opacity: 1 }}
               transition={{ duration: 0.5 }}
             >
-              가장 도움을 줄 수 있는 답변을 준비하고 있습니다. <S.LoadingSpinner src={loadingSpinner} alt="Loading" />
+              가장 도움을 줄 수 있는 답변을 준비하고 있습니다.{" "}
+              <S.LoadingSpinner src={loadingSpinner} alt="Loading" />
             </S.LoadingMessage>
           </S.MessageContainer>
         )}

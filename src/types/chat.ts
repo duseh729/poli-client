@@ -1,3 +1,5 @@
+import { AxiosRequestConfig } from "axios";
+
 export type ChatRole = "USER" | "AI";
 
 export type ChatMessage = {
@@ -16,6 +18,11 @@ export type ChatRequest = {
   initMessage: string;
   roomId: number | null;
   message: string;
+};
+
+export type MutationVariables = {
+  requestBody: ChatRequest;
+  config?: AxiosRequestConfig;
 };
 
 export type ChatResponse = {
