@@ -75,6 +75,30 @@ export const Message = styled(motion.div)`
   font-weight: 500;
 `;
 
+export const LoadingMessage = styled(motion.div)`
+  color: #808996;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 150%;
+  display: flex;
+  align-items: center;
+  gap: 6px
+  `
+export const LoadingSpinner = styled.img`
+  width: 24px;
+  height: 24px;
+  animation: spin 1s linear infinite;
+
+  @keyframes spin {
+    0% {
+      transform: rotate(360deg);
+    }
+    100% {
+      transform: rotate(0deg);
+    }
+  }
+`;
+
 export const InputContainer = styled.div`
   display: flex;
   flex-direction: column;
