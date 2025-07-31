@@ -19,10 +19,12 @@ export type ChatRequest = {
   roomId: number | null;
   message: string;
 };
-
+interface CustomAxiosRequestConfig extends AxiosRequestConfig {
+  meta?: any;
+}
 export type MutationVariables = {
   requestBody: ChatRequest;
-  config?: AxiosRequestConfig;
+  config?: CustomAxiosRequestConfig;
 };
 
 export type ChatResponse = {
