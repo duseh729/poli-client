@@ -11,6 +11,7 @@ import chatArrow from "@/assets/chat-arrow.svg";
 import poliChat from "@/assets/poli-chat-icon-sm.svg";
 import progressOn from "@/assets/progress-on.svg";
 import userChat from "@/assets/user-chat-icon.svg";
+import loadingSpinner from "@/assets/loading-spinner.svg";
 import type { ChatMessage } from "@/types/chat";
 import * as S from "./style";
 import "highlight.js/styles/github.css";
@@ -66,7 +67,7 @@ const Chat = ({ messages: initialMessages, roomId }: ChatProps) => {
     if (chatWindowRef.current) {
       chatWindowRef.current.scrollTop = chatWindowRef.current.scrollHeight;
     }
-  }, []);
+  }, [chatMessages]);
 
   const sortedMessages = chatMessages.sort(
     (a, b) => new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime()
@@ -112,6 +113,18 @@ const Chat = ({ messages: initialMessages, roomId }: ChatProps) => {
             )}
           </S.MessageContainer>
         ))}
+        {isPending && (
+          <S.MessageContainer>
+            <S.BotIcon src={poliChat} alt="Bot" />
+            <S.LoadingMessage
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 0.5 }}
+            >
+              가장 도움을 줄 수 있는 답변을 준비하고 있습니다. <S.LoadingSpinner src={loadingSpinner} alt="Loading" />
+            </S.LoadingMessage>
+          </S.MessageContainer>
+        )}
       </S.ChatWindow>
       {showProgress && (
         <S.ProgrssWrapper>
