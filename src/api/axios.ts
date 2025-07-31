@@ -1,7 +1,7 @@
 import axios from "axios";
 import { useUserStore } from "@/stores/user";
 import { useLoadingStore } from "@/stores";
-
+// Axios 인스턴스 생성
 const API = axios.create({
   baseURL: import.meta.env.VITE_API_BASE_URL,
   headers: {
@@ -9,10 +9,16 @@ const API = axios.create({
   },
 });
 
+// 요청 인터셉터
 API.interceptors.request.use(
   (config) => {
-    useLoadingStore.getState().setLoading(true);
+    const skipLoading = (config as any).meta?.skipLoading !== true;
 
+    if (skipLoading) {
+      useLoadingStore.getState().setLoading(true);
+    }
+
+    // user-id 헤더 처리
     if (config.url?.includes("/user")) {
       delete config.headers["user-id"];
     } else {
@@ -30,13 +36,20 @@ API.interceptors.request.use(
   }
 );
 
+// 응답 인터셉터
 API.interceptors.response.use(
   (response) => {
-    useLoadingStore.getState().setLoading(false);
+    const skipLoading = (response.config as any).meta?.skipLoading !== true;
+    if (skipLoading) {
+      useLoadingStore.getState().setLoading(false);
+    }
     return response;
   },
   (error) => {
-    useLoadingStore.getState().setLoading(false);
+    const skipLoading = (error.config as any).meta?.skipLoading !== true;
+    if (skipLoading) {
+      useLoadingStore.getState().setLoading(false);
+    }
     return Promise.reject(error);
   }
 );

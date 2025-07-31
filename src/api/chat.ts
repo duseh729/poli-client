@@ -5,18 +5,24 @@ import type {
   ChatRequest,
   ChatRoom,
   ChatRoomsResponse,
+  MutationVariables,
 } from "@/types/chat";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import toast from "react-hot-toast";
 import API from "./axios.ts";
+import type { AxiosRequestConfig } from "axios";
 
 export const useChatStream = () => {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: async (requestBody: ChatRequest) => {
+    mutationFn: async ({ requestBody, config }: MutationVariables) => {
       const response = await API.post("/chat/stream", requestBody, {
-        headers: { Accept: "text/event-stream" },
+        ...config,
+        headers: {
+          ...(config?.headers ?? {}),
+          Accept: "text/event-stream",
+        },
         responseType: "stream",
       });
       return response;

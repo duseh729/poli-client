@@ -91,7 +91,7 @@ const InfoCollection = ({
     };
 
     try {
-      await chatStream(requestBody);
+      await chatStream({requestBody, config: { }});
 
       const updatedRooms = await refetchChatRooms();
 
