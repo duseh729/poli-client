@@ -21,7 +21,6 @@ export const ChatContainer = styled.div`
 
 export const ChatWindow = styled.div`
   flex: 1;
-  padding: 10px;
   border-radius: 12px;
   margin-bottom: 10px;
   display: flex;
@@ -49,7 +48,7 @@ export const ChatWindow = styled.div`
 
 export const MessageContainer = styled.div`
   width: 100%;
-  margin: 20px 0;
+  margin: 15px 0;
   display: flex;
   justify-content: flex-end;
 `;
