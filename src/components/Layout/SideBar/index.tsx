@@ -10,7 +10,7 @@ import trash from "@/assets/trash.svg";
 import menuSelect from "@/assets/menu-select.svg";
 import { useUserStore } from "@/stores/user";
 import { useChatRooms, useRemoveChatRoom } from "@/api/chat";
-import { useMenuStore } from "@/stores";
+import { useChatRoomsStore, useMenuStore } from "@/stores";
 import { ChatRoom } from "@/types/chat.ts";
 import { getDynamicPath } from "@/utils/routes.ts";
 import { ROUTES } from "@/constants/routes.tsx";
@@ -28,6 +28,7 @@ const LeftSideBar = () => {
   const { mutate: removeChatRoom, isPending } = useRemoveChatRoom();
 
   const { setMenuPosition } = useMenuStore();
+  const chatRooms = useChatRoomsStore((state) => state.chatRooms);
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
@@ -156,7 +157,7 @@ const LeftSideBar = () => {
           <S.Paddding>
             <S.ConsultationTitle>상담 목록</S.ConsultationTitle>
             <S.ConsultationList>
-              {consultations?.map((consultation) => (
+              {chatRooms?.map((consultation) => (
                 <S.ConsultationItem
                   key={consultation.id}
                   onClick={() => handleConsultationClick(consultation)}

@@ -10,6 +10,7 @@ import type {
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import toast from "react-hot-toast";
 import API from "./axios.ts";
+import { useChatRoomsStore } from "@/stores/chatRoom.ts";
 
 export const useChatStream = () => {
   const queryClient = useQueryClient();
@@ -45,12 +46,17 @@ export const useChatStream = () => {
 };
 
 export const useChatRooms = () => {
+  const setChatRooms = useChatRoomsStore((state) => state.setChatRooms);
+
   return useQuery<ChatRoom[]>({
     queryKey: [CHAT_KEY.CAHT_ROOMS],
     queryFn: async () => {
       const response = await API.get<ChatRoomsResponse>("/chat/rooms");
-      return response.data.rooms;
+      const rooms = response.data.rooms;
+      setChatRooms(rooms);
+      return rooms;
     },
+    refetchOnWindowFocus: false, // 필요 시 true로
   });
 };
 

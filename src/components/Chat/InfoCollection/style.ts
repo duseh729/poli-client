@@ -151,7 +151,7 @@ export const hiddenCheckboxCheckedStyles = css`
 `;
 
 export const StartButton = styled.button`
-  background: linear-gradient(to right, #0072ff, #00c6ff);
+  background: ${COLORS.PRIMARY};
   border: none;
   border-radius: 30px;
   color: #ffffff;
@@ -165,7 +165,7 @@ export const StartButton = styled.button`
   font-family: "Wanted Sans";
 
   &:hover {
-    background: linear-gradient(to right, #00c6ff, #0072ff);
+    background: ${COLORS.PRIMARY900};
   }
   &:disabled {
     background: #c0cbd9;
