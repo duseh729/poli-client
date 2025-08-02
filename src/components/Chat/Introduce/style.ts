@@ -10,7 +10,7 @@ export const Container = styled.div`
 export const LogoContainer = styled.div`
   display: flex;
   align-items: center;
-  margin: 122px 0 28px 0;
+  margin: 82px 0 28px 0;
 `;
 
 export const Subtitle = styled.p`
