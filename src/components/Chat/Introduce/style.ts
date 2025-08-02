@@ -1,5 +1,6 @@
 import styled from "@emotion/styled";
 import { css } from "@emotion/react";
+import { COLORS } from "@/constants/color";
 
 export const Container = styled.div`
   display: flex;
@@ -59,8 +60,7 @@ export const CardText = styled.p`
 `;
 
 export const StartButton = styled.button`
-  background: linear-gradient(to right, #0072ff, #00c6ff);
-  /* background: #bdd5ff; */
+  background: ${COLORS.PRIMARY};
   border: none;
   border-radius: 30px;
   color: #ffffff;
@@ -75,7 +75,7 @@ export const StartButton = styled.button`
   overflow: hidden;
 
   &:hover {
-    background: linear-gradient(to right, #00c6ff, #0072ff);
+    background: ${COLORS.PRIMARY900};
   }
   &:disabled {
     background: #c0cbd9;
