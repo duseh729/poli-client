@@ -7,17 +7,17 @@ export const Container = styled.div`
   justify-content: space-between;
   align-items: center;
   margin: 0 auto;
-  padding: 0 60px;
+  padding: 21px 60px 20px 60px;
 `;
 
 export const StyledLink = styled(Link)`
   color: #2e3034;
   font-family: "Wanted Sans";
-  font-size: 24px;
+  font-size: 18px;
   font-style: normal;
-  font-weight: 700;
+  font-weight: 600;
   line-height: 150%;
-  margin: 0 20px;
+  padding: 0px 16px;
   text-decoration: none;
   &:hover {
     color: #111827;
@@ -26,7 +26,6 @@ export const StyledLink = styled(Link)`
 
 export const Header = css`
   width: 100%;
-  margin-top: 30px;
 `;
 
 export const LogoContainer = styled.div`

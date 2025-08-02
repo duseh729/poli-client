@@ -5,12 +5,12 @@ export const Button = styled.button`
   display: inline-flex;
   width: 200px;
   height: 70px;
-  margin-top: 76px;
+  margin-top: 26px;
   justify-content: center;
   align-items: center;
   gap: 10px;
   flex-shrink: 0;
-  border-radius: 35px;
+  border-radius: 100px;
   background: #1e1e1e;
   color: white;
   font-weight: bold;

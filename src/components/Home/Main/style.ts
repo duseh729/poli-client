@@ -7,22 +7,14 @@ export const LogoContainer = styled.div`
   align-items: center;
 `;
 
-export const TitleContainer = styled.div`
-  height: 180px;
-`;
-
 export const Title = styled.h1`
-  font-weight: 600;
-  color: #000;
-  margin-bottom: 16px;
-  line-height: 140%;
-  font-size: 48px;
-`;
-
-export const Subtitle = styled.p`
-  font-weight: 600;
-  font-size: 48px;
-  color: #000;
+  color: #2e3034;
+  text-align: center;
+  font-family: "Wanted Sans";
+  font-size: 36px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 140%; /* 33.6px */
 `;
 
 export const TextLogo = css`
