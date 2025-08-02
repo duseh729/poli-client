@@ -63,13 +63,13 @@ export const UserContainer = styled.div`
   &:hover {
     color: black;
     background-color: #f6f8fb;
+    cursor: pointer;
   }
 `;
 
 export const UserIcon = styled.img`
   width: 24px;
   height: 24px;
-  cursor: pointer;
 `;
 
 export const ConsultationList = styled.div`
