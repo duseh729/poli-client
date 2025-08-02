@@ -86,9 +86,8 @@ const Chat = ({ messages: initialMessages, roomId }: ChatProps) => {
         {sortedMessages.map((message, index) => (
           <S.MessageContainer key={index}>
             {message.role === "USER" ? (
-              <>
-                <S.UserIcon src={userChat} alt="User" />
-                <S.Message
+              <S.UserMessageWrapper>
+                <S.UserMessage
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
                   transition={{ duration: 0.5 }}
@@ -99,10 +98,10 @@ const Chat = ({ messages: initialMessages, roomId }: ChatProps) => {
                   >
                     {message.message || ""}
                   </ReactMarkdown>
-                </S.Message>
-              </>
+                </S.UserMessage>
+              </S.UserMessageWrapper>
             ) : (
-              <>
+              <S.BotMessageWrapper>
                 <S.BotIcon src={poliChat} alt="Bot" />
                 <S.Message
                   initial={{ opacity: 0 }}
@@ -125,7 +124,7 @@ const Chat = ({ messages: initialMessages, roomId }: ChatProps) => {
                     {message.message || ""}
                   </ReactMarkdown>
                 </S.Message>
-              </>
+              </S.BotMessageWrapper>
             )}
           </S.MessageContainer>
         ))}
