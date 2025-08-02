@@ -5,6 +5,7 @@ import remarkGfm from "remark-gfm";
 import {
   useChatMessages,
   useChatRoomProgress,
+  useChatRooms,
   useChatStream,
 } from "@/api/chat";
 import chatArrow from "@/assets/chat-arrow.svg";
@@ -30,6 +31,8 @@ const Chat = ({ messages: initialMessages, roomId }: ChatProps) => {
   const { data: messagesData, isLoading } = useChatMessages(roomId);
   const { data } = useChatRoomProgress(roomId);
   const { fulfilled, percentage } = data ?? {};
+
+  const { refetch } = useChatRooms();
 
   const showProgress = !fulfilled;
   const progress = percentage ?? 0;
@@ -60,6 +63,7 @@ const Chat = ({ messages: initialMessages, roomId }: ChatProps) => {
           requestBody: responseBody,
           config: { meta: { skipLoading: true } },
         });
+        await refetch(); // 채팅방 목록을 새로고침하여 최신 상태 반영
       } catch (error) {
         console.error("error", error);
       }

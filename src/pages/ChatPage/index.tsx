@@ -3,10 +3,12 @@ import { useParams, useLocation } from "react-router-dom";
 import * as S from "./style";
 import { useChatMessages } from "@/api/chat";
 import Chat from "@/components/Chat/Chat";
+import { useChatRoomsStore } from "@/stores";
 
 const ChatPage = () => {
-  const { roomName } = useLocation()?.state || { roomName: "" };
   const { id } = useParams<{ id: string }>();
+  const chatRooms = useChatRoomsStore((state) => state.chatRooms);
+  const currentRoom = chatRooms.find((room) => room.id == Number(id));
 
   const {
     data: messages = [],
@@ -24,7 +26,7 @@ const ChatPage = () => {
 
   return (
     <S.Container>
-      <S.Title>{roomName}</S.Title>
+      <S.Title>{currentRoom?.roomName}</S.Title>
       <S.Wrapper
         initial={{ opacity: 0, scale: 0.9, y: 20 }}
         animate={{ opacity: 1, scale: 1, y: 0 }}
