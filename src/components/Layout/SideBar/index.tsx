@@ -62,6 +62,7 @@ const LeftSideBar = () => {
 
   const hanldeToggleLogoutVisibility = (event: React.MouseEvent) => {
     event.stopPropagation();
+    setMenuPosition(null);
     setIsLogoutVisible((prev) => !prev);
   };
 
@@ -71,6 +72,7 @@ const LeftSideBar = () => {
 
   const handleMenuClick = (event: React.MouseEvent, roomId: number) => {
     event.stopPropagation();
+    setIsLogoutVisible(false);
     setSelectedRoomId(roomId);
     const rect = event.currentTarget.getBoundingClientRect();
     setMenuPosition({
@@ -112,7 +114,6 @@ const LeftSideBar = () => {
 
   const handleLogout = () => {
     clearUser();
-
     toast.success("로그아웃에 성공했습니다", {
       duration: 2000,
       style: {
