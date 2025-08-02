@@ -34,7 +34,6 @@ const MainPage = () => {
         {showNextScreen === 1 ? (
           <Introduce
             handleNextStep={handleNextStep}
-            isEnableNext={isEnableNext}
           />
         ) : (
           <InfoCollection
