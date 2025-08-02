@@ -132,6 +132,7 @@ export const Textarea = styled(TextareaAutosize)`
   overflow: auto !important;
   color: black;
   font-family: 'MainFont', sans-serif;
+  letter-spacing: 0.5px;
 
   overflow-y: scroll;
   scrollbar-width: none;
