@@ -15,22 +15,25 @@ export const Form = styled.form`
   border-radius: 35px;
   width: 770px;
   height: auto;
-  padding: 0 30px 32px 30px;
   border: 1px solid #a5c6ff;
 `;
 
 export const Title = styled.h2`
   display: flex;
   align-items: center;
-  gap: 8px;
-  padding: 24px 32px;
-  margin: 0 -32px;
   border-bottom: 1px solid #a5c6ff;
 `;
 
+export const FormGroupWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 34px;
+  padding: 24px;
+`;
+
 export const FormGroup = styled.div`
-  margin-top: 32px;
-  margin-bottom: 34px;
+  /* margin-top: 24px;
+  margin-bottom: 34px; */
 `;
 
 export const Label = styled.label`
@@ -153,11 +156,11 @@ export const hiddenCheckboxCheckedStyles = css`
 export const StartButton = styled.button`
   background: ${COLORS.PRIMARY};
   border: none;
-  border-radius: 30px;
+  border-radius: 100px;
   color: #ffffff;
   font-size: 18px;
   padding: 15px 30px;
-  margin-top: 10px;
+  margin-top: 40px;
   width: 100%;
   height: 70px;
   box-sizing: border-box;
@@ -186,11 +189,12 @@ export const Logo = styled.img`
   width: 43px;
 `;
 
-export const TitleText = styled.p`
-  font-size: 24px;
+export const TitleText = styled.span`
+  font-size: 22px;
   color: #0f0f10;
   font-weight: 600;
   text-align: center;
+  padding: 20px 24px;
 `;
 
 export const Duplication = styled.div<{ bold?: boolean }>`

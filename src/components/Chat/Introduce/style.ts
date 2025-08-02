@@ -62,7 +62,7 @@ export const CardText = styled.p`
 export const StartButton = styled.button`
   background: ${COLORS.PRIMARY};
   border: none;
-  border-radius: 30px;
+  border-radius: 100px;
   color: #ffffff;
   font-size: 18px;
   padding: 15px 30px;

@@ -1,6 +1,6 @@
 /** @jsxImportSource @emotion/react */
 import * as S from "./style.ts";
-import poliLgText from "@/assets/poli-lg-text.svg";
+import poliLgText from "@/assets/poli-sm-text2.svg";
 import affiDavitLogo from "@/assets/affidavit.svg";
 import messageLogo from "@/assets/message.svg";
 import notificationLogo from "@/assets/notification.svg";
