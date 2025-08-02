@@ -8,8 +8,8 @@ export const Container = styled(motion.div)`
 
 export const Sidebar = styled.div`
   width: 260px;
+  height: 100vh;
   border-right: 1px solid #dddce3;
-  padding: 20px 0 0 0;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -54,11 +54,15 @@ export const SidebarText = styled.span`
 `;
 
 export const UserContainer = styled.div`
+width: 260px;
+  position: fixed;
+  bottom: 0;
   display: flex;
   align-items: center;
   padding: 0 20px;
   height: 56px;
   gap: 10px;
+  background-color: white;
 
   &:hover {
     color: black;
@@ -76,9 +80,8 @@ export const ConsultationList = styled.div`
   display: flex;
   flex-direction: column;
   gap: 10px;
-
   flex: 1;
-  height: 600px;
+  height: 68vh;
   overflow-y: auto;
 
   ::-webkit-scrollbar {
@@ -124,11 +127,11 @@ export const MenuSelect = styled.div`
   align-items: center;
   gap: 8px;
   box-sizing: border-box;
-  background-color: #F6F8FB;
+  background-color: #f6f8fb;
   border: 1px solid #e8ecf1;
   border-radius: 12px;
   cursor: pointer;
-  &:hover{
+  &:hover {
     background-color: #e8ecf1;
   }
 `;

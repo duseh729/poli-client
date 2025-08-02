@@ -137,13 +137,15 @@ const LeftSideBar = () => {
       <S.Sidebar>
         <div>
           <S.Paddding>
-            <S.LogoImage
-              src={poliSmBox}
-              alt="POLI Small Box Logo"
-              onClick={() =>
-                navigate(ROUTES.MAIN, { state: { showNextScreen: 1 } })
-              }
-            />
+            <div style={{ paddingTop: 20 }}>
+              <S.LogoImage
+                src={poliSmBox}
+                alt="POLI Small Box Logo"
+                onClick={() =>
+                  navigate(ROUTES.MAIN, { state: { showNextScreen: 1 } })
+                }
+              />
+            </div>
             <S.SidebarButton
               onClick={() =>
                 navigate(ROUTES.MAIN, { state: { showNextScreen: 2 } })
