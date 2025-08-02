@@ -24,6 +24,14 @@ export const LogoContainer = styled.div`
   margin-bottom: 63px;
 `;
 
+export const Title = styled.header`
+  display: flex;
+  color: #2e3034;
+  font-weight: 700;
+  font-size: 40px;
+  margin-bottom: 32px;
+`;
+
 export const InputContainer = styled.div`
   width: 410px;
 `;

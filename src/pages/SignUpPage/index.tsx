@@ -52,10 +52,7 @@ const SignUpPage = () => {
   return (
     <S.Container>
       <S.Form onSubmit={handleSubmit(onSubmit)}>
-        <S.LogoContainer>
-          <img src={poliMdLogo} alt="POLI" />
-          <img src={poliSmText} alt="POLI Text" />
-        </S.LogoContainer>
+        <S.Title>회원가입</S.Title>
         <S.InputContainer>
           <S.InputWrapper>
             <S.Input
