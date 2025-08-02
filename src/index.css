@@ -148,3 +148,10 @@ body,
   padding: 0;
   overflow: hidden;
 }
+
+@font-face {
+  font-family: 'MainFont';
+  src: url('/fonts/WantedSans.ttf') format('ttf');
+  font-weight: normal;
+  font-style: normal;
+}

@@ -122,14 +122,16 @@ export const Textarea = styled(TextareaAutosize)`
   border-radius: 30px;
   font-size: 16px;
   background-color: #f6f8fb;
-  font-weight: 300;
+  font-weight: 500;
   letter-spacing: -1px;
+  line-height: 1.5;
   outline: none;
   resize: none;
   min-height: 30px;
   max-height: 150px;
   overflow: auto !important;
   color: black;
+  font-family: 'MainFont', sans-serif;
 
   overflow-y: scroll;
   scrollbar-width: none;
@@ -138,6 +140,7 @@ export const Textarea = styled(TextareaAutosize)`
   &::placeholder {
     color: #808996;
     opacity: 1;
+    font-weight: 400;
   }
 
   ::-webkit-scrollbar {
