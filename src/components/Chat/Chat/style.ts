@@ -1,3 +1,4 @@
+import { COLORS } from "@/constants/color";
 import styled from "@emotion/styled";
 import { motion } from "framer-motion";
 import TextareaAutosize from "react-textarea-autosize";
@@ -13,9 +14,8 @@ type ListItemProps = {
 export const ChatContainer = styled.div`
   display: flex;
   flex-direction: column;
-  width: 1000px;
+  max-width: 770px;
   height: 93vh;
-  padding: 20px;
   box-sizing: border-box;
 `;
 
@@ -26,7 +26,12 @@ export const ChatWindow = styled.div`
   margin-bottom: 10px;
   display: flex;
   flex-direction: column;
+  align-items: center;
   overflow-y: auto;
+
+  overflow: auto;
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* IE/Edge */
 
   ::-webkit-scrollbar {
     width: 8px;
@@ -43,10 +48,10 @@ export const ChatWindow = styled.div`
 `;
 
 export const MessageContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
+  width: 100%;
   margin: 20px 0;
+  display: flex;
+  justify-content: flex-end;
 `;
 
 export const UserIcon = styled.img`
@@ -68,11 +73,31 @@ export const Message = styled(motion.div)`
   color: #0f0f10;
   padding: 10px 0;
   border-radius: 12px;
-  max-width: 70%;
   word-wrap: break-word;
   white-space: pre-wrap;
   line-height: 24px;
   font-weight: 500;
+`;
+
+export const UserMessageWrapper = styled(motion.div)`
+  max-width: 100%;
+`;
+
+export const BotMessageWrapper = styled(motion.div)`
+`;
+
+export const UserMessage = styled(motion.div)`
+  padding: 16px;
+  max-width: 600px;
+
+  font-family: "Wanted Sans";
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 150%; /* 24px */
+  border-radius: 12px;
+
+  background-color: ${COLORS.GRAY};
 `;
 
 export const LoadingMessage = styled(motion.div)`
@@ -82,8 +107,8 @@ export const LoadingMessage = styled(motion.div)`
   line-height: 150%;
   display: flex;
   align-items: center;
-  gap: 6px
-  `
+  gap: 6px;
+`;
 export const LoadingSpinner = styled.img`
   width: 24px;
   height: 24px;
@@ -131,7 +156,7 @@ export const Textarea = styled(TextareaAutosize)`
   max-height: 150px;
   overflow: auto !important;
   color: black;
-  font-family: 'MainFont', sans-serif;
+  font-family: "MainFont", sans-serif;
   letter-spacing: 0.5px;
 
   overflow-y: scroll;
