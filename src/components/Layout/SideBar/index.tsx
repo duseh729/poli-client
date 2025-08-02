@@ -185,12 +185,8 @@ const LeftSideBar = () => {
             로그아웃
           </S.LogoutButton>
         )}
-        <S.UserContainer>
-          <S.UserIcon
-            src={userLogo}
-            alt="User Icon"
-            onClick={hanldeToggleLogoutVisibility}
-          />
+        <S.UserContainer onClick={hanldeToggleLogoutVisibility}>
+          <S.UserIcon src={userLogo} alt="User Icon" />
           <S.UserNameText>{userName}</S.UserNameText>
         </S.UserContainer>
       </S.Sidebar>
