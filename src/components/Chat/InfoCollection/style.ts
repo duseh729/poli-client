@@ -12,7 +12,7 @@ export const Container = styled(motion.div)`
 `;
 
 export const Form = styled.form`
-  border-radius: 35px;
+  border-radius: 20px;
   width: 770px;
   height: auto;
   border: 1px solid #a5c6ff;
