@@ -83,6 +83,8 @@ export const ConsultationList = styled.div`
   flex: 1;
   height: 68vh;
   overflow-y: auto;
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* IE/Edge */
 
   ::-webkit-scrollbar {
     width: 8px;
