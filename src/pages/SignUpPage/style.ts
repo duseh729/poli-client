@@ -101,7 +101,9 @@ export const StyledLink = styled(Link)`
 export const ErrorText = styled.div`
   color: #f04443;
   font-size: 17px;
-  margin: 5px 0 0 20px;
+  display: flex;
+  align-items: center;
   font-weight: 500;
   min-height: 20px;
+  padding-left: 17px;
 `;
