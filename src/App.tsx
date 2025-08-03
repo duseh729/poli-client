@@ -28,14 +28,14 @@ const GlobalStyles = css`
 const queryClient = new QueryClient();
 
 function App() {
-  const showLoader = useLoading();
+  // const showLoader = useLoading();
 
   return (
     <QueryClientProvider client={queryClient}>
       <Global styles={GlobalStyles} />
       <AppRouter />
       <Toaster position="top-center" />
-      {showLoader && (
+      {/* {showLoader && (
         <div
           css={css`
             position: fixed;
@@ -52,7 +52,7 @@ function App() {
         >
           <BeatLoader color="#3498db" loading={showLoader} size={25} />
         </div>
-      )}
+      )} */}
       {import.meta.env.MODE === "development" && <ReactQueryDevtools />}
     </QueryClientProvider>
   );
