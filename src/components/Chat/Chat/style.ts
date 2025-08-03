@@ -49,8 +49,6 @@ export const ChatWindow = styled.div`
 export const MessageContainer = styled.div`
   width: 100%;
   margin: 15px 0;
-  display: flex;
-  justify-content: flex-end;
 `;
 
 export const UserIcon = styled.img`
@@ -80,6 +78,8 @@ export const Message = styled(motion.div)`
 
 export const UserMessageWrapper = styled(motion.div)`
   max-width: 100%;
+  display: flex;
+  justify-content: flex-end;
 `;
 
 export const BotMessageWrapper = styled(motion.div)`

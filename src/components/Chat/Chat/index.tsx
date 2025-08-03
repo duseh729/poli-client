@@ -148,7 +148,7 @@ const Chat = ({ messages: initialMessages, roomId }: ChatProps) => {
             {progress === 100 && <img src={progressOn} alt="progress-on" />}
             <S.ProgressText
               progress={progress}
-            >{`진정서 확인  ${progress}%`}</S.ProgressText>
+            >{`진정서 작성 중  ${progress}%`}</S.ProgressText>
           </S.ProgressBox>
         </S.ProgrssWrapper>
       )}
