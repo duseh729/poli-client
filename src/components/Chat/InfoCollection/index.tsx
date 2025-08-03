@@ -15,7 +15,7 @@ import { ROUTES } from "@/constants/routes.tsx";
 import { getDynamicPath } from "@/utils/routes.ts";
 import poliSmLogo from "@/assets/poli-sm-logo.svg";
 
-const DESCRIPTION_MAX_LENGTH = 1000;
+export const DESCRIPTION_MAX_LENGTH = 1000;
 
 type InfoCollectionProps = {
   setIsEnableNext: (param: boolean) => void;
@@ -64,14 +64,6 @@ const InfoCollection = ({
     }
   };
 
-  const handleCheckBoxChange = (checkBoxNumber: number) => {
-    if (selectedCheckBox === checkBoxNumber) {
-      setSelectedCheckBox(null);
-    } else {
-      setSelectedCheckBox(checkBoxNumber);
-    }
-  };
-
   const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
 
@@ -90,30 +82,31 @@ const InfoCollection = ({
       message: situationDescription,
     };
 
-    try {
-      await chatStream({ requestBody, config: {} });
+    navigate("/init-chat", { state: requestBody });
+    // try {
+    //   await chatStream({ requestBody, config: {} });
 
-      const updatedRooms = await refetchChatRooms();
+    //   const updatedRooms = await refetchChatRooms();
 
-      if (updatedRooms.data) {
-        const newChatRoom = updatedRooms.data.find(
-          (room: ChatRoom) =>
-            !chatRooms.some((existingRoom) => existingRoom.id === room.id)
-        );
+    //   if (updatedRooms.data) {
+    //     const newChatRoom = updatedRooms.data.find(
+    //       (room: ChatRoom) =>
+    //         !chatRooms.some((existingRoom) => existingRoom.id === room.id)
+    //     );
 
-        if (newChatRoom) {
-          navigate(getDynamicPath(ROUTES.CHAT_ID, { id: newChatRoom.id }), {
-            state: {
-              roomName: newChatRoom.roomName,
-            },
-          });
-        } else {
-          console.error("새로운 채팅방을 찾을 수 없습니다.");
-        }
-      }
-    } catch (error) {
-      console.error("AI 대화 생성 실패:", error);
-    }
+    //     if (newChatRoom) {
+    //       navigate(getDynamicPath(ROUTES.CHAT_ID, { id: newChatRoom.id }), {
+    //         state: {
+    //           roomName: newChatRoom.roomName,
+    //         },
+    //       });
+    //     } else {
+    //       console.error("새로운 채팅방을 찾을 수 없습니다.");
+    //     }
+    //   }
+    // } catch (error) {
+    //   console.error("AI 대화 생성 실패:", error);
+    // }
   };
 
   return (

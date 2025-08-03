@@ -67,6 +67,8 @@ export const InputRow = styled.div`
 `;
 
 export const textAreaStyle = (isMaxLength: boolean) => css`
+  font-family: "MainFont", sans-serif;
+  letter-spacing: 0.3px;
   width: 100%;
   height: 140px;
   resize: none;
@@ -77,7 +79,6 @@ export const textAreaStyle = (isMaxLength: boolean) => css`
   color: #0f0f10;
   font-weight: 500;
   line-height: 24px;
-  letter-spacing: -1px;
   overflow-y: scroll;
   scrollbar-width: none;
   -ms-overflow-style: none;
