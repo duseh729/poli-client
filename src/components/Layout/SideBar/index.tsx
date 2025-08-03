@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Outlet, useNavigate, useLocation } from "react-router-dom";
 import toast from "react-hot-toast";
 import * as S from "./style.ts";
@@ -29,6 +29,15 @@ const LeftSideBar = () => {
 
   const { setMenuPosition } = useMenuStore();
   const chatRooms = useChatRoomsStore((state) => state.chatRooms);
+
+  const profileFooterRef = useRef<HTMLDivElement>(null);
+  const [footerHeight, setFooterHeight] = useState(0);
+
+  useEffect(() => {
+    if (profileFooterRef.current) {
+      setFooterHeight(profileFooterRef.current.offsetHeight);
+    }
+  }, []);
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
@@ -158,7 +167,7 @@ const LeftSideBar = () => {
           <S.Line />
           <S.Paddding>
             <S.ConsultationTitle>상담 목록</S.ConsultationTitle>
-            <S.ConsultationList>
+            <S.ConsultationList style={{ height: `calc(100vh - ${footerHeight}px - 225px)` }}>
               {chatRooms?.map((consultation) => (
                 <S.ConsultationItem
                   key={consultation.id}
@@ -173,7 +182,7 @@ const LeftSideBar = () => {
                     onClick={(e) => handleMenuClick(e, consultation.id)}
                   />
                 </S.ConsultationItem>
-              ))}
+              ))}            
             </S.ConsultationList>
           </S.Paddding>
         </div>
@@ -189,7 +198,7 @@ const LeftSideBar = () => {
             로그아웃
           </S.LogoutButton>
         )}
-        <S.UserContainer onClick={hanldeToggleLogoutVisibility}>
+        <S.UserContainer onClick={hanldeToggleLogoutVisibility} ref={profileFooterRef}>
           <S.UserIcon src={userLogo} alt="User Icon" />
           <S.UserNameText>{userName}</S.UserNameText>
         </S.UserContainer>

@@ -37,6 +37,15 @@ const Chat = ({ messages: initialMessages, roomId }: ChatProps) => {
   const showProgress = !fulfilled;
   const progress = percentage ?? 0;
 
+  const chatFooterRef = useRef<HTMLDivElement>(null);
+  const [footerHeight, setFooterHeight] = useState(0);
+
+  useEffect(() => {
+    if (chatFooterRef.current) {
+      setFooterHeight(chatFooterRef.current.offsetHeight);
+    }
+  }, []);
+
   useEffect(() => {
     setChatMessages(initialMessages);
   }, [initialMessages]);
@@ -82,7 +91,7 @@ const Chat = ({ messages: initialMessages, roomId }: ChatProps) => {
 
   return (
     <S.ChatContainer>
-      <S.ChatWindow ref={chatWindowRef}>
+      <S.ChatWindow ref={chatWindowRef} style={{ paddingBottom: footerHeight }}>
         {sortedMessages.map((message, index) => (
           <S.MessageContainer key={index}>
             {message.role === "USER" ? (
@@ -142,42 +151,44 @@ const Chat = ({ messages: initialMessages, roomId }: ChatProps) => {
           </S.MessageContainer>
         )}
       </S.ChatWindow>
-      {showProgress && (
-        <S.ProgrssWrapper>
-          <S.ProgressBox progress={progress}>
-            {progress === 100 && <img src={progressOn} alt="progress-on" />}
-            <S.ProgressText
-              progress={progress}
-            >{`진정서 작성 중  ${progress}%`}</S.ProgressText>
-          </S.ProgressBox>
-        </S.ProgrssWrapper>
-      )}
-      <S.InputContainer>
-        <S.InputWrapper>
-          <S.Textarea
-            value={inputValue}
-            placeholder="친구에게 말하듯이 편하게, 사건에 대해 말해 주세요."
-            onChange={(e) => setInputValue(e.target.value)}
-            onKeyPress={(e) => {
-              if (e.key === "Enter" && !e.shiftKey && !isPending) {
-                e.preventDefault();
-                handleSend();
-              }
-            }}
-            disabled={isPending}
-          />
-          <S.SendButton
-            onClick={handleSend}
-            disabled={isPending || inputValue.length === 0}
-          >
-            <img src={chatArrow} alt="send" />
-          </S.SendButton>
-        </S.InputWrapper>
-        <S.DisclaimerText>
-          폴리가 제공한 법률상담에 대해 어떠한 민사, 형사상의 책임도 지지
-          않습니다. 최종 결정에는 반드시 변호사의 조력을 받으십시오.
-        </S.DisclaimerText>
-      </S.InputContainer>
+      <S.ChatFooter ref={chatFooterRef}>
+        {showProgress && (
+          <S.ProgrssWrapper>
+            <S.ProgressBox progress={progress}>
+              {progress === 100 && <img src={progressOn} alt="progress-on" />}
+              <S.ProgressText
+                progress={progress}
+              >{`진정서 작성 중  ${progress}%`}</S.ProgressText>
+            </S.ProgressBox>
+          </S.ProgrssWrapper>
+        )}
+        <S.InputContainer>
+          <S.InputWrapper>
+            <S.Textarea
+              value={inputValue}
+              placeholder="친구에게 말하듯이 편하게, 사건에 대해 말해 주세요."
+              onChange={(e) => setInputValue(e.target.value)}
+              onKeyPress={(e) => {
+                if (e.key === "Enter" && !e.shiftKey && !isPending) {
+                  e.preventDefault();
+                  handleSend();
+                }
+              }}
+              disabled={isPending}
+            />
+            <S.SendButton
+              onClick={handleSend}
+              disabled={isPending || inputValue.length === 0}
+            >
+              <img src={chatArrow} alt="send" />
+            </S.SendButton>
+          </S.InputWrapper>
+          <S.DisclaimerText>
+            폴리가 제공한 법률상담에 대해 어떠한 민사, 형사상의 책임도 지지
+            않습니다. 최종 결정에는 반드시 변호사의 조력을 받으십시오.
+          </S.DisclaimerText>
+        </S.InputContainer>
+      </S.ChatFooter>
     </S.ChatContainer>
   );
 };

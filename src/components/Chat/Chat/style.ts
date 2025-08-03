@@ -82,8 +82,7 @@ export const UserMessageWrapper = styled(motion.div)`
   justify-content: flex-end;
 `;
 
-export const BotMessageWrapper = styled(motion.div)`
-`;
+export const BotMessageWrapper = styled(motion.div)``;
 
 export const UserMessage = styled(motion.div)`
   padding: 16px;
@@ -123,10 +122,17 @@ export const LoadingSpinner = styled.img`
   }
 `;
 
+export const ChatFooter = styled.div`
+  position: fixed;
+  bottom: 0;
+  background-color: white;
+  width: 770px;
+`;
+
 export const InputContainer = styled.div`
   display: flex;
   flex-direction: column;
-  padding: 10px;
+  margin-bottom: 9px;
   border-radius: 30px;
   align-items: center;
   justify-content: space-between;
@@ -298,7 +304,7 @@ export const InlineCode = styled.code`
 export const ProgrssWrapper = styled.div`
   display: flex;
   justify-content: center;
-  margin-bottom: 5px;
+  margin-bottom: 12px;
 `;
 
 export const ProgressBox = styled.div<{ progress: number }>`

@@ -81,7 +81,6 @@ export const ConsultationList = styled.div`
   flex-direction: column;
   gap: 10px;
   flex: 1;
-  height: 68vh;
   overflow-y: auto;
   scrollbar-width: none; /* Firefox */
   -ms-overflow-style: none; /* IE/Edge */
