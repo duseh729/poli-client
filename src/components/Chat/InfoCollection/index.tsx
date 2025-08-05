@@ -33,7 +33,7 @@ const InfoCollection = ({
   const [place, setPlace] = useState("");
   const { chatRooms, setChatRooms } = useChatRoomsStore();
   const navigate = useNavigate();
-  const footerRef = useRef<HTMLFormElement>(null);
+  const footerRef = useRef<HTMLDivElement>(null);
   const [formHeight, setFormHeight] = useState(0);
 
   const { mutateAsync: chatStream, isPending } = useChatStream();
