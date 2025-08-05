@@ -14,7 +14,7 @@ type ListItemProps = {
 export const ChatContainer = styled.div`
   display: flex;
   flex-direction: column;
-  max-width: 770px;
+  width: 770px;
   height: 93vh;
   box-sizing: border-box;
 `;
