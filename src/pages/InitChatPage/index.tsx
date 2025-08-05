@@ -32,7 +32,7 @@ const InitChatPage = () => {
 
         const newChatRoom = updatedRooms?.data?.find(
           (room) =>
-            !chatRooms.some((existingRoom) => existingRoom.id === room.id)
+            !chatRooms?.some((existingRoom) => existingRoom.id === room.id)
         );
 
         if (newChatRoom) {
