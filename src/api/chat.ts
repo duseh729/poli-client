@@ -60,15 +60,17 @@ export const useChatRooms = () => {
   });
 };
 
+export const fetchChatMessages = async (roomId: number) => {
+  const response = await API.get<ChatMessagesResponse>(
+    `/chat/messages/${roomId}`
+  );
+  return response.data.rooms;
+};
+
 export const useChatMessages = (roomId: number) => {
   return useQuery<ChatMessage[]>({
     queryKey: [CHAT_KEY.CHAT_MESSAGES, roomId],
-    queryFn: async () => {
-      const response = await API.get<ChatMessagesResponse>(
-        `/chat/messages/${roomId}`
-      );
-      return response.data.rooms;
-    },
+    queryFn: () => fetchChatMessages(roomId),
   });
 };
 

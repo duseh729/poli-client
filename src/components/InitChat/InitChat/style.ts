@@ -1,7 +1,7 @@
-import { COLORS } from "@/constants/color";
 import styled from "@emotion/styled";
 import { motion } from "framer-motion";
 import TextareaAutosize from "react-textarea-autosize";
+import { COLORS } from "@/constants/color";
 
 type HeadingProps = {
   level: number;
