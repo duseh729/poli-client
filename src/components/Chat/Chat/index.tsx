@@ -20,9 +20,10 @@ import "highlight.js/styles/github.css";
 type ChatProps = {
   messages: ChatMessage[];
   roomId: number;
+  isInit: boolean;
 };
 
-const Chat = ({ messages: initialMessages, roomId }: ChatProps) => {
+const Chat = ({ messages: initialMessages, roomId, isInit }: ChatProps) => {
   const [inputValue, setInputValue] = useState<string>("");
   const [chatMessages, setChatMessages] = useState<ChatMessage[]>([]);
   const chatWindowRef = useRef<HTMLDivElement>(null);
@@ -39,6 +40,14 @@ const Chat = ({ messages: initialMessages, roomId }: ChatProps) => {
 
   const chatFooterRef = useRef<HTMLDivElement>(null);
   const [footerHeight, setFooterHeight] = useState(0);
+
+  const animationProps = isInit
+    ? {}
+    : {
+        initial: { opacity: 0 },
+        animate: { opacity: 1 },
+        transition: { duration: 0.5 },
+      };
 
   useEffect(() => {
     if (chatFooterRef.current) {
@@ -94,11 +103,7 @@ const Chat = ({ messages: initialMessages, roomId }: ChatProps) => {
           <S.MessageContainer key={index}>
             {message.role === "USER" ? (
               <S.UserMessageWrapper>
-                <S.UserMessage
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  transition={{ duration: 0.5 }}
-                >
+                <S.UserMessage {...animationProps}>
                   <ReactMarkdown
                     remarkPlugins={[remarkGfm]}
                     rehypePlugins={[rehypeHighlight]}
@@ -110,11 +115,7 @@ const Chat = ({ messages: initialMessages, roomId }: ChatProps) => {
             ) : (
               <S.BotMessageWrapper>
                 <S.BotIcon src={poliChat} alt="Bot" />
-                <S.Message
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  transition={{ duration: 0.5 }}
-                >
+                <S.Message {...animationProps}>
                   <ReactMarkdown
                     remarkPlugins={[remarkGfm]}
                     rehypePlugins={[rehypeHighlight]}
