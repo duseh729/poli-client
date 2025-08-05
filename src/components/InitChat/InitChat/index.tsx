@@ -65,7 +65,7 @@ const InitChat = ({ message, isPending }: ChatProps) => {
         {showProgress && (
           <S.ProgrssWrapper>
             <S.ProgressBox progress={progress}>
-              {progress === 100 && <img src={progressOn} alt="progress-on" />}
+              {progress === 0 ? null : <img src={progressOn} alt="progress-on" />}
               <S.ProgressText progress={progress}>
                 진정서 작성 중 0%
               </S.ProgressText>
