@@ -1,5 +1,6 @@
 import ChatPage from "@/pages/ChatPage";
 import HomePage from "@/pages/HomePage";
+import InitChatPage from "@/pages/InitChatPage";
 import LoginPage from "@/pages/LoginPage";
 import MainPage from "@/pages/MainPage";
 import SignUpPage from "@/pages/SignUpPage";
@@ -10,6 +11,7 @@ export const ROUTES = {
   SIGNUP: "/signup",
   MAIN: "/main",
   CHAT_ID: "/chat/:id",
+  INIT_CHAT: "/init-chat"
 } as const;
 
 export const PUBLIC_ROUTES = [
@@ -21,4 +23,5 @@ export const PUBLIC_ROUTES = [
 export const PRIVATE_ROUTES = [
   { path: ROUTES.MAIN, element: <MainPage /> },
   { path: ROUTES.CHAT_ID, element: <ChatPage /> },
+  { path: ROUTES.INIT_CHAT, element: <InitChatPage /> },
 ] as const;
