@@ -4,13 +4,16 @@ import { motion } from "framer-motion";
 import { COLORS } from "@/constants/color";
 
 export const Container = styled(motion.div)`
+  height: 100%;
+  position: relative;
+`;
+
+export const FormWrapper = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  height: 100%;
-  position: relative;
-`;
+`
 
 export const Form = styled.form`
   border-radius: 20px;
@@ -160,6 +163,7 @@ export const FooterWrapper = styled.div`
   bottom: 0;
   background: white;
   width: 100%;
+  padding-bottom: 15px;
 `;
 
 export const StartButton = styled.button`
@@ -169,7 +173,6 @@ export const StartButton = styled.button`
   color: #ffffff;
   font-size: 18px;
   padding: 15px 30px;
-  margin-top: 40px;
   width: 100%;
   height: 70px;
   box-sizing: border-box;

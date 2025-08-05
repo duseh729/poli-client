@@ -45,7 +45,7 @@ const ChatPage = () => {
       <S.Title>{currentRoom?.roomName}</S.Title>
       <S.Wrapper {...animationProps}>
         <S.Main>
-          <Chat messages={messages} roomId={parseInt(id!, 10)} />
+          <Chat messages={messages} roomId={parseInt(id!, 10)} isInit={isInit} />
         </S.Main>
       </S.Wrapper>
     </S.Container>
