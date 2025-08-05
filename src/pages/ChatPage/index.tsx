@@ -10,6 +10,17 @@ const ChatPage = () => {
   const chatRooms = useChatRoomsStore((state) => state.chatRooms);
   const currentRoom = chatRooms.find((room) => room.id == Number(id));
 
+  const location = useLocation();
+  const { isInit } = location.state || {};
+  const animationProps = isInit
+    ? {}
+    : {
+        initial: { opacity: 0, scale: 0.9, y: 20 },
+        animate: { opacity: 1, scale: 1, y: 0 },
+        exit: { opacity: 0, scale: 0.9, y: 20 },
+        transition: { duration: 0.5 },
+      };
+
   const {
     data: messages = [],
     error,
@@ -17,7 +28,12 @@ const ChatPage = () => {
   } = useChatMessages(parseInt(id!, 10));
 
   if (isLoading) {
-    return null;
+    return (
+      <S.Container>
+        <S.Title>{currentRoom?.roomName}</S.Title>
+        <S.Wrapper>로딩 중...</S.Wrapper>
+      </S.Container>
+    );
   }
 
   if (error instanceof Error) {
@@ -27,18 +43,9 @@ const ChatPage = () => {
   return (
     <S.Container>
       <S.Title>{currentRoom?.roomName}</S.Title>
-      <S.Wrapper
-        initial={{ opacity: 0, scale: 0.9, y: 20 }}
-        animate={{ opacity: 1, scale: 1, y: 0 }}
-        exit={{ opacity: 0, scale: 0.9, y: 20 }}
-        transition={{ duration: 0.5 }}
-      >
+      <S.Wrapper {...animationProps}>
         <S.Main>
-          <Chat
-            messages={messages}
-            roomId={parseInt(id!, 10)}
-            key={parseInt(id!, 10)}
-          />
+          <Chat messages={messages} roomId={parseInt(id!, 10)} />
         </S.Main>
       </S.Wrapper>
     </S.Container>

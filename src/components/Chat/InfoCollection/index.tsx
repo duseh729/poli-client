@@ -303,16 +303,18 @@ const InfoCollection = ({
             </S.FormGroup>
           </S.FormGroupWrapper>
         </S.Form>
-        <S.StartButton
-          onClick={handleSubmit}
-          disabled={!isEnableNext || isPending}
-        >
-          사건 제출하기
-        </S.StartButton>
-        <S.Footer>
-          폴리의 역할은 정보를 제공하는데 있으며, 형사적 상담 및 법률 상담이
-          아닙니다. 본 페이지는 법적 효력이 없습니다.
-        </S.Footer>
+        {/* <S.FooterWrapper> */}
+          <S.StartButton
+            onClick={handleSubmit}
+            disabled={!isEnableNext || isPending}
+          >
+            사건 제출하기
+          </S.StartButton>
+          <S.Footer>
+            폴리의 역할은 정보를 제공하는데 있으며, 형사적 상담 및 법률 상담이
+            아닙니다. 본 페이지는 법적 효력이 없습니다.
+          </S.Footer>
+        {/* </S.FooterWrapper> */}
       </LocalizationProvider>
     </S.Container>
   );

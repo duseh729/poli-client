@@ -47,14 +47,12 @@ const Chat = ({ messages: initialMessages, roomId }: ChatProps) => {
   }, []);
 
   useEffect(() => {
-    setChatMessages(initialMessages);
-  }, [initialMessages]);
-
-  useEffect(() => {
     if (!isLoading && messagesData) {
       setChatMessages(messagesData);
+    } else {
+      setChatMessages(initialMessages);
     }
-  }, [isLoading, messagesData]);
+  }, [isLoading, messagesData, initialMessages]);
 
   const handleSend = async () => {
     if (inputValue.trim() !== "") {

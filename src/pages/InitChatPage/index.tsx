@@ -1,7 +1,8 @@
 // InitChatPage.tsx
 import { useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import { useChatStream, useChatRooms } from "@/api/chat";
+import { useQueryClient } from "@tanstack/react-query";
+import { useChatStream, useChatRooms, useChatMessages, fetchChatMessages } from "@/api/chat";
 import { ROUTES } from "@/constants/routes.tsx";
 import { getDynamicPath } from "@/utils/routes.ts";
 import * as S from "./style";
@@ -10,6 +11,7 @@ import InitChat from "@/components/InitChat/InitChat";
 const InitChatPage = () => {
   const location = useLocation();
   const navigate = useNavigate();
+  const queryClient = useQueryClient();
   const { data: chatRooms, refetch: refetchChatRooms } = useChatRooms();
   const { mutateAsync: chatStream, isPending } = useChatStream();
 
@@ -34,8 +36,14 @@ const InitChatPage = () => {
         );
 
         if (newChatRoom) {
+          // data prefetch for the new chat room messages
+          await queryClient.prefetchQuery({
+            queryKey: ["chatMessages", newChatRoom.id],
+            queryFn: () => fetchChatMessages(newChatRoom.id),
+          });
+
           navigate(getDynamicPath(ROUTES.CHAT_ID, { id: newChatRoom.id }), {
-            state: { roomName: newChatRoom.roomName },
+            state: { isInit: true },
           });
         } else {
           console.error("새로운 채팅방을 찾지 못했습니다.");
@@ -59,10 +67,7 @@ const InitChatPage = () => {
         transition={{ duration: 0.5 }}
       >
         <S.Main>
-          <InitChat
-            message={requestBody?.message}
-            isPending={isPending}
-          />
+          <InitChat message={requestBody?.message} isPending={isPending} />
         </S.Main>
       </S.Wrapper>
     </S.Container>

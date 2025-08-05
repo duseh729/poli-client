@@ -9,6 +9,7 @@ export const Container = styled(motion.div)`
   justify-content: center;
   align-items: center;
   height: 100%;
+  position: relative;
 `;
 
 export const Form = styled.form`
@@ -152,6 +153,13 @@ export const hiddenCheckboxCheckedStyles = css`
   &:checked + span:before {
     opacity: 1;
   }
+`;
+
+export const FooterWrapper = styled.div`
+  position: absolute;
+  bottom: 0;
+  background: white;
+  width: 100%;
 `;
 
 export const StartButton = styled.button`
