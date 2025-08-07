@@ -2,7 +2,12 @@
 import { useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useQueryClient } from "@tanstack/react-query";
-import { useChatStream, useChatRooms, useChatMessages, fetchChatMessages } from "@/api/chat";
+import {
+  useChatStream,
+  useChatRooms,
+  useChatMessages,
+  fetchChatMessages,
+} from "@/api/chat";
 import { ROUTES } from "@/constants/routes.tsx";
 import { getDynamicPath } from "@/utils/routes.ts";
 import * as S from "./style";

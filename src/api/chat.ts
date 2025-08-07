@@ -11,27 +11,72 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import toast from "react-hot-toast";
 import API from "./axios.ts";
 import { useChatRoomsStore } from "@/stores/chatRoom.ts";
+import { useUserStore } from "@/stores/user.ts";
+
+type MutationVariables = {
+  requestBody: any;
+  config?: any;
+  onMessage?: (message: string) => void; // 👈 콜백 추가
+};
 
 export const useChatStream = () => {
+  const userId = useUserStore.getState().userId;
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: async ({ requestBody, config }: MutationVariables) => {
-      const response = await API.post("/chat/stream", requestBody, {
-        ...config,
+    mutationFn: async ({ requestBody, onMessage }: MutationVariables) => {
+      const response = await fetch(`${import.meta.env.VITE_API_BASE_URL}chat/stream`, {
+        method: "POST",
         headers: {
-          ...(config?.headers ?? {}),
           Accept: "text/event-stream",
+          "Content-Type": "application/json",
+          "user-id": userId ?? "",
         },
-        responseType: "stream",
+        body: JSON.stringify(requestBody),
       });
-      return response;
+
+      if (!response.body) throw new Error("No response body");
+
+      const reader = response.body.getReader();
+      const decoder = new TextDecoder("utf-8");
+      let buffer = "";
+
+      while (true) {
+        const { value, done } = await reader.read();
+        if (done) break;
+
+        const chunk = decoder.decode(value, { stream: true });
+        buffer += chunk;
+
+        const events = buffer.split("\n\n");
+        for (let i = 0; i < events.length - 1; i++) {
+          const line = events[i].trim();
+          if (!line.startsWith("data:")) continue;
+
+          const jsonString = line.replace("data:", "").trim();
+
+          try {
+            const data = JSON.parse(jsonString);
+            if (data.message && onMessage) {
+              onMessage(data.message); // 👈 콜백으로 전달
+            }
+          } catch (err) {
+            console.error("파싱 실패", err);
+          }
+        }
+
+        buffer = events[events.length - 1];
+      }
+
+      return true;
     },
+
     onSuccess: (_, variables) => {
       queryClient.invalidateQueries({
         queryKey: [CHAT_KEY.CHAT_MESSAGES, variables.requestBody.roomId],
       });
     },
+
     onError: (error: Error) => {
       toast.error(error.message, {
         duration: 2000,
@@ -44,6 +89,7 @@ export const useChatStream = () => {
     },
   });
 };
+
 
 export const useChatRooms = () => {
   const setChatRooms = useChatRoomsStore((state) => state.setChatRooms);
