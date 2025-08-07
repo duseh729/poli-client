@@ -11,10 +11,12 @@ import loadingSpinner from "@/assets/loading-spinner.svg";
 
 type ChatProps = {
   message: string;
+  botMessage: string;
   isPending: boolean;
+  isTyping: boolean;
 };
 
-const InitChat = ({ message, isPending }: ChatProps) => {
+const InitChat = ({ message, botMessage, isPending, isTyping }: ChatProps) => {
   const [inputValue, setInputValue] = useState<string>("");
   const chatWindowRef = useRef<HTMLDivElement>(null);
 
@@ -29,6 +31,12 @@ const InitChat = ({ message, isPending }: ChatProps) => {
       setFooterHeight(chatFooterRef.current.offsetHeight);
     }
   }, [chatFooterRef.current]);
+
+  useEffect(() => {
+    if (chatWindowRef.current) {
+      chatWindowRef.current.scrollTop = chatWindowRef.current.scrollHeight;
+    }
+  }, [botMessage]);
 
   return (
     <S.ChatContainer>
@@ -49,17 +57,35 @@ const InitChat = ({ message, isPending }: ChatProps) => {
             </S.UserMessage>
           </S.UserMessageWrapper>
         </S.MessageContainer>
-        <S.MessageContainer>
-          <S.BotIcon src={poliChat} alt="Bot" />
-          <S.LoadingMessage
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 0.5 }}
-          >
-            가장 도움을 줄 수 있는 답변을 준비하고 있습니다.{" "}
-            <S.LoadingSpinner src={loadingSpinner} alt="Loading" />
-          </S.LoadingMessage>
-        </S.MessageContainer>
+        {isTyping && botMessage && (
+          <S.MessageContainer>
+            <S.BotIcon src={poliChat} alt="Bot" />
+            <S.Message 
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 0.5 }}>
+              <ReactMarkdown
+                remarkPlugins={[remarkGfm]}
+                rehypePlugins={[rehypeHighlight]}
+              >
+                {botMessage}
+              </ReactMarkdown>
+            </S.Message>
+          </S.MessageContainer>
+        )}
+        {!isTyping && isPending && (
+          <S.MessageContainer>
+            <S.BotIcon src={poliChat} alt="Bot" />
+            <S.LoadingMessage
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 0.5 }}
+            >
+              가장 도움을 줄 수 있는 답변을 준비하고 있습니다.{" "}
+              <S.LoadingSpinner src={loadingSpinner} alt="Loading" />
+            </S.LoadingMessage>
+          </S.MessageContainer>
+        )}
       </S.ChatWindow>
       <S.ChatFooter ref={chatFooterRef}>
         {showProgress && (
