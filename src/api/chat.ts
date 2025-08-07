@@ -38,6 +38,8 @@ export const useChatStream = () => {
       const decoder = new TextDecoder("utf-8");
       let buffer = "";
 
+      let hasReceivedMessage = false;
+      
       while (true) {
         const { value, done } = await reader.read();
         if (done) break;
@@ -55,7 +57,15 @@ export const useChatStream = () => {
           try {
             const data = JSON.parse(jsonString);
             if (data.message && onMessage) {
+              hasReceivedMessage = true;
               onMessage(data.message); // 👈 콜백으로 전달
+            } else if (
+              hasReceivedMessage &&
+              data.roomId &&
+              !data.message &&
+              onMessage
+            ) {
+              onMessage(null); // 첫 message 이후에만 마지막 신호로 처리
             }
           } catch (err) {
             console.error("파싱 실패", err);

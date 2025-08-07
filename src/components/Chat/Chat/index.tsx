@@ -44,6 +44,10 @@ const Chat = ({ messages: initialMessages, roomId, isInit }: ChatProps) => {
   const [currentBotMessage, setCurrentBotMessage] = useState("");
   const [isTyping, setIsTyping] = useState(false);
   const bufferRef = useRef<string[]>([]);
+  const timeoutRef = useRef<NodeJS.Timeout | null>(null);
+
+  // 첫 message 수신 여부
+  const hasReceivedMessageRef = useRef(false);
 
   const animationProps = isInit
     ? {}
@@ -67,9 +71,9 @@ const Chat = ({ messages: initialMessages, roomId, isInit }: ChatProps) => {
     }
   }, [isLoading, messagesData, initialMessages]);
 
-  const timeoutRef = useRef<NodeJS.Timeout | null>(null);
-
   const handleSend = async () => {
+    if (isPending || isTyping) return;
+
     if (inputValue.trim() !== "") {
       const userMessage: ChatMessage = {
         createdAt: new Date().toISOString(),
@@ -84,15 +88,10 @@ const Chat = ({ messages: initialMessages, roomId, isInit }: ChatProps) => {
         await chatStream({
           requestBody: responseBody,
           config: { meta: { skipLoading: true } },
-          onMessage: (chunk: string) => {
-            bufferRef.current.push(chunk); // 조각 저장
-            const combined = bufferRef.current.join("");
-            setCurrentBotMessage(combined); // 실시간 UI 갱신
-            setIsTyping(true);
-
-            if (timeoutRef.current) clearTimeout(timeoutRef.current);
-            timeoutRef.current = setTimeout(() => {
-              // 1초 동안 추가 메시지가 없으면 완료 처리
+          onMessage: (chunk: string | null) => {
+            if (chunk === null) {
+              // 답변 끝 처리
+              if (timeoutRef.current) clearTimeout(timeoutRef.current);
               const fullMessage = bufferRef.current.join("");
               setChatMessages((prev) => [
                 ...prev,
@@ -105,7 +104,15 @@ const Chat = ({ messages: initialMessages, roomId, isInit }: ChatProps) => {
               bufferRef.current = [];
               setCurrentBotMessage("");
               setIsTyping(false);
-            }, 1000);
+              return;
+            }
+
+            if (chunk) {
+              bufferRef.current.push(chunk);
+              const combined = bufferRef.current.join("");
+              setCurrentBotMessage(combined);
+              setIsTyping(true);
+            }
           },
         });
         await refetch(); // 채팅방 목록을 새로고침하여 최신 상태 반영
