@@ -33,21 +33,15 @@ const InitChatPage = () => {
         await chatStream({
           requestBody,
           config: {},
-          onMessage: (chunk: string) => {
-            bufferRef.current.push(chunk);
-            const combined = bufferRef.current.join("");
-            setBotMessage(combined);
-            setIsTyping(true);
-
-            if (timeoutRef.current) clearTimeout(timeoutRef.current);
-            timeoutRef.current = setTimeout(async () => {
-              // 답변이 끝났다고 판단
+          onMessage: (chunk: string | null) => {
+            // console.log("onMessage 호출됨:", chunk); // 호출 횟수 확인
+            if (chunk === null) {
+              // 답변이 끝났으니 바로 처리
               setIsTyping(false);
 
-              if (!isTyping) {
-                // 채팅방 목록 새로고침
+              // 채팅방 목록 새로고침 및 이동
+              (async () => {
                 const updatedRooms = await refetchChatRooms();
-
                 const newChatRoom = updatedRooms?.data?.find(
                   (room) =>
                     !chatRooms?.some(
@@ -70,8 +64,15 @@ const InitChatPage = () => {
                 } else {
                   console.error("새로운 채팅방을 찾지 못했습니다.");
                 }
-              }
-            }, 1000); // 1초 동안 추가 chunk가 없으면 완료 처리
+              })();
+              return;
+            }
+
+            // 일반 chunk 처리
+            bufferRef.current.push(chunk);
+            const combined = bufferRef.current.join("");
+            setBotMessage(combined);
+            setIsTyping(true);
           },
         });
       } catch (error) {
