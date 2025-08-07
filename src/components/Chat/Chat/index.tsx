@@ -41,6 +41,10 @@ const Chat = ({ messages: initialMessages, roomId, isInit }: ChatProps) => {
   const chatFooterRef = useRef<HTMLDivElement>(null);
   const [footerHeight, setFooterHeight] = useState(0);
 
+  const [currentBotMessage, setCurrentBotMessage] = useState("");
+  const [isTyping, setIsTyping] = useState(false);
+  const bufferRef = useRef<string[]>([]);
+
   const animationProps = isInit
     ? {}
     : {
@@ -63,6 +67,8 @@ const Chat = ({ messages: initialMessages, roomId, isInit }: ChatProps) => {
     }
   }, [isLoading, messagesData, initialMessages]);
 
+  const timeoutRef = useRef<NodeJS.Timeout | null>(null);
+
   const handleSend = async () => {
     if (inputValue.trim() !== "") {
       const userMessage: ChatMessage = {
@@ -78,6 +84,29 @@ const Chat = ({ messages: initialMessages, roomId, isInit }: ChatProps) => {
         await chatStream({
           requestBody: responseBody,
           config: { meta: { skipLoading: true } },
+          onMessage: (chunk: string) => {
+            bufferRef.current.push(chunk); // 조각 저장
+            const combined = bufferRef.current.join("");
+            setCurrentBotMessage(combined); // 실시간 UI 갱신
+            setIsTyping(true);
+
+            if (timeoutRef.current) clearTimeout(timeoutRef.current);
+            timeoutRef.current = setTimeout(() => {
+              // 1초 동안 추가 메시지가 없으면 완료 처리
+              const fullMessage = bufferRef.current.join("");
+              setChatMessages((prev) => [
+                ...prev,
+                {
+                  createdAt: new Date().toISOString(),
+                  message: fullMessage,
+                  role: "BOT",
+                },
+              ]);
+              bufferRef.current = [];
+              setCurrentBotMessage("");
+              setIsTyping(false);
+            }, 1000);
+          },
         });
         await refetch(); // 채팅방 목록을 새로고침하여 최신 상태 반영
       } catch (error) {
@@ -90,7 +119,7 @@ const Chat = ({ messages: initialMessages, roomId, isInit }: ChatProps) => {
     if (chatWindowRef.current) {
       chatWindowRef.current.scrollTop = chatWindowRef.current.scrollHeight;
     }
-  }, [chatMessages]);
+  }, [chatMessages, currentBotMessage]);
 
   const sortedMessages = chatMessages.sort(
     (a, b) => new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime()
@@ -136,7 +165,20 @@ const Chat = ({ messages: initialMessages, roomId, isInit }: ChatProps) => {
             )}
           </S.MessageContainer>
         ))}
-        {isPending && (
+        {isTyping && currentBotMessage && (
+          <S.MessageContainer>
+            <S.BotIcon src={poliChat} alt="Bot" />
+            <S.Message {...animationProps}>
+              <ReactMarkdown
+                remarkPlugins={[remarkGfm]}
+                rehypePlugins={[rehypeHighlight]}
+              >
+                {currentBotMessage}
+              </ReactMarkdown>
+            </S.Message>
+          </S.MessageContainer>
+        )}
+        {!isTyping && isPending && (
           <S.MessageContainer>
             <S.BotIcon src={poliChat} alt="Bot" />
             <S.LoadingMessage
