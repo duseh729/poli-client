@@ -1,13 +1,7 @@
-// InitChatPage.tsx
-import { useEffect } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useQueryClient } from "@tanstack/react-query";
-import {
-  useChatStream,
-  useChatRooms,
-  useChatMessages,
-  fetchChatMessages,
-} from "@/api/chat";
+import { useChatStream, useChatRooms, fetchChatMessages } from "@/api/chat";
 import { ROUTES } from "@/constants/routes.tsx";
 import { getDynamicPath } from "@/utils/routes.ts";
 import * as S from "./style";
@@ -22,44 +16,71 @@ const InitChatPage = () => {
 
   const requestBody = location?.state;
 
+  // chunk UI 상태
+  const [botMessage, setBotMessage] = useState("");
+  const bufferRef = useRef<string[]>([]);
+  const timeoutRef = useRef<NodeJS.Timeout | null>(null);
+  const [isTyping, setIsTyping] = useState(false);
+
   useEffect(() => {
     const startChat = async () => {
       if (!requestBody) {
-        // 예외 처리: requestBody 없으면 홈으로 보내기 등
         navigate("/main");
         return;
       }
 
       try {
-        await chatStream({ requestBody, config: {} });
+        await chatStream({
+          requestBody,
+          config: {},
+          onMessage: (chunk: string) => {
+            bufferRef.current.push(chunk);
+            const combined = bufferRef.current.join("");
+            setBotMessage(combined);
+            setIsTyping(true);
 
-        const updatedRooms = await refetchChatRooms();
+            if (timeoutRef.current) clearTimeout(timeoutRef.current);
+            timeoutRef.current = setTimeout(async () => {
+              // 답변이 끝났다고 판단
+              setIsTyping(false);
 
-        const newChatRoom = updatedRooms?.data?.find(
-          (room) =>
-            !chatRooms?.some((existingRoom) => existingRoom.id === room.id)
-        );
+              if (!isTyping) {
+                // 채팅방 목록 새로고침
+                const updatedRooms = await refetchChatRooms();
 
-        if (newChatRoom) {
-          // data prefetch for the new chat room messages
-          await queryClient.prefetchQuery({
-            queryKey: ["chatMessages", newChatRoom.id],
-            queryFn: () => fetchChatMessages(newChatRoom.id),
-          });
+                const newChatRoom = updatedRooms?.data?.find(
+                  (room) =>
+                    !chatRooms?.some(
+                      (existingRoom) => existingRoom.id === room.id
+                    )
+                );
 
-          navigate(getDynamicPath(ROUTES.CHAT_ID, { id: newChatRoom.id }), {
-            state: { isInit: true },
-          });
-        } else {
-          console.error("새로운 채팅방을 찾지 못했습니다.");
-        }
+                if (newChatRoom) {
+                  await queryClient.prefetchQuery({
+                    queryKey: ["chatMessages", newChatRoom.id],
+                    queryFn: () => fetchChatMessages(newChatRoom.id),
+                  });
+
+                  navigate(
+                    getDynamicPath(ROUTES.CHAT_ID, { id: newChatRoom.id }),
+                    {
+                      state: { isInit: true },
+                    }
+                  );
+                } else {
+                  console.error("새로운 채팅방을 찾지 못했습니다.");
+                }
+              }
+            }, 1000); // 1초 동안 추가 chunk가 없으면 완료 처리
+          },
+        });
       } catch (error) {
         console.error("AI 채팅 요청 실패:", error);
-        // 에러 시 fallback 또는 에러 페이지 navigate 가능
       }
     };
 
     startChat();
+    // eslint-disable-next-line
   }, []);
 
   return (
@@ -72,7 +93,13 @@ const InitChatPage = () => {
         transition={{ duration: 0.5 }}
       >
         <S.Main>
-          <InitChat message={requestBody?.message} isPending={isPending} />
+          {/* 실시간 chunk UI */}
+          <InitChat
+            message={requestBody.message}
+            botMessage={botMessage}
+            isPending={isPending || isTyping}
+            isTyping={isTyping}
+          />
         </S.Main>
       </S.Wrapper>
     </S.Container>

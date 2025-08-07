@@ -99,7 +99,7 @@ const Chat = ({ messages: initialMessages, roomId, isInit }: ChatProps) => {
                 {
                   createdAt: new Date().toISOString(),
                   message: fullMessage,
-                  role: "BOT",
+                  role: "AI",
                 },
               ]);
               bufferRef.current = [];
@@ -143,7 +143,7 @@ const Chat = ({ messages: initialMessages, roomId, isInit }: ChatProps) => {
               </S.UserMessageWrapper>
             ) : (
               <S.BotMessageWrapper>
-                <S.BotIcon src={poliChat} alt="Bot" />
+                <S.BotIcon src={poliChat} alt="AI" />
                 <S.Message {...animationProps}>
                   <ReactMarkdown
                     remarkPlugins={[remarkGfm]}
@@ -167,20 +167,20 @@ const Chat = ({ messages: initialMessages, roomId, isInit }: ChatProps) => {
         ))}
         {isTyping && currentBotMessage && (
           <S.MessageContainer>
-            <S.BotIcon src={poliChat} alt="Bot" />
+            <S.BotIcon src={poliChat} alt="AI" />
             <S.Message {...animationProps}>
               <ReactMarkdown
                 remarkPlugins={[remarkGfm]}
                 rehypePlugins={[rehypeHighlight]}
               >
-                {currentBotMessage}
+                {`${currentBotMessage}`}
               </ReactMarkdown>
             </S.Message>
           </S.MessageContainer>
         )}
         {!isTyping && isPending && (
           <S.MessageContainer>
-            <S.BotIcon src={poliChat} alt="Bot" />
+            <S.BotIcon src={poliChat} alt="AI" />
             <S.LoadingMessage
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}

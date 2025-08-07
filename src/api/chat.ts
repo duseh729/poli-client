@@ -13,27 +13,24 @@ import API from "./axios.ts";
 import { useChatRoomsStore } from "@/stores/chatRoom.ts";
 import { useUserStore } from "@/stores/user.ts";
 
-type MutationVariables = {
-  requestBody: any;
-  config?: any;
-  onMessage?: (message: string) => void; // 👈 콜백 추가
-};
-
 export const useChatStream = () => {
   const userId = useUserStore.getState().userId;
   const queryClient = useQueryClient();
 
   return useMutation({
     mutationFn: async ({ requestBody, onMessage }: MutationVariables) => {
-      const response = await fetch(`${import.meta.env.VITE_API_BASE_URL}chat/stream`, {
-        method: "POST",
-        headers: {
-          Accept: "text/event-stream",
-          "Content-Type": "application/json",
-          "user-id": userId ?? "",
-        },
-        body: JSON.stringify(requestBody),
-      });
+      const response = await fetch(
+        `${import.meta.env.VITE_API_BASE_URL}chat/stream`,
+        {
+          method: "POST",
+          headers: {
+            Accept: "text/event-stream",
+            "Content-Type": "application/json",
+            "user-id": userId ?? "",
+          },
+          body: JSON.stringify(requestBody),
+        }
+      );
 
       if (!response.body) throw new Error("No response body");
 
@@ -86,10 +83,12 @@ export const useChatStream = () => {
           fontSize: "16px",
         },
       });
+      setTimeout(() => {
+        // 재연결 로직 (예: mutate 다시 호출)
+      }, 3000);
     },
   });
 };
-
 
 export const useChatRooms = () => {
   const setChatRooms = useChatRoomsStore((state) => state.setChatRooms);
