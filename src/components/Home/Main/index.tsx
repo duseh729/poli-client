@@ -1,11 +1,18 @@
 /** @jsxImportSource @emotion/react */
 import * as S from "./style";
-import poliMain from "@/assets/poli-main-sm.png";
+import poliMain from "@/assets/poli-main-sm.svg";
 
 const Main = () => (
   <S.Container>
     <S.LogoContainer>
-      <img src={poliMain} alt="POLI" />
+      <img
+        src={poliMain}
+        alt="POLI"
+        onError={(e) => {
+          e.currentTarget.onerror = null; // 무한 루프 방지
+          e.currentTarget.src = "/poli-main-sm.svg"; // 대체 이미지 경로
+        }}
+      />
     </S.LogoContainer>
     <S.Title>
       사이버범죄 대응의 모든 것을 해결해주는 POLI,
