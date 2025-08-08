@@ -74,6 +74,125 @@ export const Message = styled(motion.div)`
   white-space: pre-wrap;
   line-height: 24px;
   font-weight: 500;
+
+  /* 마크다운 스타일링 */
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    margin: 1em 0 0.5em;
+    font-weight: bold;
+  }
+
+  h1 {
+    font-size: 2em;
+  }
+  h2 {
+    font-size: 1.5em;
+  }
+  h3 {
+    font-size: 1.3em;
+  }
+  h4 {
+    font-size: 1.2em;
+  }
+  h5 {
+    font-size: 1.1em;
+  }
+  h6 {
+    font-size: 1em;
+  }
+
+  p {
+    margin: 0.8em 0;
+  }
+
+  strong,
+  b {
+    font-weight: bold;
+  }
+
+  em,
+  i {
+    font-style: italic;
+  }
+
+  ul,
+  ol {
+    margin: 0.5em 0;
+    padding-left: 2em;
+  }
+
+  li {
+    margin: 0.3em 0;
+  }
+
+  hr {
+    margin: 1.5em 0;
+    border: none;
+    border-bottom: 1px solid #e1e4e8;
+  }
+
+  /* 체크박스 스타일링 */
+  input[type="checkbox"] {
+    margin-right: 0.5em;
+  }
+
+  /* 취소선 스타일링 */
+  del {
+    text-decoration: line-through;
+    color: #6a737d;
+  }
+
+  /* 링크 스타일링 */
+  a {
+    color: #0366d6;
+    text-decoration: none;
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+
+  /* 코드 블록 스타일링 */
+  code {
+    background-color: rgba(27, 31, 35, 0.05);
+    border-radius: 3px;
+    font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace;
+    font-size: 85%;
+    padding: 0.2em 0.4em;
+    margin: 0;
+  }
+
+  pre {
+    background-color: #f6f8fa;
+    border-radius: 3px;
+    font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace;
+    font-size: 85%;
+    line-height: 1.45;
+    overflow: auto;
+    padding: 16px;
+
+    code {
+      background-color: transparent;
+      border: 0;
+      display: inline;
+      line-height: inherit;
+      margin: 0;
+      overflow: visible;
+      padding: 0;
+      word-wrap: normal;
+    }
+  }
+
+  /* 인용구 스타일링 */
+  blockquote {
+    margin: 0.8em 0;
+    padding: 0 1em;
+    color: #6a737d;
+    border-left: 0.25em solid #dfe2e5;
+  }
 `;
 
 export const UserMessageWrapper = styled(motion.div)`

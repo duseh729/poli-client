@@ -132,6 +132,7 @@ const Chat = ({ messages: initialMessages, roomId, isInit }: ChatProps) => {
     (a, b) => new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime()
   );
 
+
   return (
     <S.ChatContainer>
       <S.ChatWindow ref={chatWindowRef} style={{ paddingBottom: footerHeight }}>
