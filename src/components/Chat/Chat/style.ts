@@ -231,6 +231,10 @@ export const Message = styled(motion.div)`
       white-space: nowrap;
     }
   }
+
+  ol, ul{
+    padding-left: 0px;
+  }
 `;
 
 export const UserMessageWrapper = styled(motion.div)`
