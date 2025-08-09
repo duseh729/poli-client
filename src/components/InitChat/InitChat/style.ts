@@ -1,7 +1,7 @@
+import { COLORS } from "@/constants/color";
 import styled from "@emotion/styled";
 import { motion } from "framer-motion";
 import TextareaAutosize from "react-textarea-autosize";
-import { COLORS } from "@/constants/color";
 
 type HeadingProps = {
   level: number;
@@ -82,7 +82,7 @@ export const Message = styled(motion.div)`
   h4,
   h5,
   h6 {
-    margin: 1em 0 0.5em;
+    margin: 0.5em 0 0.5em;
     font-weight: bold;
   }
 
@@ -106,7 +106,6 @@ export const Message = styled(motion.div)`
   }
 
   p {
-    margin: 0.8em 0;
   }
 
   strong,
@@ -121,16 +120,16 @@ export const Message = styled(motion.div)`
 
   ul,
   ol {
-    margin: 0.5em 0;
-    padding-left: 2em;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5em;
   }
 
   li {
-    margin: 0.3em 0;
   }
 
   hr {
-    margin: 1.5em 0;
+    margin: 1em 0;
     border: none;
     border-bottom: 1px solid #e1e4e8;
   }
@@ -193,7 +192,7 @@ export const Message = styled(motion.div)`
     color: #6a737d;
     border-left: 0.25em solid #dfe2e5;
   }
-  
+
   /* 테이블 스타일링 */
   table {
     border-collapse: collapse;
@@ -230,6 +229,10 @@ export const Message = styled(motion.div)`
       overflow-x: auto;
       white-space: nowrap;
     }
+  }
+
+  ol, ul{
+    padding-left: 0px;
   }
 `;
 
