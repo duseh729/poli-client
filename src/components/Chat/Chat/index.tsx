@@ -134,7 +134,7 @@ const Chat = ({ messages: initialMessages, roomId, isInit }: ChatProps) => {
 
   /** 메시지 전송 */
   const handleSend = async () => {
-    if (isPending || isTyping) return;
+    // if (isPending || isTyping) return;
 
     if (inputValue.trim() !== "") {
       const userMessage: ChatMessage = {
