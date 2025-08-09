@@ -11,7 +11,6 @@ import {
 import chatArrow from "@/assets/chat-arrow.svg";
 import poliChat from "@/assets/poli-chat-icon-sm.svg";
 import progressOn from "@/assets/progress-on.svg";
-import userChat from "@/assets/user-chat-icon.svg";
 import loadingSpinner from "@/assets/loading-spinner.svg";
 import type { ChatMessage } from "@/types/chat";
 import * as S from "./style";
@@ -23,6 +22,9 @@ type ChatProps = {
   isInit: boolean;
 };
 
+const BLOCK_SIZE = 7; // 한 번에 붙일 글자 수 (조정 가능)
+const TICK_DELAY_MS = 5; // 반복 간격(ms) — 작을수록 더 빠름
+
 const Chat = ({ messages: initialMessages, roomId, isInit }: ChatProps) => {
   const [inputValue, setInputValue] = useState<string>("");
   const [chatMessages, setChatMessages] = useState<ChatMessage[]>([]);
@@ -30,24 +32,26 @@ const Chat = ({ messages: initialMessages, roomId, isInit }: ChatProps) => {
 
   const { mutateAsync: chatStream, isPending } = useChatStream();
   const { data: messagesData, isLoading } = useChatMessages(roomId);
-  const { data } = useChatRoomProgress(roomId);
-  const { fulfilled, percentage } = data ?? {};
-
   const { refetch } = useChatRooms();
 
-  const showProgress = !fulfilled;
-  const progress = percentage ?? 0;
+  // const { data } = useChatRoomProgress(roomId);
+  // const { fulfilled, percentage } = data ?? {};
+  // const showProgress = !fulfilled;
+  // const progress = percentage ?? 0;
 
   const chatFooterRef = useRef<HTMLDivElement>(null);
   const [footerHeight, setFooterHeight] = useState(0);
 
+  // 타이핑 관련
   const [currentBotMessage, setCurrentBotMessage] = useState("");
   const [isTyping, setIsTyping] = useState(false);
-  const bufferRef = useRef<string[]>([]);
-  const timeoutRef = useRef<NodeJS.Timeout | null>(null);
 
-  // 첫 message 수신 여부
-  const hasReceivedMessageRef = useRef(false);
+  const bufferRef = useRef<string[]>([]); // 표시 대기 중인 글자들
+  const intervalRef = useRef<NodeJS.Timeout | null>(null);
+  const currentBotMessageRef = useRef(""); // 전체 누적 원문
+  const streamingRef = useRef(false); // 스트리밍이 서버측에서 아직 진행중인지
+  const streamEndedRef = useRef(false); // 서버에서 종료 신호(=null chunk) 받았는지
+  const appendedFinalRef = useRef(false); // 이미 최종 메시지를 로컬에 추가했는지 중복방지
 
   const animationProps = isInit
     ? {}
@@ -63,14 +67,72 @@ const Chat = ({ messages: initialMessages, roomId, isInit }: ChatProps) => {
     }
   }, []);
 
+  /**
+   * 외부 데이터(messagesData)로 덮어쓰기 제어
+   * - 스트리밍/타이핑 중이면 덮어쓰지 않음 (로컬 애니메이션 우선)
+   */
   useEffect(() => {
     if (!isLoading && messagesData) {
+      if (streamingRef.current || isTyping) {
+        return;
+      }
       setChatMessages(messagesData);
     } else {
-      setChatMessages(initialMessages);
+      if (!streamingRef.current && !isTyping) {
+        setChatMessages(initialMessages);
+      }
     }
-  }, [isLoading, messagesData, initialMessages]);
+  }, [isLoading, messagesData, initialMessages, isTyping]);
 
+  /** 타이핑 루프 시작 */
+  const startTypingLoop = () => {
+    if (intervalRef.current) return; // 이미 동작 중이면 무시
+
+    intervalRef.current = setInterval(() => {
+      const buf = bufferRef.current;
+      if (buf.length > 0) {
+        // BLOCK_SIZE만큼 꺼내서 붙임
+        const take = buf.splice(0, BLOCK_SIZE).join("");
+        setCurrentBotMessage((prev) => prev + take);
+      } else {
+        // 버퍼 비었음
+        if (streamEndedRef.current) {
+          if (intervalRef.current) {
+            clearInterval(intervalRef.current);
+            intervalRef.current = null;
+          }
+          setIsTyping(false);
+
+          if (!appendedFinalRef.current) {
+            appendedFinalRef.current = true;
+            setChatMessages((prev) => [
+              ...prev,
+              {
+                createdAt: new Date().toISOString(),
+                message: currentBotMessageRef.current,
+                role: "AI",
+              },
+            ]);
+            currentBotMessageRef.current = "";
+            setCurrentBotMessage("");
+          }
+        } else {
+          // 버퍼 비었지만 스트림은 아직 끝나지 않음 -> 잠시 멈추고 interval 정리.
+          if (intervalRef.current) {
+            clearInterval(intervalRef.current);
+            intervalRef.current = null;
+          }
+          // 대기: 새로운 chunk가 오면 startTypingLoop가 다시 호출되어 재개됨
+        }
+      }
+    }, TICK_DELAY_MS);
+  };
+
+  useEffect(() => {
+    // console.log("Chat component mounted", isTyping);
+  }, [isTyping])
+
+  /** 메시지 전송 */
   const handleSend = async () => {
     if (isPending || isTyping) return;
 
@@ -84,54 +146,89 @@ const Chat = ({ messages: initialMessages, roomId, isInit }: ChatProps) => {
       setInputValue("");
 
       try {
+        // 초기화
+        streamingRef.current = true;
+        streamEndedRef.current = false;
+        appendedFinalRef.current = false;
+        bufferRef.current = [];
+        currentBotMessageRef.current = "";
+        setCurrentBotMessage("");
+        setIsTyping(false);
+
         const responseBody = { message: inputValue, initMessage: "{}", roomId };
         await chatStream({
           requestBody: responseBody,
           config: { meta: { skipLoading: true } },
           onMessage: (chunk: string | null) => {
+            // 스트림 종료 신호
             if (chunk === null) {
-              // 답변 끝 처리
-              if (timeoutRef.current) clearTimeout(timeoutRef.current);
-              const fullMessage = bufferRef.current.join("");
-              setChatMessages((prev) => [
-                ...prev,
-                {
-                  createdAt: new Date().toISOString(),
-                  message: fullMessage,
-                  role: "AI",
-                },
-              ]);
-              bufferRef.current = [];
-              setCurrentBotMessage("");
-              setIsTyping(false);
+              streamingRef.current = false;
+              streamEndedRef.current = true;
+              // don't force finalize here — let the typing loop drain buffer and finalize
               return;
             }
 
             if (chunk) {
-              bufferRef.current.push(chunk);
-              const combined = bufferRef.current.join("");
-              setCurrentBotMessage(combined);
-              setIsTyping(true);
+              // 들어오는 chunk를 한 글자 단위로 버퍼에 넣음
+              bufferRef.current.push(...chunk.split(""));
+              // 전체 텍스트 누적
+              currentBotMessageRef.current += chunk;
+
+              // 타이핑 상태 세팅 및 루프 시작
+              if (!isTyping) {
+                setIsTyping(true);
+                startTypingLoop();
+              } else {
+                // 이미 타이핑 중이면 루프가 소비중 -> do nothing
+                // But ensure interval is running (in case it was cleared when buffer momentarily emptied)
+                if (!intervalRef.current) {
+                  startTypingLoop();
+                }
+              }
             }
           },
         });
-        await refetch(); // 채팅방 목록을 새로고침하여 최신 상태 반영
+
+        // chatStream 종료 후에 메타/방 목록은 한 번 갱신
+        // (실제 메시지 내용은 typing이 끝날 때 로컬에 추가되므로 messagesData가 와도 덮어쓰지 않음)
+        await refetch();
       } catch (error) {
-        console.error("error", error);
+        console.error("chat stream error:", error);
+        // 실패 시 정리
+        streamingRef.current = false;
+        streamEndedRef.current = true;
+        bufferRef.current = [];
+        currentBotMessageRef.current = "";
+        setIsTyping(false);
+        if (intervalRef.current) {
+          clearInterval(intervalRef.current);
+          intervalRef.current = null;
+        }
       }
     }
   };
 
+  /** 항상 아래로 스크롤 */
   useEffect(() => {
     if (chatWindowRef.current) {
       chatWindowRef.current.scrollTop = chatWindowRef.current.scrollHeight;
     }
   }, [chatMessages, currentBotMessage]);
 
-  const sortedMessages = chatMessages.sort(
+  /** 정렬해서 렌더 (원본 배열 변경 금지) */
+  const sortedMessages = [...chatMessages].sort(
     (a, b) => new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime()
   );
 
+  /** 언마운트시 클린업 */
+  useEffect(() => {
+    return () => {
+      if (intervalRef.current) {
+        clearInterval(intervalRef.current);
+        intervalRef.current = null;
+      }
+    };
+  }, []);
 
   return (
     <S.ChatContainer>
@@ -173,7 +270,8 @@ const Chat = ({ messages: initialMessages, roomId, isInit }: ChatProps) => {
             )}
           </S.MessageContainer>
         ))}
-        {isTyping && currentBotMessage && (
+
+        {isTyping && currentBotMessage !== "" && (
           <S.MessageContainer>
             <S.BotIcon src={poliChat} alt="AI" />
             <S.Message {...animationProps}>
@@ -186,6 +284,7 @@ const Chat = ({ messages: initialMessages, roomId, isInit }: ChatProps) => {
             </S.Message>
           </S.MessageContainer>
         )}
+
         {!isTyping && isPending && (
           <S.MessageContainer>
             <S.BotIcon src={poliChat} alt="AI" />
@@ -200,17 +299,18 @@ const Chat = ({ messages: initialMessages, roomId, isInit }: ChatProps) => {
           </S.MessageContainer>
         )}
       </S.ChatWindow>
+
       <S.ChatFooter ref={chatFooterRef}>
-        {showProgress && (
+        {/* {showProgress && (
           <S.ProgrssWrapper>
             <S.ProgressBox progress={progress}>
               {progress === 100 && <img src={progressOn} alt="progress-on" />}
-              <S.ProgressText
-                progress={progress}
-              >{`진정서 작성 중  ${progress}%`}</S.ProgressText>
+              <S.ProgressText progress={progress}>
+                {`진정서 작성 중  ${progress}%`}
+              </S.ProgressText>
             </S.ProgressBox>
           </S.ProgrssWrapper>
-        )}
+        )} */}
         <S.InputContainer>
           <S.InputWrapper>
             <S.Textarea
@@ -223,11 +323,11 @@ const Chat = ({ messages: initialMessages, roomId, isInit }: ChatProps) => {
                   handleSend();
                 }
               }}
-              disabled={isPending}
+              disabled={isPending || isTyping}
             />
             <S.SendButton
               onClick={handleSend}
-              disabled={isPending || inputValue.length === 0}
+              disabled={isPending || isTyping || inputValue.length === 0}
             >
               <img src={chatArrow} alt="send" />
             </S.SendButton>
