@@ -20,8 +20,8 @@ const InitChat = ({ message, botMessage, isPending, isTyping }: ChatProps) => {
   const [inputValue, setInputValue] = useState<string>("");
   const chatWindowRef = useRef<HTMLDivElement>(null);
 
-  const showProgress = true;
-  const progress = 0;
+  // const showProgress = true;
+  // const progress = 0;
 
   const chatFooterRef = useRef<HTMLDivElement>(null);
   const [footerHeight, setFooterHeight] = useState(0);
@@ -88,7 +88,7 @@ const InitChat = ({ message, botMessage, isPending, isTyping }: ChatProps) => {
         )}
       </S.ChatWindow>
       <S.ChatFooter ref={chatFooterRef}>
-        {showProgress && (
+        {/* {showProgress && (
           <S.ProgrssWrapper>
             <S.ProgressBox progress={progress}>
               {progress === 0 ? null : <img src={progressOn} alt="progress-on" />}
@@ -97,16 +97,16 @@ const InitChat = ({ message, botMessage, isPending, isTyping }: ChatProps) => {
               </S.ProgressText>
             </S.ProgressBox>
           </S.ProgrssWrapper>
-        )}
+        )} */}
         <S.InputContainer>
           <S.InputWrapper>
             <S.Textarea
               value={inputValue}
               placeholder="친구에게 말하듯이 편하게, 사건에 대해 말해 주세요."
               onChange={(e) => setInputValue(e.target.value)}
-              disabled={isPending}
+              disabled={isPending || isTyping}
             />
-            <S.SendButton disabled={isPending || inputValue.length === 0}>
+            <S.SendButton disabled={isPending || isTyping || inputValue.length === 0}>
               <img src={chatArrow} alt="send" />
             </S.SendButton>
           </S.InputWrapper>
