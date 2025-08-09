@@ -99,7 +99,16 @@ export const ConsultationList = styled.div`
   }
 `;
 
-export const ConsultationItem = styled.div`
+export const ConsultationItem = styled.div<{ selected?: boolean }>`
+  cursor: pointer;
+  padding: 6px 8px;
+  background-color: ${({ selected }) => (selected ? "#F6F8FB" : "transparent")};
+  border-radius: 8px;
+
+  &:hover {
+    background-color: ${({ selected }) => (selected ? "#E9F1FF" : "#E9F1FF")};
+  }
+
   display: flex;
   align-items: center;
   justify-content: space-between;

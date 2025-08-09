@@ -1,4 +1,10 @@
-import { AnchorHTMLAttributes, useCallback, useEffect, useRef, useState } from "react";
+import {
+  AnchorHTMLAttributes,
+  useCallback,
+  useEffect,
+  useRef,
+  useState,
+} from "react";
 import ReactMarkdown from "react-markdown";
 import rehypeHighlight from "rehype-highlight";
 import remarkGfm from "remark-gfm";
@@ -109,6 +115,9 @@ const Chat = ({ messages: initialMessages, roomId, isInit }: ChatProps) => {
 
           if (!appendedFinalRef.current) {
             appendedFinalRef.current = true;
+
+            // console.log("최종 스트리밍 메시지:", currentBotMessageRef.current); // 여기에 찍기
+
             setChatMessages((prev) => [
               ...prev,
               {
@@ -278,14 +287,15 @@ const Chat = ({ messages: initialMessages, roomId, isInit }: ChatProps) => {
     { constents: "진정서를 만들어줘." },
   ];
 
-  const CustomLink: React.FC<AnchorHTMLAttributes<HTMLAnchorElement>> = useCallback(
-    ({ children, ...props }) => (
-      <a {...props} target="_blank" rel="noopener noreferrer">
-        {children}
-      </a>
-    ),
-    []
-  );
+  const CustomLink: React.FC<AnchorHTMLAttributes<HTMLAnchorElement>> =
+    useCallback(
+      ({ children, ...props }) => (
+        <a {...props} target="_blank" rel="noopener noreferrer">
+          {children}
+        </a>
+      ),
+      []
+    );
 
   return (
     <S.ChatContainer>
