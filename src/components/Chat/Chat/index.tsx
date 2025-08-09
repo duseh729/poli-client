@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useRef, useState } from "react";
+import { AnchorHTMLAttributes, useCallback, useEffect, useRef, useState } from "react";
 import ReactMarkdown from "react-markdown";
 import rehypeHighlight from "rehype-highlight";
 import remarkGfm from "remark-gfm";
@@ -278,7 +278,7 @@ const Chat = ({ messages: initialMessages, roomId, isInit }: ChatProps) => {
     { constents: "진정서를 만들어줘." },
   ];
 
-  const CustomLink = useCallback(
+  const CustomLink: React.FC<AnchorHTMLAttributes<HTMLAnchorElement>> = useCallback(
     ({ children, ...props }) => (
       <a {...props} target="_blank" rel="noopener noreferrer">
         {children}
