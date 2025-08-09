@@ -193,6 +193,44 @@ export const Message = styled(motion.div)`
     color: #6a737d;
     border-left: 0.25em solid #dfe2e5;
   }
+  
+  /* 테이블 스타일링 */
+  table {
+    border-collapse: collapse;
+    width: 100%;
+    margin: 1em 0;
+    font-size: 0.9em;
+  }
+
+  th {
+    background-color: #f6f8fa;
+    font-weight: 600;
+    text-align: left;
+  }
+
+  th,
+  td {
+    padding: 8px 12px;
+    border: 1px solid #dfe2e5;
+  }
+
+  tr {
+    background-color: white;
+    border-top: 1px solid #dfe2e5;
+
+    &:nth-of-type(2n) {
+      background-color: #f6f8fa;
+    }
+  }
+
+  /* 테이블 반응형 처리 */
+  @media screen and (max-width: 600px) {
+    table {
+      display: block;
+      overflow-x: auto;
+      white-space: nowrap;
+    }
+  }
 `;
 
 export const UserMessageWrapper = styled(motion.div)`
