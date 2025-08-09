@@ -11,7 +11,7 @@ export const Title = styled.h1`
   color: #2e3034;
   text-align: center;
   font-family: "Wanted Sans";
-  font-size: 36px;
+  font-size: 42px;
   font-style: normal;
   font-weight: 700;
   line-height: 140%; /* 33.6px */
