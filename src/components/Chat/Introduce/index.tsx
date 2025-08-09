@@ -14,8 +14,7 @@ const Introduce = ({ handleNextStep }: IntroduceProps) => {
     <S.Container>
       <S.MainTitle>누구나 사이버 사기 대처가 쉽도록!</S.MainTitle>
       <S.Subtitle>
-        대처 상담부터 진술서 작성까지 사이버 사기 신고 도우미 폴리가
-        도와드립니다.
+        대처 상담부터 진술서 작성까지 사이버 사기 신고 도우미 폴리가 함께합니다.
       </S.Subtitle>
       <S.CardContainer>
         <S.Card onClick={handleNextStep}>
