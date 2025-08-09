@@ -15,6 +15,7 @@ import loadingSpinner from "@/assets/loading-spinner.svg";
 import type { ChatMessage } from "@/types/chat";
 import * as S from "./style";
 import "highlight.js/styles/github.css";
+import { COLORS } from "@/constants/color";
 
 type ChatProps = {
   messages: ChatMessage[];
@@ -136,19 +137,20 @@ const Chat = ({ messages: initialMessages, roomId, isInit }: ChatProps) => {
   }, [isTyping]);
 
   /** 메시지 전송 */
-  const handleSend = async () => {
+  const handleSend = async (value?: string) => {
     // if (isPending || isTyping) return;
-    setAutoScroll(true);
+    const messageToSend = value ?? inputValue;
 
-    if (inputValue.trim() !== "") {
+    if (messageToSend.trim() !== "") {
       const userMessage: ChatMessage = {
         createdAt: new Date().toISOString(),
-        message: inputValue,
+        message: messageToSend,
         role: "USER",
       };
       setChatMessages((prevMessages) => [...prevMessages, userMessage]);
       setInputValue("");
 
+      setAutoScroll(true);
       try {
         // 초기화
         streamingRef.current = true;
@@ -159,7 +161,11 @@ const Chat = ({ messages: initialMessages, roomId, isInit }: ChatProps) => {
         setCurrentBotMessage("");
         setIsTyping(false);
 
-        const responseBody = { message: inputValue, initMessage: "{}", roomId };
+        const responseBody = {
+          message: messageToSend,
+          initMessage: "{}",
+          roomId,
+        };
         await chatStream({
           requestBody: responseBody,
           config: { meta: { skipLoading: true } },
@@ -265,6 +271,13 @@ const Chat = ({ messages: initialMessages, roomId, isInit }: ChatProps) => {
     };
   }, []);
 
+  const recommendMessages = [
+    { constents: "진정서가 뭐야?" },
+    { constents: "범인을 잡으면 돈을 돌려 받을 수 있어?" },
+    { constents: "나와 비슷한 사례를 출처와 함께 공유해줘." },
+    { constents: "진정서를 만들어줘." },
+  ];
+
   return (
     <S.ChatContainer>
       <S.ChatWindow ref={chatWindowRef} style={{ paddingBottom: footerHeight }}>
@@ -348,24 +361,60 @@ const Chat = ({ messages: initialMessages, roomId, isInit }: ChatProps) => {
         )} */}
         <S.InputContainer>
           <S.InputWrapper>
-            <S.Textarea
-              value={inputValue}
-              placeholder="친구에게 말하듯이 편하게, 사건에 대해 말해 주세요."
-              onChange={(e) => setInputValue(e.target.value)}
-              onKeyPress={(e) => {
-                if (e.key === "Enter" && !e.shiftKey && !isPending) {
-                  e.preventDefault();
-                  handleSend();
-                }
-              }}
-              disabled={isPending || isTyping}
-            />
-            <S.SendButton
-              onClick={handleSend}
-              disabled={isPending || isTyping || inputValue.length === 0}
+            <div
+              style={{ display: "flex", width: "100%", marginBottom: "18px" }}
             >
-              <img src={chatArrow} alt="send" />
-            </S.SendButton>
+              <S.Textarea
+                value={inputValue}
+                placeholder="친구에게 말하듯이 편하게, 사건에 대해 말해 주세요."
+                onChange={(e) => setInputValue(e.target.value)}
+                onKeyPress={(e) => {
+                  if (e.key === "Enter" && !e.shiftKey && !isPending) {
+                    e.preventDefault();
+                    handleSend();
+                  }
+                }}
+                disabled={isPending || isTyping}
+              />
+              <S.SendButton
+                onClick={() => {
+                  handleSend(inputValue);
+                }}
+                disabled={isPending || isTyping || inputValue.length === 0}
+              >
+                <img src={chatArrow} alt="send" />
+              </S.SendButton>
+            </div>
+            {/* 추천 질문 영역 */}
+            <div style={{ display: "flex", gap: "8px" }}>
+              <div
+                style={{
+                  borderRadius: 16,
+                  padding: "4px 10px",
+                  backgroundColor: `${COLORS.GRAY4}`,
+                  fontSize: 12,
+                  fontFamily: "Wanted Sans",
+                  fontWeight: 400,
+                  lineHeight: "150%",
+                  color: "#fff",
+                }}
+              >
+                추천 질문
+              </div>
+              {recommendMessages.map((msg, index) => {
+                return (
+                  <S.RecommendMessage
+                    key={index}
+                    onClick={() => {
+                      handleSend(msg.constents);
+                    }}
+                    disabled={isPending || isTyping}
+                  >
+                    {msg.constents}
+                  </S.RecommendMessage>
+                );
+              })}
+            </div>
           </S.InputWrapper>
           <S.DisclaimerText>
             폴리가 제공한 법률상담에 대해 어떠한 민사, 형사상의 책임도 지지

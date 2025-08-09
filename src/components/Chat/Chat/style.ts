@@ -123,9 +123,8 @@ export const Message = styled(motion.div)`
     flex-direction: column;
     gap: 0.5em;
   }
-  
+
   ol {
-    
     display: flex;
     flex-direction: column;
     gap: 2em;
@@ -133,7 +132,7 @@ export const Message = styled(motion.div)`
 
   li {
     display: flex;
-    flex-direction:column
+    flex-direction: column;
   }
 
   hr {
@@ -166,7 +165,8 @@ export const Message = styled(motion.div)`
   code {
     background-color: rgba(27, 31, 35, 0.05);
     border-radius: 3px;
-    font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace;
+    font-family:
+      "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace;
     font-size: 85%;
     padding: 0.2em 0.4em;
     margin: 0;
@@ -175,7 +175,8 @@ export const Message = styled(motion.div)`
   pre {
     background-color: #f6f8fa;
     border-radius: 3px;
-    font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace;
+    font-family:
+      "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace;
     font-size: 85%;
     line-height: 1.45;
     overflow: auto;
@@ -239,7 +240,8 @@ export const Message = styled(motion.div)`
     }
   }
 
-  ol, ul{
+  ol,
+  ul {
     padding-left: 0px;
   }
 `;
@@ -308,19 +310,21 @@ export const InputContainer = styled.div`
 
 export const InputWrapper = styled.div`
   display: flex;
+  flex-direction: column;
   width: 100%;
-  align-items: center;
   position: relative;
+  padding: 18px;
+  background-color: #f6f8fb;
+  border: 1px solid #a5c6ff;
+  border-radius: 30px;
 `;
 
 export const Textarea = styled(TextareaAutosize)`
   flex: 1;
-  padding: 20px 35px 20px 25px;
-  border: 1px solid #a5c6ff;
-  border-radius: 30px;
   font-size: 16px;
-  background-color: #f6f8fb;
   font-weight: 500;
+  border: none;
+  background: transparent;
   letter-spacing: -1px;
   line-height: 1.5;
   outline: none;
@@ -348,7 +352,6 @@ export const Textarea = styled(TextareaAutosize)`
 `;
 
 export const SendButton = styled.button`
-  position: absolute;
   right: 15px;
   box-sizing: border-box;
   width: 30px;
@@ -378,6 +381,33 @@ export const SendButton = styled.button`
   & img {
     width: 15px;
     height: 15px;
+  }
+`;
+
+export const RecommendMessage = styled.button<{ disabled?: boolean }>`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 4px 10px;
+  gap: 10px;
+  border-radius: 14px;
+  border: 1px solid #c0cbd9;
+  background-color: transparent;
+
+  font-size: 12px;
+  font-family: "Wanted Sans";
+  font-weight: 400;
+  line-height: 150%;
+  color: #808996;
+
+  &:hover {
+    border-color: ${COLORS.PRIMARY};
+    color: #2e3034;
+  }
+
+  &:disabled:hover {
+    border-color: #c0cbd9;
+    color: #808996;
   }
 `;
 
