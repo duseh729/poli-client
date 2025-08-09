@@ -7,6 +7,9 @@ import { getDynamicPath } from "@/utils/routes.ts";
 import * as S from "./style";
 import InitChat from "@/components/InitChat/InitChat";
 
+const BLOCK_SIZE = 5;       // 한 번에 보여줄 글자 수
+const TICK_DELAY_MS = 20;   // 글자 붙이는 간격(ms)
+
 const InitChatPage = () => {
   const location = useLocation();
   const navigate = useNavigate();
@@ -16,11 +19,38 @@ const InitChatPage = () => {
 
   const requestBody = location?.state;
 
-  // chunk UI 상태
+  // UI 상태
   const [botMessage, setBotMessage] = useState("");
-  const bufferRef = useRef<string[]>([]);
-  const timeoutRef = useRef<NodeJS.Timeout | null>(null);
   const [isTyping, setIsTyping] = useState(false);
+
+  // 내부 제어용 Ref
+  const bufferRef = useRef<string[]>([]);
+  const intervalRef = useRef<NodeJS.Timeout | null>(null);
+  const streamEndedRef = useRef(false);
+
+  // 버퍼에서 조금씩 글자 꺼내 화면에 붙이는 함수
+  const startTypingLoop = () => {
+    if (intervalRef.current) return; // 이미 실행 중이면 중복 실행 방지
+
+    intervalRef.current = setInterval(() => {
+      const buf = bufferRef.current;
+      if (buf.length > 0) {
+        const take = buf.splice(0, BLOCK_SIZE).join("");
+        setBotMessage((prev) => prev + take);
+      } else {
+        // 버퍼가 비었을 때 스트림이 끝났다면 타이핑 종료
+        if (streamEndedRef.current) {
+          clearInterval(intervalRef.current!);
+          intervalRef.current = null;
+          setIsTyping(false);
+        } else {
+          // 아직 끝나지 않은 경우 → 잠시 멈췄다가 재개
+          clearInterval(intervalRef.current!);
+          intervalRef.current = null;
+        }
+      }
+    }, TICK_DELAY_MS);
+  };
 
   useEffect(() => {
     const startChat = async () => {
@@ -30,58 +60,69 @@ const InitChatPage = () => {
       }
 
       try {
+        // 초기화
+        setBotMessage("");
+        bufferRef.current = [];
+        streamEndedRef.current = false;
+        setIsTyping(false);
+
         await chatStream({
           requestBody,
           config: {},
           onMessage: (chunk: string | null) => {
-            // console.log("onMessage 호출됨:", chunk); // 호출 횟수 확인
             if (chunk === null) {
-              // 답변이 끝났으니 바로 처리
-              setIsTyping(false);
-
-              // 채팅방 목록 새로고침 및 이동
-              (async () => {
-                const updatedRooms = await refetchChatRooms();
-                const newChatRoom = updatedRooms?.data?.find(
-                  (room) =>
-                    !chatRooms?.some(
-                      (existingRoom) => existingRoom.id === room.id
-                    )
-                );
-
-                if (newChatRoom) {
-                  await queryClient.prefetchQuery({
-                    queryKey: ["chatMessages", newChatRoom.id],
-                    queryFn: () => fetchChatMessages(newChatRoom.id),
-                  });
-
-                  navigate(
-                    getDynamicPath(ROUTES.CHAT_ID, { id: newChatRoom.id }),
-                    {
-                      state: { isInit: true },
-                    }
-                  );
-                } else {
-                  console.error("새로운 채팅방을 찾지 못했습니다.");
-                }
-              })();
+              // 스트림 끝
+              streamEndedRef.current = true;
               return;
             }
 
-            // 일반 chunk 처리
-            bufferRef.current.push(chunk);
-            const combined = bufferRef.current.join("");
-            setBotMessage(combined);
-            setIsTyping(true);
+            if (chunk) {
+              // 들어온 chunk를 글자 단위로 버퍼에 넣기
+              bufferRef.current.push(...chunk.split(""));
+
+              // 타이핑 시작
+              if (!isTyping) {
+                setIsTyping(true);
+                startTypingLoop();
+              } else if (!intervalRef.current) {
+                startTypingLoop();
+              }
+            }
           },
         });
+
+        // 스트림이 완전히 끝난 후 채팅방 이동 처리
+        const updatedRooms = await refetchChatRooms();
+        const newChatRoom = updatedRooms?.data?.find(
+          (room) => !chatRooms?.some((existingRoom) => existingRoom.id === room.id)
+        );
+
+        if (newChatRoom) {
+          await queryClient.prefetchQuery({
+            queryKey: ["chatMessages", newChatRoom.id],
+            queryFn: () => fetchChatMessages(newChatRoom.id),
+          });
+
+          navigate(getDynamicPath(ROUTES.CHAT_ID, { id: newChatRoom.id }), {
+            state: { isInit: true },
+          });
+        } else {
+          console.error("새로운 채팅방을 찾지 못했습니다.");
+        }
       } catch (error) {
         console.error("AI 채팅 요청 실패:", error);
       }
     };
 
     startChat();
-    // eslint-disable-next-line
+
+    // 컴포넌트 언마운트 시 인터벌 정리
+    return () => {
+      if (intervalRef.current) {
+        clearInterval(intervalRef.current);
+      }
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
@@ -94,7 +135,6 @@ const InitChatPage = () => {
         transition={{ duration: 0.5 }}
       >
         <S.Main>
-          {/* 실시간 chunk UI */}
           <InitChat
             message={requestBody.message}
             botMessage={botMessage}
