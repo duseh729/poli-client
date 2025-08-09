@@ -82,7 +82,7 @@ export const Message = styled(motion.div)`
   h4,
   h5,
   h6 {
-    margin: 1em 0 0.5em;
+    margin: 0.5em 0 0.5em;
     font-weight: bold;
   }
 
@@ -106,7 +106,6 @@ export const Message = styled(motion.div)`
   }
 
   p {
-    margin: 0.8em 0;
   }
 
   strong,
@@ -119,18 +118,26 @@ export const Message = styled(motion.div)`
     font-style: italic;
   }
 
-  ul,
+  ul {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5em;
+  }
+  
   ol {
-    margin: 0.5em 0;
-    padding-left: 2em;
+    
+    display: flex;
+    flex-direction: column;
+    gap: 2em;
   }
 
   li {
-    margin: 0.3em 0;
+    display: flex;
+    flex-direction:column
   }
 
   hr {
-    margin: 1.5em 0;
+    margin: 1em 0;
     border: none;
     border-bottom: 1px solid #e1e4e8;
   }
