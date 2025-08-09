@@ -22,8 +22,8 @@ type ChatProps = {
   isInit: boolean;
 };
 
-const BLOCK_SIZE = 7; // 한 번에 붙일 글자 수 (조정 가능)
-const TICK_DELAY_MS = 5; // 반복 간격(ms) — 작을수록 더 빠름
+const BLOCK_SIZE = 2; // 한 번에 붙일 글자 수 (조정 가능)
+const TICK_DELAY_MS = 30; // 반복 간격(ms) — 작을수록 더 빠름
 
 const Chat = ({ messages: initialMessages, roomId, isInit }: ChatProps) => {
   const [inputValue, setInputValue] = useState<string>("");
@@ -60,6 +60,9 @@ const Chat = ({ messages: initialMessages, roomId, isInit }: ChatProps) => {
         animate: { opacity: 1 },
         transition: { duration: 0.5 },
       };
+
+  // 스크롤 변수
+  const [autoScroll, setAutoScroll] = useState(true);
 
   useEffect(() => {
     if (chatFooterRef.current) {
@@ -130,11 +133,12 @@ const Chat = ({ messages: initialMessages, roomId, isInit }: ChatProps) => {
 
   useEffect(() => {
     // console.log("Chat component mounted", isTyping);
-  }, [isTyping])
+  }, [isTyping]);
 
   /** 메시지 전송 */
   const handleSend = async () => {
     // if (isPending || isTyping) return;
+    setAutoScroll(true);
 
     if (inputValue.trim() !== "") {
       const userMessage: ChatMessage = {
@@ -208,12 +212,28 @@ const Chat = ({ messages: initialMessages, roomId, isInit }: ChatProps) => {
     }
   };
 
-  /** 항상 아래로 스크롤 */
+  // useEffect(() => {
+  //   const chatWindow = chatWindowRef.current;
+  //   if (!chatWindow) return;
+
+  //   const handleScroll = () => {
+  //     console.log("Scroll event detected");
+  //     console.log(isPending, isTyping)
+  //     // 스크롤 조금이라도 움직이면 끔
+  //     setAutoScroll(false);
+  //   };
+
+  //   chatWindow.addEventListener("scroll", handleScroll);
+  //   return () => {
+  //     chatWindow.removeEventListener("scroll", handleScroll);
+  //   };
+  // }, []);
+
   useEffect(() => {
-    if (chatWindowRef.current) {
+    if (autoScroll && chatWindowRef.current) {
       chatWindowRef.current.scrollTop = chatWindowRef.current.scrollHeight;
     }
-  }, [chatMessages, currentBotMessage]);
+  }, [chatMessages, currentBotMessage, autoScroll]);
 
   /** 정렬해서 렌더 (원본 배열 변경 금지) */
   const sortedMessages = [...chatMessages].sort(

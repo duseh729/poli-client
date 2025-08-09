@@ -7,8 +7,8 @@ import { getDynamicPath } from "@/utils/routes.ts";
 import * as S from "./style";
 import InitChat from "@/components/InitChat/InitChat";
 
-const BLOCK_SIZE = 5;       // 한 번에 보여줄 글자 수
-const TICK_DELAY_MS = 20;   // 글자 붙이는 간격(ms)
+const BLOCK_SIZE = 2;       // 한 번에 보여줄 글자 수
+const TICK_DELAY_MS = 30;   // 글자 붙이는 간격(ms)
 
 const InitChatPage = () => {
   const location = useLocation();
@@ -22,6 +22,7 @@ const InitChatPage = () => {
   // UI 상태
   const [botMessage, setBotMessage] = useState("");
   const [isTyping, setIsTyping] = useState(false);
+  const [pendingNavigation, setPendingNavigation] = useState<string | null>(null);
 
   // 내부 제어용 Ref
   const bufferRef = useRef<string[]>([]);
@@ -51,6 +52,14 @@ const InitChatPage = () => {
       }
     }, TICK_DELAY_MS);
   };
+
+  // isTyping이 false가 되고 pendingNavigation이 있으면 네비게이션 실행
+  useEffect(() => {
+    if (!isTyping && pendingNavigation) {
+      navigate(pendingNavigation, { state: { isInit: true } });
+      setPendingNavigation(null);
+    }
+  }, [isTyping, pendingNavigation, navigate]);
 
   useEffect(() => {
     const startChat = async () => {
@@ -94,7 +103,8 @@ const InitChatPage = () => {
         // 스트림이 완전히 끝난 후 채팅방 이동 처리
         const updatedRooms = await refetchChatRooms();
         const newChatRoom = updatedRooms?.data?.find(
-          (room) => !chatRooms?.some((existingRoom) => existingRoom.id === room.id)
+          (room) =>
+            !chatRooms?.some((existingRoom) => existingRoom.id === room.id)
         );
 
         if (newChatRoom) {
@@ -103,9 +113,13 @@ const InitChatPage = () => {
             queryFn: () => fetchChatMessages(newChatRoom.id),
           });
 
-          navigate(getDynamicPath(ROUTES.CHAT_ID, { id: newChatRoom.id }), {
-            state: { isInit: true },
-          });
+          const path = getDynamicPath(ROUTES.CHAT_ID, { id: newChatRoom.id });
+
+          if (!isTyping) {
+            navigate(path, { state: { isInit: true } });
+          } else {
+            setPendingNavigation(path);
+          }
         } else {
           console.error("새로운 채팅방을 찾지 못했습니다.");
         }
