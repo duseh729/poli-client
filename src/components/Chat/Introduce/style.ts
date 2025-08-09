@@ -5,16 +5,23 @@ import { COLORS } from "@/constants/color";
 export const Container = styled.div`
   display: flex;
   flex-direction: column;
+  /* align-items: center; */
+  justify-content: center;
+  height: 100vh;
 `;
 
-export const LogoContainer = styled.div`
-  display: flex;
-  align-items: center;
-  margin: 82px 0 28px 0;
+export const MainTitle = styled.h1`
+  color: #2e3034;
+  font-family: "Wanted Sans";
+  font-size: 36px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 150%; /* 54px */
 `;
 
 export const Subtitle = styled.p`
-  font-size: 18px;
+  font-family: "Wanted Sans";
+  font-size: 20px;
   color: #2e3034;
   font-weight: 500;
   line-height: 150%;
@@ -115,7 +122,7 @@ export const StartButtonCircle3 = styled.div`
   width: 100%;
   height: 500px;
   border-radius: 50%;
-  background: #00FFFF;
+  background: #00ffff;
 `;
 
 export const Footer = styled.footer`

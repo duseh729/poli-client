@@ -12,14 +12,10 @@ type IntroduceProps = {
 const Introduce = ({ handleNextStep }: IntroduceProps) => {
   return (
     <S.Container>
-      <S.LogoContainer>
-        <img src={poliLgText} alt="POLI Text" css={S.textLogoStyle} />
-      </S.LogoContainer>
+      <S.MainTitle>누구나 사이버 사기 대처가 쉽도록!</S.MainTitle>
       <S.Subtitle>
-        사이버범죄 대처의 모든 것, <span css={S.boldStyle}>POLI</span>에게
-        물어보세요.
-        <br />
-        대처 상담부터 진술서 작성까지 한 번에 이루어집니다.
+        대처 상담부터 진술서 작성까지 사이버 사기 신고 도우미 폴리가
+        도와드립니다.
       </S.Subtitle>
       <S.CardContainer>
         <S.Card onClick={handleNextStep}>
