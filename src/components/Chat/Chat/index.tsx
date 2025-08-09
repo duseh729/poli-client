@@ -326,6 +326,11 @@ const Chat = ({ messages: initialMessages, roomId, isInit }: ChatProps) => {
               <ReactMarkdown
                 remarkPlugins={[remarkGfm]}
                 rehypePlugins={[rehypeHighlight]}
+                components={{
+                  a: ({ node, ...props }) => (
+                    <a {...props} target="_blank" rel="noopener noreferrer" />
+                  ),
+                }}
               >
                 {`${currentBotMessage}`}
               </ReactMarkdown>
