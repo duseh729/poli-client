@@ -19,13 +19,14 @@ type ChatProps = {
 const InitChat = ({ message, botMessage, isPending, isTyping }: ChatProps) => {
   const [inputValue, setInputValue] = useState<string>("");
   const chatWindowRef = useRef<HTMLDivElement>(null);
+  const [autoScroll, setAutoScroll] = useState(true);
 
   // const showProgress = true;
   // const progress = 0;
 
   const chatFooterRef = useRef<HTMLDivElement>(null);
   const [footerHeight, setFooterHeight] = useState(0);
-  
+
   useEffect(() => {
     if (chatFooterRef.current) {
       setFooterHeight(chatFooterRef.current.offsetHeight);
@@ -33,10 +34,42 @@ const InitChat = ({ message, botMessage, isPending, isTyping }: ChatProps) => {
   }, [chatFooterRef.current]);
 
   useEffect(() => {
-    if (chatWindowRef.current) {
-      chatWindowRef.current.scrollTop = chatWindowRef.current.scrollHeight;
+    const chatWindow = chatWindowRef.current;
+    if (!chatWindow) return;
+
+    const handleScroll = () => {
+      const { scrollTop, scrollHeight, clientHeight } = chatWindow;
+      const nearBottom = scrollHeight - scrollTop - clientHeight < 1;
+      if (nearBottom) {
+        setAutoScroll(true);
+      } else {
+        setAutoScroll(false);
+      }
+    };
+
+    const handleWheel = (e: WheelEvent) => {
+      // 휠을 위로 굴릴 경우 자동 스크롤 끔
+      if (e.deltaY < 0) {
+        setAutoScroll(false);
+      }
+    };
+
+    chatWindow.addEventListener("scroll", handleScroll);
+    chatWindow.addEventListener("wheel", handleWheel);
+
+    return () => {
+      chatWindow.removeEventListener("scroll", handleScroll);
+      chatWindow.removeEventListener("wheel", handleWheel);
+    };
+  }, []);
+
+  useEffect(() => {
+    if (autoScroll && chatWindowRef.current) {
+      chatWindowRef.current.scrollTo({
+        top: chatWindowRef.current.scrollHeight,
+      });
     }
-  }, [botMessage]);
+  }, [botMessage, autoScroll]);
 
   return (
     <S.ChatContainer>
@@ -60,10 +93,11 @@ const InitChat = ({ message, botMessage, isPending, isTyping }: ChatProps) => {
         {isTyping && botMessage && (
           <S.MessageContainer>
             <S.BotIcon src={poliChat} alt="Bot" />
-            <S.Message 
+            <S.Message
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
-              transition={{ duration: 0.5 }}>
+              transition={{ duration: 0.5 }}
+            >
               <ReactMarkdown
                 remarkPlugins={[remarkGfm]}
                 rehypePlugins={[rehypeHighlight]}
@@ -106,7 +140,9 @@ const InitChat = ({ message, botMessage, isPending, isTyping }: ChatProps) => {
               onChange={(e) => setInputValue(e.target.value)}
               disabled={isPending || isTyping}
             />
-            <S.SendButton disabled={isPending || isTyping || inputValue.length === 0}>
+            <S.SendButton
+              disabled={isPending || isTyping || inputValue.length === 0}
+            >
               <img src={chatArrow} alt="send" />
             </S.SendButton>
           </S.InputWrapper>

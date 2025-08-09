@@ -212,26 +212,41 @@ const Chat = ({ messages: initialMessages, roomId, isInit }: ChatProps) => {
     }
   };
 
-  // useEffect(() => {
-  //   const chatWindow = chatWindowRef.current;
-  //   if (!chatWindow) return;
+  useEffect(() => {
+    const chatWindow = chatWindowRef.current;
+    if (!chatWindow) return;
 
-  //   const handleScroll = () => {
-  //     console.log("Scroll event detected");
-  //     console.log(isPending, isTyping)
-  //     // 스크롤 조금이라도 움직이면 끔
-  //     setAutoScroll(false);
-  //   };
+    const handleScroll = () => {
+      const { scrollTop, scrollHeight, clientHeight } = chatWindow;
+      const nearBottom = scrollHeight - scrollTop - clientHeight < 1;
+      if (nearBottom) {
+        setAutoScroll(true);
+      } else {
+        setAutoScroll(false);
+      }
+    };
 
-  //   chatWindow.addEventListener("scroll", handleScroll);
-  //   return () => {
-  //     chatWindow.removeEventListener("scroll", handleScroll);
-  //   };
-  // }, []);
+    const handleWheel = (e: WheelEvent) => {
+      // 휠을 위로 굴릴 경우 자동 스크롤 끔
+      if (e.deltaY < 0) {
+        setAutoScroll(false);
+      }
+    };
+
+    chatWindow.addEventListener("scroll", handleScroll);
+    chatWindow.addEventListener("wheel", handleWheel);
+
+    return () => {
+      chatWindow.removeEventListener("scroll", handleScroll);
+      chatWindow.removeEventListener("wheel", handleWheel);
+    };
+  }, []);
 
   useEffect(() => {
     if (autoScroll && chatWindowRef.current) {
-      chatWindowRef.current.scrollTop = chatWindowRef.current.scrollHeight;
+      chatWindowRef.current.scrollTo({
+        top: chatWindowRef.current.scrollHeight,
+      });
     }
   }, [chatMessages, currentBotMessage, autoScroll]);
 
