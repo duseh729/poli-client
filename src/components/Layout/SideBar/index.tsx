@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { Outlet, useNavigate, useLocation } from "react-router-dom";
+import { Outlet, useNavigate, useLocation, useParams } from "react-router-dom";
 import toast from "react-hot-toast";
 import * as S from "./style.ts";
 import poliSmBox from "@/assets/poli-sm-box.svg";
@@ -32,6 +32,8 @@ const LeftSideBar = () => {
 
   const profileFooterRef = useRef<HTMLDivElement>(null);
   const [footerHeight, setFooterHeight] = useState(0);
+
+  const { id } = useParams<{ id: string }>(); // URL 파라미터에서 방 ID 읽기
 
   useEffect(() => {
     if (profileFooterRef.current) {
@@ -91,10 +93,11 @@ const LeftSideBar = () => {
     });
   };
 
-  const handleConsultationClick = (consulation: ChatRoom) => {
-    navigate(getDynamicPath(ROUTES.CHAT_ID, { id: consulation.id }), {
+  const handleConsultationClick = (consultation: ChatRoom) => {
+    setSelectedRoomId(consultation.id); // 여기에 선택 상태 업데이트 추가
+    navigate(getDynamicPath(ROUTES.CHAT_ID, { id: consultation.id }), {
       state: {
-        roomName: consulation.roomName,
+        roomName: consultation.roomName,
       },
     });
   };
@@ -136,6 +139,12 @@ const LeftSideBar = () => {
     navigate(ROUTES.HOME);
   };
 
+  useEffect(() => {
+    if (id) {
+      setSelectedRoomId(Number(id));
+    }
+  }, [id]);
+
   return (
     <S.Container
       initial={{ opacity: 0, scale: 0.9, y: 20 }}
@@ -167,10 +176,13 @@ const LeftSideBar = () => {
           <S.Line />
           <S.Paddding>
             <S.ConsultationTitle>상담 목록</S.ConsultationTitle>
-            <S.ConsultationList style={{ height: `calc(100vh - ${footerHeight}px - 225px)` }}>
+            <S.ConsultationList
+              style={{ height: `calc(100vh - ${footerHeight}px - 225px)` }}
+            >
               {chatRooms?.map((consultation) => (
                 <S.ConsultationItem
                   key={consultation.id}
+                  selected={consultation.id === selectedRoomId} // 선택된 방인지 확인
                   onClick={() => handleConsultationClick(consultation)}
                 >
                   <S.ConsultationItemText>
@@ -182,7 +194,7 @@ const LeftSideBar = () => {
                     onClick={(e) => handleMenuClick(e, consultation.id)}
                   />
                 </S.ConsultationItem>
-              ))}            
+              ))}
             </S.ConsultationList>
           </S.Paddding>
         </div>
@@ -198,7 +210,10 @@ const LeftSideBar = () => {
             로그아웃
           </S.LogoutButton>
         )}
-        <S.UserContainer onClick={hanldeToggleLogoutVisibility} ref={profileFooterRef}>
+        <S.UserContainer
+          onClick={hanldeToggleLogoutVisibility}
+          ref={profileFooterRef}
+        >
           <S.UserIcon src={userLogo} alt="User Icon" />
           <S.UserNameText>{userName}</S.UserNameText>
         </S.UserContainer>
