@@ -109,6 +109,11 @@ const InitChat = ({ message, botMessage, isPending, isTyping }: ChatProps) => {
               <ReactMarkdown
                 remarkPlugins={[remarkGfm]}
                 rehypePlugins={[rehypeHighlight]}
+                components={{
+                  a: ({ node, ...props }) => (
+                    <a {...props} target="_blank" rel="noopener noreferrer" />
+                  ),
+                }}
               >
                 {botMessage}
               </ReactMarkdown>
