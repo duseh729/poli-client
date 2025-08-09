@@ -15,9 +15,9 @@ const Main = () => (
       />
     </S.LogoContainer>
     <S.Title>
-      사이버범죄 대응의 모든 것을 해결해주는 POLI,
+      사이버 사기, POLI와 함께 빠르고 든든하게
       <br />
-      상담부터 진술서 작성까지 한 번에 경험해보세요.
+      상담부터 진술서까지 한 번에 해결하세요
     </S.Title>
   </S.Container>
 );
