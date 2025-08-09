@@ -66,6 +66,7 @@ export const BotIcon = styled.img`
 `;
 
 export const Message = styled(motion.div)`
+  pointer-events: auto; /* 추가 */
   background-color: transparent;
   color: #0f0f10;
   padding: 10px 0;

@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import ReactMarkdown from "react-markdown";
 import rehypeHighlight from "rehype-highlight";
 import remarkGfm from "remark-gfm";
@@ -278,6 +278,15 @@ const Chat = ({ messages: initialMessages, roomId, isInit }: ChatProps) => {
     { constents: "진정서를 만들어줘." },
   ];
 
+  const CustomLink = useCallback(
+    ({ children, ...props }) => (
+      <a {...props} target="_blank" rel="noopener noreferrer">
+        {children}
+      </a>
+    ),
+    []
+  );
+
   return (
     <S.ChatContainer>
       <S.ChatWindow ref={chatWindowRef} style={{ paddingBottom: footerHeight }}>
@@ -327,9 +336,7 @@ const Chat = ({ messages: initialMessages, roomId, isInit }: ChatProps) => {
                 remarkPlugins={[remarkGfm]}
                 rehypePlugins={[rehypeHighlight]}
                 components={{
-                  a: ({ node, ...props }) => (
-                    <a {...props} target="_blank" rel="noopener noreferrer" />
-                  ),
+                  a: CustomLink,
                 }}
               >
                 {`${currentBotMessage}`}
