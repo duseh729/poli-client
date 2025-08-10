@@ -284,7 +284,7 @@ const Chat = ({ messages: initialMessages, roomId, isInit }: ChatProps) => {
     { constents: "진정서가 뭐야?" },
     { constents: "범인을 잡으면 돈을 돌려 받을 수 있어?" },
     { constents: "나와 비슷한 사례를 출처와 함께 공유해줘." },
-    { constents: "진정서를 만들어줘." },
+    { constents: "진정서를 작성해줘." },
   ];
 
   const CustomLink: React.FC<AnchorHTMLAttributes<HTMLAnchorElement>> =
