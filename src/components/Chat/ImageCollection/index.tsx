@@ -33,38 +33,38 @@ const ImageCollection = ({
   const [formHeight, setFormHeight] = useState(0);
 
   const [dragActive, setDragActive] = useState(false);
-  const [files, setFiles] = useState([]);
+  const [files, setFiles] = useState<File[]>([]);
 
-  const fileInputRef = useRef(null);
+  const fileInputRef = useRef<HTMLInputElement>(null);
 
-  const handleButtonClick = (e) => {
+  const handleButtonClick = (e: any) => {
     e.preventDefault();
-    fileInputRef.current.click(); // 숨겨진 input 클릭
+    fileInputRef.current?.click(); // 숨겨진 input 클릭
   };
 
   // 드래그 오버 시
-  const handleDragOver = (e) => {
+  const handleDragOver = (e: any) => {
     e.preventDefault();
     e.stopPropagation();
     setDragActive(true);
   };
 
   // 드래그 영역 벗어날 시
-  const handleDragLeave = (e) => {
+  const handleDragLeave = (e: any) => {
     e.preventDefault();
     e.stopPropagation();
     setDragActive(false);
   };
 
   // 특정 확장자인지 검사
-  const isValidFile = (file) => {
+  const isValidFile = (file: File) => {
     const allowedExtensions = ["heic", "pdf", "jpg", "jpeg", "png"];
     const ext = file.name.split(".").pop()?.toLowerCase() || "";
     return allowedExtensions.includes(ext);
   };
 
-  const handleFileChange = (e) => {
-    const inputFiles = Array.from(e.target.files);
+  const handleFileChange = (e: any) => {
+    const inputFiles: File[] = Array.from(e.target.files);
 
     // 기존에 있는 파일 크기 합산
     const existingTotalSize = files.reduce((acc, file) => acc + file.size, 0);
@@ -111,12 +111,12 @@ const ImageCollection = ({
   };
 
   // 드롭 시
-  const handleDrop = (e) => {
+  const handleDrop = (e: any) => {
     e.preventDefault();
     e.stopPropagation();
     setDragActive(false);
 
-    const droppedFiles = Array.from(e.dataTransfer.files);
+    const droppedFiles: File[] = Array.from(e.dataTransfer.files);
 
     // 기존에 있는 파일 크기 합산
     const existingTotalSize = files.reduce((acc, file) => acc + file.size, 0);
@@ -165,7 +165,7 @@ const ImageCollection = ({
     }
   }, []);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = (e: any) => {
     e.preventDefault();
     const requestBody = {
       initMessage: JSON.stringify(initMessage),
@@ -239,7 +239,6 @@ const ImageCollection = ({
             <S.ImageInputWrapper>
               {files.length > 0 ? (
                 files.map((file, index) => {
-                  const isImage = file.type.startsWith("image/");
                   const fileUrl = URL.createObjectURL(file);
 
                   return (
