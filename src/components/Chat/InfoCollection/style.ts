@@ -112,11 +112,24 @@ export const ImageInputWrapper = styled.div`
   height: 100px;
   overflow-y: scroll;
   margin-top: 20px;
+
+  scrollbar-width: thin;
 `;
 
 export const ImageInputList = styled.div`
   display: flex;
   justify-content: space-between;
+`;
+
+export const ImageInputListBlur = styled.div`
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  height: 60px;
+
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0) 0%, #fff 100%);
+  /* 이벤트 자체를 없애버리는  */
+  pointer-events: none;
 `;
 
 export const Label = styled.label`
