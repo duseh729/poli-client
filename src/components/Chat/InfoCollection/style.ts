@@ -13,7 +13,7 @@ export const FormWrapper = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-`
+`;
 
 export const Form = styled.form`
   border-radius: 20px;
@@ -31,13 +31,92 @@ export const Title = styled.h2`
 export const FormGroupWrapper = styled.div`
   display: flex;
   flex-direction: column;
-  gap: 34px;
   padding: 24px;
 `;
 
 export const FormGroup = styled.div`
   /* margin-top: 24px;
   margin-bottom: 34px; */
+`;
+
+export const ImageInputContainer = styled.div`
+  display: flex;
+  padding: 20px 12px;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  align-self: stretch;
+
+  border-radius: 10px;
+  border: 1px dashed var(--grey-4, #c0cbd9);
+  background: var(--bg-2, #f6f8fb);
+`;
+
+export const ImageInputText = styled.span`
+  overflow: hidden;
+  color: var(--grey-8, #0f0f10);
+  text-align: center;
+  text-overflow: ellipsis;
+
+  /* subtitle/3 */
+  font-family: "Wanted Sans";
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 150%; /* 21px */
+
+  margin-top: 12px;
+`;
+
+export const ImageInputLimitedText = styled.span`
+  color: var(--grey-5, #808996);
+  text-align: center;
+
+  /* caption/2 */
+  font-family: "Wanted Sans";
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 150%; /* 18px */
+`;
+
+export const ImageInputButton = styled.button`
+  display: flex;
+  padding: 12px;
+  justify-content: center;
+  align-items: center;
+
+  margin-top: 24px;
+
+  border-radius: 10px;
+  border: 1px solid var(--main-line, #a5c6ff);
+  background: var(--bg-3, #e9f1ff);
+
+  overflow: hidden;
+  color: var(--main-emphasis, #004edf);
+  text-overflow: ellipsis;
+
+  /* body/2 */
+  font-family: "Wanted Sans";
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 150%; /* 21px */
+
+  cursor: pointer;
+`;
+
+export const ImageInputWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  height: 100px;
+  overflow-y: scroll;
+  margin-top: 20px;
+`;
+
+export const ImageInputList = styled.div`
+  display: flex;
+  justify-content: space-between;
 `;
 
 export const Label = styled.label`
