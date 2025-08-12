@@ -9,30 +9,34 @@ import "dayjs/locale/ko";
 import dayjs, { Dayjs } from "dayjs";
 import * as S from "./style.ts";
 import { useChatRoomsStore } from "@/stores";
-import { ChatRoom } from "@/types/chat";
 import { useChatStream, useChatRooms } from "@/api/chat";
-import { ROUTES } from "@/constants/routes.tsx";
-import { getDynamicPath } from "@/utils/routes.ts";
-import poliSmLogo from "@/assets/poli-sm-logo.svg";
 
 export const DESCRIPTION_MAX_LENGTH = 1000;
 
 type InfoCollectionProps = {
+  handleNextStep: () => void;
   setIsEnableNext: (param: boolean) => void;
   isEnableNext: boolean;
+  initMessage: any;
+  setInitMessage: (value: any) => void;
+  situationDescription: string;
+  setSituationDescription: (value: string) => void;
 };
 
 const InfoCollection = ({
+  handleNextStep,
   setIsEnableNext,
   isEnableNext,
+  initMessage,
+  setInitMessage,
+  situationDescription,
+  setSituationDescription,
 }: InfoCollectionProps) => {
   const [selectedDate, setSelectedDate] = useState<Dayjs | null>(dayjs());
   const [selectedTime, setSelectedTime] = useState<Dayjs | null>(dayjs());
-  const [situationDescription, setSituationDescription] = useState("");
   const [selectedCheckBox, setSelectedCheckBox] = useState<number | null>(null);
   const [place, setPlace] = useState("");
   const { chatRooms, setChatRooms } = useChatRoomsStore();
-  const navigate = useNavigate();
   const footerRef = useRef<HTMLDivElement>(null);
   const [formHeight, setFormHeight] = useState(0);
 
@@ -75,14 +79,14 @@ const InfoCollection = ({
   const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
 
-    const initMessage = {
+    setInitMessage({
       place,
       date: selectedDate?.toISOString().split("T")[0],
       time: selectedTime?.toISOString().split("T")[1]?.slice(0, 5),
       situation: situationDescription,
       hasReported: selectedCheckBox === 1,
       isLegalProcedureOngoing: selectedCheckBox === 2,
-    };
+    });
 
     const requestBody = {
       initMessage: JSON.stringify(initMessage),
@@ -90,31 +94,7 @@ const InfoCollection = ({
       message: situationDescription,
     };
 
-    navigate("/init-chat", { state: requestBody });
-    // try {
-    //   await chatStream({ requestBody, config: {} });
-
-    //   const updatedRooms = await refetchChatRooms();
-
-    //   if (updatedRooms.data) {
-    //     const newChatRoom = updatedRooms.data.find(
-    //       (room: ChatRoom) =>
-    //         !chatRooms.some((existingRoom) => existingRoom.id === room.id)
-    //     );
-
-    //     if (newChatRoom) {
-    //       navigate(getDynamicPath(ROUTES.CHAT_ID, { id: newChatRoom.id }), {
-    //         state: {
-    //           roomName: newChatRoom.roomName,
-    //         },
-    //       });
-    //     } else {
-    //       console.error("새로운 채팅방을 찾을 수 없습니다.");
-    //     }
-    //   }
-    // } catch (error) {
-    //   console.error("AI 대화 생성 실패:", error);
-    // }
+    // navigate("/init-chat", { state: requestBody });
   };
 
   return (
@@ -125,11 +105,11 @@ const InfoCollection = ({
       transition={{ duration: 0.5 }}
     >
       <LocalizationProvider dateAdapter={AdapterDayjs} adapterLocale="ko">
-        <S.FormWrapper style={{height: `calc(100vh - ${formHeight}px)`}}>
+        <S.FormWrapper style={{ height: `calc(100vh - ${formHeight}px)` }}>
           <S.Form>
             <S.Title>
               <S.TitleText>
-                상담을 시작하기에 앞서, 사건에 대한 정보를 입력해 주세요.
+                상담을 시작하기에 앞서, 사건에 대한 정보를 입력해 주세요. (1/2)
               </S.TitleText>
             </S.Title>
             <S.FormGroupWrapper>
@@ -145,7 +125,7 @@ const InfoCollection = ({
                   onChange={(e) => setPlace(e.target.value)}
                 />
               </S.FormGroup>
-              <S.FormGroup>
+              <S.FormGroup style={{ marginTop: 34 }}>
                 <S.Label>
                   <S.Highlight>피해 일시 |</S.Highlight> 언제 피해를 겪으셨나요?
                   날짜와 시간을 선택해 주세요.
@@ -284,7 +264,7 @@ const InfoCollection = ({
                   </div>
                 </S.InputRow>
               </S.FormGroup>
-              <S.FormGroup>
+              <S.FormGroup style={{ marginTop: 34 }}>
                 <S.Label>
                   <S.Highlight>피해 상세 상황 |</S.Highlight> 어떤 상황이고 어떤
                   부분이 고민되는지 설명해 주세요.
@@ -315,10 +295,10 @@ const InfoCollection = ({
         </S.FormWrapper>
         <S.FooterWrapper ref={footerRef}>
           <S.StartButton
-            onClick={handleSubmit}
+            onClick={handleNextStep}
             disabled={!isEnableNext || isPending}
           >
-            사건 제출하기
+            다음
           </S.StartButton>
           <S.Footer>
             폴리의 역할은 정보를 제공하는데 있으며, 형사적 상담 및 법률 상담이

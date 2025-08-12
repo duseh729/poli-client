@@ -4,11 +4,24 @@ import { useLocation } from "react-router-dom";
 import * as S from "./style";
 import Introduce from "@/components/Chat/Introduce";
 import InfoCollection from "@/components/Chat/InfoCollection";
+import ImageCollection from "@/components/Chat/ImageCollection";
+
+type InitMessageType = {
+  place: string;
+  date: string | undefined;
+  time: string | undefined;
+  situation: string;
+  hasReported: boolean;
+  isLegalProcedureOngoing: boolean;
+};
 
 const MainPage = () => {
   const location = useLocation();
   const [showNextScreen, setShowNextScreen] = useState(1);
   const [isEnableNext, setIsEnableNext] = useState(true);
+
+  const [initMessage, setInitMessage] = useState<InitMessageType | null>(null);
+  const [situationDescription, setSituationDescription] = useState("");
 
   useEffect(() => {
     if (location.state?.showNextScreen) {
@@ -20,6 +33,9 @@ const MainPage = () => {
     if (showNextScreen === 1) {
       setShowNextScreen(2);
       setIsEnableNext(false);
+    } else if (showNextScreen === 2) {
+      setShowNextScreen(3);
+      setIsEnableNext(true);
     }
   };
 
@@ -32,13 +48,21 @@ const MainPage = () => {
     >
       <S.Main>
         {showNextScreen === 1 ? (
-          <Introduce
-            handleNextStep={handleNextStep}
-          />
-        ) : (
+          <Introduce handleNextStep={handleNextStep} />
+        ) : showNextScreen === 2 ? (
           <InfoCollection
+            handleNextStep={handleNextStep}
             setIsEnableNext={setIsEnableNext}
             isEnableNext={isEnableNext}
+            initMessage={initMessage}
+            setInitMessage={setInitMessage}
+            situationDescription={situationDescription}
+            setSituationDescription={setSituationDescription}
+          />
+        ) : (
+          <ImageCollection
+            initMessage={initMessage}
+            situationDescription={situationDescription}
           />
         )}
       </S.Main>
