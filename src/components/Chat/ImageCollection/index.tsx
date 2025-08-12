@@ -236,37 +236,40 @@ const ImageCollection = ({
               multiple
             />
 
-            <S.ImageInputWrapper>
-              {files.length > 0 ? (
-                files.map((file, index) => {
-                  const fileUrl = URL.createObjectURL(file);
+            <div style={{position: 'relative'}}>
+              <S.ImageInputWrapper>
+                {files.length > 0 ? (
+                  files.map((file, index) => {
+                    const fileUrl = URL.createObjectURL(file);
 
-                  return (
-                    <S.ImageInputList key={index}>
-                      <div style={{ display: "flex", alignItems: "center" }}>
-                        <img src={check} alt="check" />
-                        <span
+                    return (
+                      <S.ImageInputList key={index}>
+                        <div style={{ display: "flex", alignItems: "center" }}>
+                          <img src={check} alt="check" />
+                          <span
+                            style={{ cursor: "pointer" }}
+                            onClick={() => window.open(fileUrl, "_blank")}
+                          >
+                            {file?.name}
+                          </span>
+                        </div>
+                        <div
                           style={{ cursor: "pointer" }}
-                          onClick={() => window.open(fileUrl, "_blank")}
+                          onClick={() =>
+                            setFiles(files.filter((_, i) => i !== index))
+                          }
                         >
-                          {file?.name}
-                        </span>
-                      </div>
-                      <div
-                        style={{ cursor: "pointer" }}
-                        onClick={() =>
-                          setFiles(files.filter((_, i) => i !== index))
-                        }
-                      >
-                        <img src={cancel} alt="cancel" />
-                      </div>
-                    </S.ImageInputList>
-                  );
-                })
-              ) : (
-                <div>파일이 없습니다</div>
-              )}
-            </S.ImageInputWrapper>
+                          <img src={cancel} alt="cancel" />
+                        </div>
+                      </S.ImageInputList>
+                    );
+                  })
+                ) : (
+                  <div>파일이 없습니다</div>
+                )}
+              </S.ImageInputWrapper>
+              <S.ImageInputListBlur />
+            </div>
           </S.FormGroupWrapper>
         </S.Form>
       </S.FormWrapper>
