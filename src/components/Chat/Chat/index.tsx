@@ -105,19 +105,18 @@ const Chat = ({ messages: initialMessages, roomId, isInit }: ChatProps) => {
         const take = buf.splice(0, BLOCK_SIZE).join("");
         setCurrentBotMessage((prev) => prev + take);
       } else {
-        // 버퍼 비었음
-        if (streamEndedRef.current) {
+        if (buf.length === 0) {
+          // 스트림이 끝났고, 버퍼도 완전히 비었을 때만 종료
           if (intervalRef.current) {
             clearInterval(intervalRef.current);
             intervalRef.current = null;
           }
+          // console.log("########### 117", isTyping)
           setIsTyping(false);
+          // console.log("########### 119", isTyping)
 
           if (!appendedFinalRef.current) {
             appendedFinalRef.current = true;
-
-            // console.log("최종 스트리밍 메시지:", currentBotMessageRef.current); // 여기에 찍기
-
             setChatMessages((prev) => [
               ...prev,
               {
@@ -130,12 +129,11 @@ const Chat = ({ messages: initialMessages, roomId, isInit }: ChatProps) => {
             setCurrentBotMessage("");
           }
         } else {
-          // 버퍼 비었지만 스트림은 아직 끝나지 않음 -> 잠시 멈추고 interval 정리.
+          // 버퍼 비었지만 아직 스트림 진행 중 → 대기
           if (intervalRef.current) {
             clearInterval(intervalRef.current);
             intervalRef.current = null;
           }
-          // 대기: 새로운 chunk가 오면 startTypingLoop가 다시 호출되어 재개됨
         }
       }
     }, TICK_DELAY_MS);
