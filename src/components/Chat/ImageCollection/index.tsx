@@ -208,7 +208,10 @@ const ImageCollection = ({
               onDragOver={handleDragOver}
               onDragLeave={handleDragLeave}
               onDrop={handleDrop}
-              style={{ borderColor: dragActive ? COLORS.PRIMARY : undefined }}
+              style={{
+                borderColor: dragActive ? COLORS.PRIMARY : undefined,
+                background: dragActive ? "#E9F1FF" : undefined,
+              }}
             >
               <img
                 style={{ padding: 12 }}
@@ -222,7 +225,14 @@ const ImageCollection = ({
                 업로드 가능한 파일 유형 : heic, pdf, jpg, jpeg, png | 최대
                 400mb까지 업로드 가능
               </S.ImageInputLimitedText>
-              <S.ImageInputButton onClick={handleButtonClick}>
+              <S.ImageInputButton
+                onClick={handleButtonClick}
+                style={{
+                  background: dragActive
+                    ? "linear-gradient(0deg, rgba(0, 0, 0, 0.05) 0%, rgba(0, 0, 0, 0.05) 100%), #E9F1FF"
+                    : undefined,
+                }}
+              >
                 증거 자료 찾기
               </S.ImageInputButton>
             </S.ImageInputContainer>
@@ -236,7 +246,7 @@ const ImageCollection = ({
               multiple
             />
 
-            <div style={{position: 'relative'}}>
+            <div style={{ position: "relative" }}>
               <S.ImageInputWrapper>
                 {files.length > 0 ? (
                   files.map((file, index) => {

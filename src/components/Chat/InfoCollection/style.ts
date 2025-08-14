@@ -82,6 +82,7 @@ export const ImageInputLimitedText = styled.span`
 
 export const ImageInputButton = styled.button`
   display: flex;
+  width: 177px;
   padding: 12px;
   justify-content: center;
   align-items: center;
