@@ -92,46 +92,52 @@ const PetitionPage = () => {
             <S.PetitionDefalutInfoWrapper>
               <S.PetitionInfoTitle>진정인(본인)</S.PetitionInfoTitle>
 
-              <div>
-                <div style={{ flex: 1 }}>
+              <S.BasicColumnWrapper>
+                <S.BasicWrapper>
                   <S.PetitionInfoContents>이름:</S.PetitionInfoContents>
-                  <S.PetitionInfoContents>주소:</S.PetitionInfoContents>
-                  <S.PetitionInfoContents>연락처:</S.PetitionInfoContents>
-                </div>
-                <div style={{ flex: 2 }}>
                   <S.PetitionInfoContents>
                     {complaintInstance.complainant.name}
                   </S.PetitionInfoContents>
+                </S.BasicWrapper>
+
+                <S.BasicWrapper>
+                  <S.PetitionInfoContents>주소:</S.PetitionInfoContents>
                   <S.PetitionInfoContents>
                     {complaintInstance.complainant.address}
                   </S.PetitionInfoContents>
+                </S.BasicWrapper>
+
+                <S.BasicWrapper>
+                  <S.PetitionInfoContents>연락처:</S.PetitionInfoContents>
                   <S.PetitionInfoContents>
                     {complaintInstance.complainant.contact}
                   </S.PetitionInfoContents>
-                </div>
-              </div>
+                </S.BasicWrapper>
+              </S.BasicColumnWrapper>
             </S.PetitionDefalutInfoWrapper>
             <S.PetitionDefalutInfoWrapper>
               <S.PetitionInfoTitle>피진정인(가해자)</S.PetitionInfoTitle>
 
-              <div>
-                <div style={{ flex: 1 }}>
+              <S.BasicColumnWrapper>
+                <S.BasicWrapper>
                   <S.PetitionInfoContents>이름(닉네임):</S.PetitionInfoContents>
-                  <S.PetitionInfoContents>연락처:</S.PetitionInfoContents>
-                  <S.PetitionInfoContents>특이사항:</S.PetitionInfoContents>
-                </div>
-                <div style={{ flex: 2 }}>
                   <S.PetitionInfoContents>
                     {complaintInstance.respondent.name}
                   </S.PetitionInfoContents>
+                </S.BasicWrapper>
+                <S.BasicWrapper>
+                  <S.PetitionInfoContents>연락처:</S.PetitionInfoContents>
                   <S.PetitionInfoContents>
                     {complaintInstance.respondent.contact}
                   </S.PetitionInfoContents>
+                </S.BasicWrapper>
+                <S.BasicWrapper>
+                  <S.PetitionInfoContents>특이사항:</S.PetitionInfoContents>
                   <S.PetitionInfoContents>
                     {complaintInstance.respondent.specialNotes}
                   </S.PetitionInfoContents>
-                </div>
-              </div>
+                </S.BasicWrapper>
+              </S.BasicColumnWrapper>
             </S.PetitionDefalutInfoWrapper>
           </div>
         </S.PetitionInfoWrapper>
@@ -141,21 +147,25 @@ const PetitionPage = () => {
           <h3>사건 유형 정보</h3>
           <S.PetitionInfoTitle>범죄유형</S.PetitionInfoTitle>
 
-          <div style={{ display: "flex" }}>
-            <S.PetitionInfoContentsTitleWrapper>
-              <span>범죄유형</span>
-              <span>세부유형</span>
-            </S.PetitionInfoContentsTitleWrapper>
-
-            <S.PetitionInfoContentsWrapper>
+          <S.ColumnWrapper>
+            <S.Wrapper>
+              <S.PetitionInfoContentsTitle>
+                범죄유형
+              </S.PetitionInfoContentsTitle>
               <S.PetitionInfoContents>
                 {complaintInstance.crimeType}
               </S.PetitionInfoContents>
+            </S.Wrapper>
+
+            <S.Wrapper>
+              <S.PetitionInfoContentsTitle>
+                세부유형
+              </S.PetitionInfoContentsTitle>
               <S.PetitionInfoContents>
                 {complaintInstance.crimeDetail}
               </S.PetitionInfoContents>
-            </S.PetitionInfoContentsWrapper>
-          </div>
+            </S.Wrapper>
+          </S.ColumnWrapper>
         </S.PetitionInfoWrapper>
 
         {/* 상세 피해 상황 */}
@@ -168,21 +178,20 @@ const PetitionPage = () => {
             <div style={{ flex: 1 }}>
               <S.PetitionInfoTitle>피해장소</S.PetitionInfoTitle>
 
-              <div style={{ display: "flex" }}>
-                <S.PetitionInfoContentsTitleWrapper>
+              <S.ColumnWrapper>
+                <S.Wrapper>
                   <span>사이트명</span>
-                  <span>사이트 주소</span>
-                </S.PetitionInfoContentsTitleWrapper>
-
-                <S.PetitionInfoContentsWrapper>
                   <S.PetitionInfoContents>
                     {complaintInstance.siteName}
                   </S.PetitionInfoContents>
+                </S.Wrapper>
+                <S.Wrapper>
+                  <span>사이트 주소</span>
                   <S.PetitionInfoContents>
                     {complaintInstance.siteUrl}
                   </S.PetitionInfoContents>
-                </S.PetitionInfoContentsWrapper>
-              </div>
+                </S.Wrapper>
+              </S.ColumnWrapper>
             </div>
             {/* 진정취지 */}
 
@@ -190,42 +199,42 @@ const PetitionPage = () => {
               <S.PetitionInfoTitle>진정취지</S.PetitionInfoTitle>
 
               <div style={{ display: "flex" }}>
-                <S.PetitionInfoContentsTitleWrapper>
-                  <span>진정죄명</span>
-                  <span>처벌의사</span>
-                </S.PetitionInfoContentsTitleWrapper>
-
-                <S.PetitionInfoContentsWrapper>
-                  <S.PetitionInfoContents>
-                    {complaintInstance.crimeName}
-                  </S.PetitionInfoContents>
-                  <S.PetitionInfoContents>
-                    {complaintInstance.intentToPunish
-                      ? "처벌 원함"
-                      : "처벌 원치 않음"}
-                  </S.PetitionInfoContents>
-                </S.PetitionInfoContentsWrapper>
+                <S.ColumnWrapper>
+                  <S.Wrapper>
+                    <span>진정죄명</span>
+                    <S.PetitionInfoContents>
+                      {complaintInstance.crimeName}
+                    </S.PetitionInfoContents>
+                  </S.Wrapper>
+                  <S.Wrapper>
+                    <span>처벌의사</span>
+                    <S.PetitionInfoContents>
+                      {complaintInstance.intentToPunish
+                        ? "처벌 원함"
+                        : "처벌 원치 않음"}
+                    </S.PetitionInfoContents>
+                  </S.Wrapper>
+                </S.ColumnWrapper>
               </div>
             </div>
           </div>
           {/* 피해상황 */}
           <S.PetitionInfoTitle>피해상황</S.PetitionInfoTitle>
 
-          <div style={{ display: "flex" }}>
-            <S.PetitionInfoContentsTitleWrapper>
+          <S.ColumnWrapper>
+            <S.Wrapper>
               <span>피해사실</span>
-              <span>피해상황</span>
-            </S.PetitionInfoContentsTitleWrapper>
-
-            <S.PetitionInfoContentsWrapper>
               <S.PetitionInfoContents>
                 {complaintInstance.incidentDescription}
               </S.PetitionInfoContents>
+            </S.Wrapper>
+            <S.Wrapper>
+              <span>피해상황</span>
               <S.PetitionInfoContents>
                 {complaintInstance.incidentDetails}
               </S.PetitionInfoContents>
-            </S.PetitionInfoContentsWrapper>
-          </div>
+            </S.Wrapper>
+          </S.ColumnWrapper>
         </S.PetitionInfoWrapper>
 
         {/* 부가 정보 */}
