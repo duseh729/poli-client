@@ -145,8 +145,43 @@ body,
 }
 
 @font-face {
-  font-family: 'MainFont';
-  src: url('/fonts/WantedSans.ttf') format('ttf');
-  font-weight: normal;
+  font-family: "Wanted Sans";
+  src: url("/fonts/WantedSans-Regular.ttf") format("truetype");
+  font-weight: 400;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Wanted Sans";
+  src: url("/fonts/WantedSans-Medium.ttf") format("truetype");
+  font-weight: 500;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Wanted Sans";
+  src: url("/fonts/WantedSans-SemiBold.ttf") format("truetype");
+  font-weight: 600;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Wanted Sans";
+  src: url("/fonts/WantedSans-Bold.ttf") format("truetype");
+  font-weight: 700;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Wanted Sans";
+  src: url("/fonts/WantedSans-ExtraBold.ttf") format("truetype");
+  font-weight: 800;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Wanted Sans";
+  src: url("/fonts/WantedSans-Black.ttf") format("truetype");
+  font-weight: 900;
   font-style: normal;
 }
