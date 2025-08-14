@@ -15,6 +15,45 @@ export const Container = styled(motion.div)`
   }
 `;
 
+export const ColumnWrapper = styled(motion.div)`
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+`;
+
+export const BasicColumnWrapper = styled(motion.div)`
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+`;
+
+export const BasicWrapper = styled(motion.div)`
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+
+  & > :first-child {
+    flex: 1;
+  }
+  & > :last-child {
+    flex: 2;
+  }
+`;
+
+export const Wrapper = styled(motion.div)`
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+
+  & > :first-child {
+    flex: 1;
+    min-width: 180px
+  }
+  & > :last-child {
+    flex: 5;
+  }
+`;
+
 export const PetitionWrapper = styled(motion.div)`
   display: flex;
   flex-direction: column;
@@ -167,6 +206,17 @@ export const PetitionInfoContentsTitleWrapper = styled(motion.span)`
   }
 `;
 
+export const PetitionInfoContentsTitle = styled.span`
+  color: #1a1b1c;
+  font-family: "Wanted Sans";
+  font-size: 18px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 140%; /* 25.2px */
+
+  opacity: 0.6;
+`;
+
 export const PetitionInfoContentsWrapper = styled(motion.span)`
   display: flex;
   flex-direction: column;
@@ -194,14 +244,5 @@ export const PetitionDefalutInfoWrapper = styled(motion.div)`
 
     border-radius: 8px;
     background: #f4f7f9;
-
-    & > div {
-      display: flex;
-      flex-direction: column;
-
-      gap: 10px;
-      flex: 1 0 0;
-      align-self: stretch;
-    }
   }
 `;
