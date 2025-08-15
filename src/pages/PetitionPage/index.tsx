@@ -3,7 +3,7 @@ import * as S from "./style";
 import close from "@/assets/close.svg";
 import exportIcon from "@/assets/exportIcon.svg";
 import edit from "@/assets/edit.svg";
-import Complaint, { ComplaintData } from "@/types/petition";
+import Complaint, { ComplaintData, Evidence } from "@/types/petition";
 import buttonCheck from "@/assets/button-check.svg";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
@@ -82,7 +82,7 @@ const PetitionPage = () => {
     complaintInstance.incidentDetails
   );
 
-  const [evidences, setEvidences] = useState(complaintInstance.evidences);
+  const [evidences, setEvidences] = useState<(File | Evidence)[]>((complaintInstance.evidences));
 
   const navigate = useNavigate();
 
@@ -491,7 +491,7 @@ const PetitionPage = () => {
               {isUpdate ? (
                 <ImageInput files={evidences} setFiles={setEvidences} />
               ) : (
-                complaintInstance?.evidences.map((evidence, index) => {
+                complaintInstance?.evidences.map((evidence) => {
                   return (
                     <S.PetitionInfoContents>
                       {evidence.fileName}
