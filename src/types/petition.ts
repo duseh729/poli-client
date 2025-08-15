@@ -1,5 +1,5 @@
 // 📌 증거자료 타입
-type Evidence = {
+export type Evidence = {
   fileName: string; // 증거 파일 이름 (예: "송금내역.png")
   fileUrl: string;  // 증거 파일 경로 또는 URL
 };
@@ -27,10 +27,11 @@ export type ComplaintData = {
   siteName: string;                   // 피해 발생 사이트 이름
   siteUrl: string;                     // 피해 발생 사이트 주소 (URL)
   crimeName: string;                   // 진정죄명 (예: 사기죄, 협박죄)
-  intentToPunish: boolean;             // 처벌의사 (true: 처벌 원함, false: 원치 않음)
+  intentToPunish: string;             // 처벌의사 (true: 처벌 원함, false: 원치 않음)
   incidentDescription: string;         // 피해사실 (간단 요약)
   incidentDetails: string;             // 피해상황 (상세 설명)
   evidences: Evidence[];               // 증거자료 목록
+  complaintDate: string;               // 진정 접수일 (YYYY-MM-DD)
 };
 
 class Complaint implements ComplaintData {
@@ -41,10 +42,11 @@ class Complaint implements ComplaintData {
   siteName!: string;
   siteUrl!: string;
   crimeName!: string;
-  intentToPunish!: boolean;
+  intentToPunish!: string;
   incidentDescription!: string;
   incidentDetails!: string;
   evidences!: Evidence[];
+  complaintDate!: string;
 
   constructor(data: ComplaintData) {
     Object.assign(this, data);
