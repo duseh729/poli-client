@@ -234,6 +234,9 @@ export const PetitionInfoContents = styled(motion.span)`
   font-style: normal;
   font-weight: 600;
   line-height: 140%; /* 25.2px */
+  
+  word-wrap: break-word;   /* 긴 단어도 줄바꿈 */
+  overflow-wrap: break-word;
 `;
 
 export const PetitionDefalutInfoWrapper = styled(motion.div)`
