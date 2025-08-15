@@ -17,6 +17,8 @@ const ImageCollection = ({
   const footerRef = useRef<HTMLDivElement>(null);
   const [formHeight, setFormHeight] = useState(0);
 
+   const [files, setFiles] = useState<File[]>([]);
+
   useEffect(() => {
     if (footerRef.current) {
       setFormHeight(footerRef.current.offsetHeight);
@@ -61,7 +63,7 @@ const ImageCollection = ({
                 영수증 및 송금 내역, 판매자 계좌번호 및 닉네임(확보 시), 기타
                 판매자 관련 정보(확보 시) 이미지를 올려주세요.
               </S.ExampleText>
-              <ImageInput />
+              <ImageInput files={files} setFiles={setFiles} />
             </S.FormGroup>
           </S.FormGroupWrapper>
         </S.Form>

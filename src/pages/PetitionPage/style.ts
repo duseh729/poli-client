@@ -44,10 +44,11 @@ export const Wrapper = styled(motion.div)`
   display: flex;
   flex-direction: row;
   width: 100%;
+  align-items: center;
 
   & > :first-child {
     flex: 1;
-    min-width: 180px
+    min-width: 170px
   }
   & > :last-child {
     flex: 5;
@@ -164,6 +165,7 @@ export const PetitionInfoWrapper = styled(motion.div)`
   padding: 20px 0 40px 0;
   flex-direction: column;
   gap: 8px;
+  width: 100%;
 
   border-bottom: 1px solid var(--grey-3, #e8ecf1);
 
@@ -192,7 +194,7 @@ export const PetitionInfoContentsTitleWrapper = styled(motion.span)`
   flex-direction: column;
   gap: 12px;
   flex: 1;
-  min-width: 180px;
+  min-width: 170px;
 
   span {
     color: #1a1b1c;
