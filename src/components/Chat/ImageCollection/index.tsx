@@ -3,6 +3,7 @@ import { useRef, useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import * as S from "../InfoCollection/style.ts";
 import ImageInput from "@/components/Chat/ImageCollection/ImageInput/index.tsx";
+import { Evidence } from "@/types/petition.ts";
 
 type ImageCollectionProps = {
   initMessage: any; // MainPage에서 전달
@@ -17,7 +18,7 @@ const ImageCollection = ({
   const footerRef = useRef<HTMLDivElement>(null);
   const [formHeight, setFormHeight] = useState(0);
 
-   const [files, setFiles] = useState<File[]>([]);
+  const [files, setFiles] = useState<(File | Evidence)[]>([]);
 
   useEffect(() => {
     if (footerRef.current) {
