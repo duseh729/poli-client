@@ -31,6 +31,8 @@ export const BasicWrapper = styled(motion.div)`
   display: flex;
   flex-direction: row;
   width: 100%;
+  overflow-wrap: anywhere;
+  word-break: break-all;
 
   & > :first-child {
     flex: 1;
@@ -48,7 +50,7 @@ export const Wrapper = styled(motion.div)`
 
   & > :first-child {
     flex: 1;
-    min-width: 170px
+    min-width: 170px;
   }
   & > :last-child {
     flex: 5;
@@ -234,9 +236,9 @@ export const PetitionInfoContents = styled(motion.span)`
   font-style: normal;
   font-weight: 600;
   line-height: 140%; /* 25.2px */
-  
-  word-wrap: break-word;   /* 긴 단어도 줄바꿈 */
-  overflow-wrap: break-word;
+
+  overflow-wrap: anywhere;
+  word-break: break-all;
 `;
 
 export const PetitionDefalutInfoWrapper = styled(motion.div)`
