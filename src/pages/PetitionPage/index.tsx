@@ -13,6 +13,7 @@ import dayjs, { Dayjs } from "dayjs";
 import Input from "@/components/Petition/Input";
 import ImageInput from "@/components/Chat/ImageCollection/ImageInput";
 import DropdownInput from "@/components/Petition/DropdownInput";
+import { useNavigate } from "react-router-dom";
 
 const mockComplaint: ComplaintData = {
   complainant: {
@@ -83,6 +84,8 @@ const PetitionPage = () => {
 
   const [evidences, setEvidences] = useState(complaintInstance.evidences);
 
+  const navigate = useNavigate();
+
   const toggleIsUpdate = () => {
     setIsUpdate(!isUpdate);
   };
@@ -104,7 +107,11 @@ const PetitionPage = () => {
         {/* 헤더 영역 */}
         <S.PetitionHeaderWrapper>
           <span>작성완료</span>
-          <button>
+          <button
+            onClick={() => {
+              navigate(-1);
+            }}
+          >
             <img src={close} alt="진정서 끄기" />
           </button>
         </S.PetitionHeaderWrapper>

@@ -17,11 +17,13 @@ import {
 import chatArrow from "@/assets/chat-arrow.svg";
 import poliChat from "@/assets/poli-chat-icon-sm.svg";
 import progressOn from "@/assets/progress-on.svg";
+import check2 from "@/assets/check2.svg";
 import loadingSpinner from "@/assets/loading-spinner.svg";
 import type { ChatMessage } from "@/types/chat";
 import * as S from "./style";
 import "highlight.js/styles/github.css";
 import { COLORS } from "@/constants/color";
+import { useNavigate } from "react-router-dom";
 
 type ChatProps = {
   messages: ChatMessage[];
@@ -70,6 +72,8 @@ const Chat = ({ messages: initialMessages, roomId, isInit }: ChatProps) => {
 
   // 스크롤 변수
   const [autoScroll, setAutoScroll] = useState(true);
+
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (chatFooterRef.current) {
@@ -369,6 +373,14 @@ const Chat = ({ messages: initialMessages, roomId, isInit }: ChatProps) => {
       </S.ChatWindow>
 
       <S.ChatFooter ref={chatFooterRef}>
+        <S.PetitionButton
+          onClick={() => {
+            navigate("/petition");
+          }}
+        >
+          <img src={check2} />
+          진정서 확인하기
+        </S.PetitionButton>
         {/* {showProgress && (
           <S.ProgrssWrapper>
             <S.ProgressBox progress={progress}>

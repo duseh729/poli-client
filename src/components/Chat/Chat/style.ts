@@ -300,6 +300,33 @@ export const ChatFooter = styled.div`
   width: 770px;
 `;
 
+export const PetitionButton = styled.button`
+margin: auto;
+display: flex;
+height: 44px;
+padding: 0 16px;
+justify-content: center;
+align-items: center;
+gap: 8px;
+
+border-radius: 45px;
+background: var(--main-default, #0059FF);
+border: none;
+margin-bottom: 12px;
+
+color: var(--grey-1, #FFF);
+text-align: center;
+
+/* subtitle/3 */
+font-family: "Wanted Sans";
+font-size: 14px;
+font-style: normal;
+font-weight: 600;
+line-height: 150%; /* 21px */
+
+cursor: pointer;
+`
+
 export const InputContainer = styled.div`
   display: flex;
   flex-direction: column;
