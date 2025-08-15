@@ -180,13 +180,13 @@ const PetitionPage = () => {
 
               <S.ColumnWrapper>
                 <S.Wrapper>
-                  <span>사이트명</span>
+                  <S.PetitionInfoContentsTitle>사이트명</S.PetitionInfoContentsTitle>
                   <S.PetitionInfoContents>
                     {complaintInstance.siteName}
                   </S.PetitionInfoContents>
                 </S.Wrapper>
                 <S.Wrapper>
-                  <span>사이트 주소</span>
+                  <S.PetitionInfoContentsTitle>사이트 주소</S.PetitionInfoContentsTitle>
                   <S.PetitionInfoContents>
                     {complaintInstance.siteUrl}
                   </S.PetitionInfoContents>
@@ -201,13 +201,13 @@ const PetitionPage = () => {
               <div style={{ display: "flex" }}>
                 <S.ColumnWrapper>
                   <S.Wrapper>
-                    <span>진정죄명</span>
+                    <S.PetitionInfoContentsTitle>진정죄명</S.PetitionInfoContentsTitle>
                     <S.PetitionInfoContents>
                       {complaintInstance.crimeName}
                     </S.PetitionInfoContents>
                   </S.Wrapper>
                   <S.Wrapper>
-                    <span>처벌의사</span>
+                    <S.PetitionInfoContentsTitle>처벌의사</S.PetitionInfoContentsTitle>
                     <S.PetitionInfoContents>
                       {complaintInstance.intentToPunish
                         ? "처벌 원함"
@@ -223,13 +223,13 @@ const PetitionPage = () => {
 
           <S.ColumnWrapper>
             <S.Wrapper>
-              <span>피해사실</span>
+              <S.PetitionInfoContentsTitle>피해사실</S.PetitionInfoContentsTitle>
               <S.PetitionInfoContents>
                 {complaintInstance.incidentDescription}
               </S.PetitionInfoContents>
             </S.Wrapper>
             <S.Wrapper>
-              <span>피해상황</span>
+              <S.PetitionInfoContentsTitle>피해상황</S.PetitionInfoContentsTitle>
               <S.PetitionInfoContents>
                 {complaintInstance.incidentDetails}
               </S.PetitionInfoContents>
@@ -244,7 +244,7 @@ const PetitionPage = () => {
 
           <div style={{ display: "flex" }}>
             <S.PetitionInfoContentsTitleWrapper>
-              <span>증거자료</span>
+              <S.PetitionInfoContentsTitle>증거자료</S.PetitionInfoContentsTitle>
             </S.PetitionInfoContentsTitleWrapper>
 
             <S.PetitionInfoContentsWrapper>
