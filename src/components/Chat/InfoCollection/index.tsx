@@ -27,7 +27,6 @@ const InfoCollection = ({
   handleNextStep,
   setIsEnableNext,
   isEnableNext,
-  initMessage,
   setInitMessage,
   situationDescription,
   setSituationDescription,

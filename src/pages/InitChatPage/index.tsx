@@ -6,6 +6,7 @@ import { ROUTES } from "@/constants/routes.tsx";
 import { getDynamicPath } from "@/utils/routes.ts";
 import * as S from "./style";
 import InitChat from "@/components/InitChat/InitChat";
+import { ChatRequest } from "@/types/chat";
 
 interface InitChatState {
   requestBody: ChatRequest;
