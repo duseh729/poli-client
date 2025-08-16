@@ -7,6 +7,11 @@ import { getDynamicPath } from "@/utils/routes.ts";
 import * as S from "./style";
 import InitChat from "@/components/InitChat/InitChat";
 
+interface InitChatState {
+  requestBody: ChatRequest;
+  files?: File[];
+}
+
 const BLOCK_SIZE = 2; // 한 번에 보여줄 글자 수
 const TICK_DELAY_MS = 30; // 글자 붙이는 간격(ms)
 
@@ -17,7 +22,7 @@ const InitChatPage = () => {
   const { data: chatRooms, refetch: refetchChatRooms } = useChatRooms();
   const { mutateAsync: chatStream, isPending } = useChatStream();
 
-  const requestBody = location?.state;
+  const { requestBody, files } = (location.state as InitChatState) || {};
 
   // UI 상태
   const [botMessage, setBotMessage] = useState("");
@@ -105,6 +110,7 @@ const InitChatPage = () => {
 
         await chatStream({
           requestBody,
+          files,
           config: {},
           onMessage: (chunk: string | null) => {
             if (chunk === null) {

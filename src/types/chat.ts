@@ -24,6 +24,7 @@ interface CustomAxiosRequestConfig extends AxiosRequestConfig {
 }
 export type MutationVariables = {
   requestBody: ChatRequest;
+  files?: File[]; 
   config?: CustomAxiosRequestConfig;
   onMessage?: (message: string | null) => void; // 콜백 함수 추가
 };

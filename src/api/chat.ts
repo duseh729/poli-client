@@ -12,23 +12,40 @@ import toast from "react-hot-toast";
 import API from "./axios.ts";
 import { useChatRoomsStore } from "@/stores/chatRoom.ts";
 import { useUserStore } from "@/stores/user.ts";
-
 export const useChatStream = () => {
   const userId = useUserStore.getState().userId;
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: async ({ requestBody, onMessage }: MutationVariables) => {
+    mutationFn: async ({
+      requestBody,
+      files,
+      onMessage,
+    }: MutationVariables) => {
+      const formData = new FormData();
+
+      // request(JSON 문자열) 추가
+      if (requestBody) {
+        formData.append("request", JSON.stringify(requestBody));
+      }
+
+      // files 추가
+      if (files && files.length > 0) {
+        files.forEach((file: File) => {
+          formData.append("files", file);
+        });
+      }
+
       const response = await fetch(
         `${import.meta.env.VITE_API_BASE_URL}chat/stream`,
         {
           method: "POST",
           headers: {
             Accept: "text/event-stream",
-            "Content-Type": "application/json",
             "user-id": userId ?? "",
+            // ⚠️ Content-Type은 설정하지 말 것!
           },
-          body: JSON.stringify(requestBody),
+          body: formData,
         }
       );
 
@@ -37,9 +54,8 @@ export const useChatStream = () => {
       const reader = response.body.getReader();
       const decoder = new TextDecoder("utf-8");
       let buffer = "";
-
       let hasReceivedMessage = false;
-      
+
       while (true) {
         const { value, done } = await reader.read();
         if (done) break;
@@ -58,14 +74,14 @@ export const useChatStream = () => {
             const data = JSON.parse(jsonString);
             if (data.message && onMessage) {
               hasReceivedMessage = true;
-              onMessage(data.message); // 👈 콜백으로 전달
+              onMessage(data.message);
             } else if (
               hasReceivedMessage &&
               data.roomId &&
               !data.message &&
               onMessage
             ) {
-              onMessage(null); // 첫 message 이후에만 마지막 신호로 처리
+              onMessage(null);
             }
           } catch (err) {
             console.error("파싱 실패", err);
@@ -94,7 +110,7 @@ export const useChatStream = () => {
         },
       });
       setTimeout(() => {
-        // 재연결 로직 (예: mutate 다시 호출)
+        // 재연결 로직
       }, 3000);
     },
   });

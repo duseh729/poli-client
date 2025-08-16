@@ -87,14 +87,6 @@ const InfoCollection = ({
       hasReported: selectedCheckBox === 1,
       isLegalProcedureOngoing: selectedCheckBox === 2,
     });
-
-    const requestBody = {
-      initMessage: JSON.stringify(initMessage),
-      roomId: null,
-      message: situationDescription,
-    };
-
-    // navigate("/init-chat", { state: requestBody });
   };
 
   return (
@@ -295,7 +287,10 @@ const InfoCollection = ({
         </S.FormWrapper>
         <S.FooterWrapper ref={footerRef}>
           <S.StartButton
-            onClick={handleNextStep}
+            onClick={(e) => {
+              handleSubmit(e);
+              handleNextStep();
+            }}
             disabled={!isEnableNext || isPending}
           >
             다음

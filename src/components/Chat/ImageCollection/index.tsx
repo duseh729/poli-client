@@ -34,7 +34,7 @@ const ImageCollection = ({
       message: situationDescription,
     };
 
-    navigate("/init-chat", { state: requestBody });
+    navigate("/init-chat", { state: { requestBody, files } });
   };
 
   return (
