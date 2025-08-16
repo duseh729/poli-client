@@ -491,9 +491,9 @@ const PetitionPage = () => {
               {isUpdate ? (
                 <ImageInput files={evidences} setFiles={setEvidences} />
               ) : (
-                complaintInstance?.evidences.map((evidence) => {
+                complaintInstance?.evidences.map((evidence, index) => {
                   return (
-                    <S.PetitionInfoContents>
+                    <S.PetitionInfoContents key={index}>
                       {evidence.fileName}
                     </S.PetitionInfoContents>
                   );

@@ -34,10 +34,10 @@ export const BasicWrapper = styled(motion.div)`
   overflow-wrap: anywhere;
   word-break: break-all;
 
-  & > :first-child {
+  & > span:first-of-type {
     flex: 1;
   }
-  & > :last-child {
+  & > span:last-of-type {
     flex: 2;
   }
 `;
