@@ -76,6 +76,8 @@ const Chat = ({ messages: initialMessages, roomId, isInit }: ChatProps) => {
   // 스크롤 변수
   const [autoScroll, setAutoScroll] = useState(true);
 
+  const [isPetition, setIsPetition] = useState(false);
+
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -144,6 +146,7 @@ const Chat = ({ messages: initialMessages, roomId, isInit }: ChatProps) => {
               (async () => {
                 try {
                   await initPetition(roomId, finalText);
+                  setIsPetition(true)
                 } catch (err) {
                   console.error(err);
                 }
@@ -302,6 +305,20 @@ const Chat = ({ messages: initialMessages, roomId, isInit }: ChatProps) => {
     };
   }, []);
 
+  useEffect(() => {
+    const fetchPetition = async () => {
+      try {
+        const res = await getPetition(roomId);
+        // console.log(isPetition)
+        setIsPetition(true);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
+    fetchPetition();
+  }, []);
+
   const recommendMessages = [
     { constents: "진정서가 뭐야?" },
     { constents: "범인을 잡으면 돈을 돌려 받을 수 있어?" },
@@ -393,14 +410,16 @@ const Chat = ({ messages: initialMessages, roomId, isInit }: ChatProps) => {
       </S.ChatWindow>
 
       <S.ChatFooter ref={chatFooterRef}>
-        <S.PetitionButton
-          onClick={() => {
-            navigate(`/petition/${roomId}`);
-          }}
-        >
-          <img src={check2} />
-          진정서 확인하기
-        </S.PetitionButton>
+        {isPetition ? (
+          <S.PetitionButton
+            onClick={() => {
+              navigate(`/petition/${roomId}`);
+            }}
+          >
+            <img src={check2} />
+            진정서 확인하기
+          </S.PetitionButton>
+        ) : null}
         {/* {showProgress && (
           <S.ProgrssWrapper>
             <S.ProgressBox progress={progress}>

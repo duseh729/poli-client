@@ -182,7 +182,7 @@ const PetitionPage = () => {
     const fetchPetition = async () => {
       try {
         const petition = await getPetition(Number(id));
-
+        // console.log(petition)
         // petition이 문자열일 경우
         let parsedPetition;
         if (typeof petition === "string") {
@@ -191,10 +191,11 @@ const PetitionPage = () => {
           parsedPetition = petition;
         }
 
-        const complaintObj = new Complaint(parsedPetition);
+        // extracted_data가 있으면 그걸 쓰고, 없으면 parsedPetition 전체 사용
+        const dataToUse = parsedPetition.extracted_data ?? parsedPetition;
+
+        const complaintObj = new Complaint(dataToUse);
         setComplaint(complaintObj);
-        // console.log(complaintObj)
-        // 필요하다면 state에 저장하거나 context에 넣을 수 있음
       } catch (err) {
         console.error("getPetition error:", err);
       }
