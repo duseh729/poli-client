@@ -146,7 +146,7 @@ const Chat = ({ messages: initialMessages, roomId, isInit }: ChatProps) => {
               (async () => {
                 try {
                   await initPetition(roomId, finalText);
-                  setIsPetition(true)
+                  setIsPetition(true);
                 } catch (err) {
                   console.error(err);
                 }
@@ -306,18 +306,20 @@ const Chat = ({ messages: initialMessages, roomId, isInit }: ChatProps) => {
   }, []);
 
   useEffect(() => {
+    setIsPetition(false);
+    // console.log(roomId)
     const fetchPetition = async () => {
       try {
         const res = await getPetition(roomId);
         // console.log(isPetition)
         setIsPetition(true);
       } catch (error) {
-        console.error(error);
+        // console.error(error);
       }
     };
 
     fetchPetition();
-  }, []);
+  }, [roomId]);
 
   const recommendMessages = [
     { constents: "진정서가 뭐야?" },
@@ -338,7 +340,10 @@ const Chat = ({ messages: initialMessages, roomId, isInit }: ChatProps) => {
 
   return (
     <S.ChatContainer>
-      <S.ChatWindow ref={chatWindowRef} style={{ paddingBottom: `${footerHeight + 60}px` }}>
+      <S.ChatWindow
+        ref={chatWindowRef}
+        style={{ paddingBottom: `${footerHeight + 60}px` }}
+      >
         {sortedMessages.map((message, index) => (
           <S.MessageContainer key={index}>
             {message.role === "USER" ? (

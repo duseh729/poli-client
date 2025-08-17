@@ -21,7 +21,7 @@ export const getPetition = async (roomId: number) => {
         data = JSON.parse(data.petitionJson);
       } catch (e) {
         console.error("JSON parse error:", e);
-        // throw e;
+        throw e;
       }
     }
 
