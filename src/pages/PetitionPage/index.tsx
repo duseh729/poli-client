@@ -1,10 +1,10 @@
-import { useState } from "react";
+import { useEffect, useLayoutEffect, useState } from "react";
 import { useRef } from "react";
 
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { DatePicker } from "@mui/x-date-pickers";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 import dayjs from "dayjs";
 
 import html2canvas from "html2canvas";
@@ -20,57 +20,115 @@ import "dayjs/locale/ko";
 import Input from "@/components/Petition/Input";
 import ImageInput from "@/components/Chat/ImageCollection/ImageInput";
 import DropdownInput from "@/components/Petition/DropdownInput";
-import { useComplaintStore } from "@/stores/petition";
+import { getPetition, updatePetition } from "@/api/petition";
 
 const PetitionPage = () => {
-  const {complaint, setComplaint} = useComplaintStore();
+  const { id } = useParams<{ id: string }>();
+  const [complaint, setComplaint] = useState<Complaint>(
+    new Complaint({
+      complaintDate: "",
+      complainant: { name: "", address: "", contact: "" },
+      respondent: { name: "", contact: "", specialNotes: "" },
+      crimeType: "",
+      crimeDetail: "",
+      siteName: "",
+      siteUrl: "",
+      crimeName: "",
+      intentToPunish: "",
+      incidentDescription: "",
+      incidentDetails: "",
+      evidences: [],
+    })
+  );
+
+  const location = useLocation();
 
   const [isUpdate, setIsUpdate] = useState(false);
 
   const [complainantName, setComplainantName] = useState(
-    complaint.complainant.name
+    complaint?.complainant?.name || ""
   );
   const [complainantAddress, setComplainantAddress] = useState(
-    complaint.complainant.address
+    complaint?.complainant?.address || ""
   );
   const [complainantContact, setComplainantContact] = useState(
-    complaint.complainant.contact
+    complaint?.complainant?.contact || ""
   );
   const [respondentName, setRespondentName] = useState(
-    complaint.respondent.name
+    complaint?.respondent?.name || ""
   );
   const [respondentContact, setRespondentContact] = useState(
-    complaint.respondent.contact
+    complaint?.respondent?.contact || ""
   );
   const [respondentSpecialNotes, setRespondentSpecialNotes] = useState(
-    complaint.respondent.specialNotes
+    complaint?.respondent?.specialNotes || ""
   );
 
-  const [crimeType, setCrimeType] = useState(complaint.crimeType);
-  const [crimeDetail, setCrimeDetail] = useState(complaint.crimeDetail);
-  const [siteName, setSiteName] = useState(complaint.siteName);
-  const [siteUrl, setSiteUrl] = useState(complaint.siteUrl);
-  const [crimeName, setCrimeName] = useState(complaint.crimeName);
+  const [crimeType, setCrimeType] = useState(complaint?.crimeType || "");
+  const [crimeDetail, setCrimeDetail] = useState(complaint?.crimeDetail || "");
+  const [siteName, setSiteName] = useState(complaint?.siteName || "");
+  const [siteUrl, setSiteUrl] = useState(complaint?.siteUrl || "");
+  const [crimeName, setCrimeName] = useState(complaint?.crimeName || "");
   const [intentToPunish, setIntentToPunish] = useState(
-    complaint.intentToPunish
+    complaint?.intentToPunish || ""
   );
   const [incidentDescription, setIncidentDescription] = useState(
-    complaint.incidentDescription
+    complaint?.incidentDescription || ""
   );
   const [incidentDetails, setIncidentDetails] = useState(
-    complaint.incidentDetails
+    complaint?.incidentDetails || ""
   );
 
-  const [evidences, setEvidences] = useState<(File | Evidence)[]>(
-    complaint.evidences
+  const [evidences, setEvidences] = useState<File | Evidence[]>(
+    complaint?.evidences || []
+  );
+
+  const [complaintDate, setComplaintDate] = useState<string | null>(
+    complaint?.complaintDate || null
   );
 
   const navigate = useNavigate();
 
   const pdfRef = useRef<HTMLDivElement>(null);
 
-  const toggleIsUpdate = () => {
-    setIsUpdate(!isUpdate);
+  const putPetition = async () => {
+    const serverPayload: ComplaintData = {
+      complainant: {
+        name: complainantName,
+        address: complainantAddress,
+        contact: complainantContact,
+      },
+      respondent: {
+        name: respondentName,
+        contact: respondentContact,
+        specialNotes: respondentSpecialNotes,
+      },
+      crimeType,
+      crimeDetail,
+      siteName,
+      siteUrl,
+      crimeName,
+      intentToPunish,
+      incidentDescription,
+      incidentDetails,
+      evidences,
+      complaintDate: complaint?.complaintDate || "",
+    };
+
+    const payloadString = JSON.stringify(serverPayload);
+    const res = await updatePetition(id, payloadString);
+    console.log(res);
+  };
+
+  const toggleIsUpdate = async () => {
+    try {
+      if (isUpdate) {
+        await putPetition();
+      }
+      setIsUpdate(!isUpdate);
+    } catch (err) {
+      console.error("Failed to update petition:", err);
+    }
   };
 
   const handleDownload = async () => {
@@ -117,6 +175,54 @@ const PetitionPage = () => {
     "기타 사이버사기",
   ];
 
+  // 진정서 조회
+  useEffect(() => {
+    if (!id) return;
+
+    const fetchPetition = async () => {
+      try {
+        const petition = await getPetition(Number(id));
+
+        // petition이 문자열일 경우
+        let parsedPetition;
+        if (typeof petition === "string") {
+          parsedPetition = JSON.parse(petition);
+        } else {
+          parsedPetition = petition;
+        }
+
+        const complaintObj = new Complaint(parsedPetition);
+        setComplaint(complaintObj);
+        // console.log(complaintObj)
+        // 필요하다면 state에 저장하거나 context에 넣을 수 있음
+      } catch (err) {
+        console.error("getPetition error:", err);
+      }
+    };
+
+    fetchPetition();
+  }, []);
+  useEffect(() => {
+    if (!complaint) return;
+
+    setComplainantName(complaint.complainant?.name || "");
+    setComplainantAddress(complaint.complainant?.address || "");
+    setComplainantContact(complaint.complainant?.contact || "");
+    setRespondentName(complaint.respondent?.name || "");
+    setRespondentContact(complaint.respondent?.contact || "");
+    setRespondentSpecialNotes(complaint.respondent?.specialNotes || "");
+    setCrimeType(complaint.crimeType || "");
+    setCrimeDetail(complaint.crimeDetail || "");
+    setSiteName(complaint.siteName || "");
+    setSiteUrl(complaint.siteUrl || "");
+    setCrimeName(complaint.crimeName || "");
+    setIntentToPunish(complaint.intentToPunish || "");
+    setIncidentDescription(complaint.incidentDescription || "");
+    setIncidentDetails(complaint.incidentDetails || "");
+    setEvidences(complaint.evidences || []);
+    setComplaintDate(complaint.complaintDate || null);
+  }, [complaint]);
+
   return (
     <S.Container>
       <S.PetitionWrapper>
@@ -155,13 +261,9 @@ const PetitionPage = () => {
                   {isUpdate ? (
                     <div>
                       <DatePicker
-                        value={
-                          complaint.complaintDate
-                            ? dayjs(complaint.complaintDate)
-                            : null
-                        }
+                        value={complaintDate ? dayjs(complaintDate) : null}
                         onChange={(newDate) => {
-                          complaint.update({
+                          complaint?.update({
                             complaintDate: newDate
                               ? dayjs(newDate).format("YYYY-MM-DD")
                               : "",
@@ -514,7 +616,7 @@ const PetitionPage = () => {
                 {isUpdate ? (
                   <ImageInput files={evidences} setFiles={setEvidences} />
                 ) : (
-                  complaint?.evidences.map((evidence, index) => {
+                  complaint?.evidences?.map((evidence, index) => {
                     return (
                       <S.PetitionInfoContents key={index}>
                         {evidence.fileName}

@@ -32,3 +32,12 @@ export const getPetition = async (roomId: number) => {
   }
 };
 
+export const updatePetition = async (roomId: number, petitionJson: any) => {
+  try {
+    const res = await API.put(`/chat/petition/${roomId}`, { petitionJson });
+    return res.data;
+  } catch (err) {
+    console.error("updatePetition error:", err);
+    throw err;
+  }
+};

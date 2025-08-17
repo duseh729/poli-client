@@ -64,8 +64,6 @@ const Chat = ({ messages: initialMessages, roomId, isInit }: ChatProps) => {
   const streamingRef = useRef(false); // 스트리밍이 서버측에서 아직 진행중인지
   const streamEndedRef = useRef(false); // 서버에서 종료 신호(=null chunk) 받았는지
   const appendedFinalRef = useRef(false); // 이미 최종 메시지를 로컬에 추가했는지 중복방지
-  
-  const { complaint, setComplaint } = useComplaintStore();
 
   const animationProps = isInit
     ? {}
@@ -304,35 +302,6 @@ const Chat = ({ messages: initialMessages, roomId, isInit }: ChatProps) => {
     };
   }, []);
 
-  // 진정서 조회
-  useEffect(() => {
-    console.log(roomId)
-    if (!roomId) return;
-
-    const fetchPetition = async () => {
-      try {
-        const petition = await getPetition(roomId);
-
-        // petition이 문자열일 경우
-        let parsedPetition;
-        if (typeof petition === "string") {
-          parsedPetition = JSON.parse(petition);
-        } else {
-          parsedPetition = petition;
-        }
-
-        const complaintObj = new Complaint(parsedPetition.extracted_data);
-        setComplaint(complaintObj);
-        // console.log(complaintObj)
-        // 필요하다면 state에 저장하거나 context에 넣을 수 있음
-      } catch (err) {
-        console.error("getPetition error:", err);
-      }
-    };
-
-    fetchPetition();
-  }, []);
-
   const recommendMessages = [
     { constents: "진정서가 뭐야?" },
     { constents: "범인을 잡으면 돈을 돌려 받을 수 있어?" },
@@ -426,7 +395,7 @@ const Chat = ({ messages: initialMessages, roomId, isInit }: ChatProps) => {
       <S.ChatFooter ref={chatFooterRef}>
         <S.PetitionButton
           onClick={() => {
-            navigate("/petition");
+            navigate(`/petition/${roomId}`);
           }}
         >
           <img src={check2} />

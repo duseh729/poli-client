@@ -14,7 +14,7 @@ export const ROUTES = {
   MAIN: "/main",
   CHAT_ID: "/chat/:id",
   INIT_CHAT: "/init-chat",
-  PETITION: "/petition"
+  PETITION: "/petition/:id"
 } as const;
 
 export const PUBLIC_ROUTES = [
