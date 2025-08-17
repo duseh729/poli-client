@@ -12,6 +12,7 @@ import toast from "react-hot-toast";
 import API from "./axios.ts";
 import { useChatRoomsStore } from "@/stores/chatRoom.ts";
 import { useUserStore } from "@/stores/user.ts";
+
 export const useChatStream = () => {
   const userId = useUserStore.getState().userId;
   const queryClient = useQueryClient();

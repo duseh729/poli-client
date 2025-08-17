@@ -46,7 +46,7 @@ export const Wrapper = styled(motion.div)`
   display: flex;
   flex-direction: row;
   width: 100%;
-  align-items: center;
+  align-items: flex-start;
 
   & > :first-child {
     flex: 1;

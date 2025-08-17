@@ -20,76 +20,49 @@ import "dayjs/locale/ko";
 import Input from "@/components/Petition/Input";
 import ImageInput from "@/components/Chat/ImageCollection/ImageInput";
 import DropdownInput from "@/components/Petition/DropdownInput";
-
-const mockComplaint: ComplaintData = {
-  complainant: {
-    name: "홍길동",
-    address: "서울특별시 강남구 역삼동 123-45",
-    contact: "010-1234-5678",
-  },
-  respondent: {
-    name: "김철수",
-    contact: "010-9876-5432",
-    specialNotes: "사기 전과 있음",
-  },
-  crimeType: "사이버 범죄",
-  crimeDetail: "직거래사기",
-  siteName: "중고나라",
-  siteUrl: "https://joonggonara.com",
-  crimeName: "사기죄",
-  intentToPunish: "진정인은 피진정인을 진정하오니 처벌 요청",
-  incidentDescription: "피해자가 거래 대금을 송금했으나 물품을 받지 못함.",
-  incidentDetails:
-    "2025년 8월 1일, 중고나라를 통해 카메라 거래를 진행. 김철수라는 인물에게 50만원을 송금했으나 물품을 보내주지 않고 잠적함.",
-  evidences: [
-    { fileName: "송금내역.png", fileUrl: "/evidence/송금내역.png" },
-    { fileName: "채팅기록.jpg", fileUrl: "/evidence/채팅기록.jpg" },
-  ],
-  complaintDate: "2025-07-29",
-};
-
-// 클래스 인스턴스 생성 예시
-const complaintInstance = new Complaint(mockComplaint);
+import { useComplaintStore } from "@/stores/petition";
 
 const PetitionPage = () => {
+  const {complaint, setComplaint} = useComplaintStore();
+
   const [isUpdate, setIsUpdate] = useState(false);
 
   const [complainantName, setComplainantName] = useState(
-    complaintInstance.complainant.name
+    complaint.complainant.name
   );
   const [complainantAddress, setComplainantAddress] = useState(
-    complaintInstance.complainant.address
+    complaint.complainant.address
   );
   const [complainantContact, setComplainantContact] = useState(
-    complaintInstance.complainant.contact
+    complaint.complainant.contact
   );
   const [respondentName, setRespondentName] = useState(
-    complaintInstance.respondent.name
+    complaint.respondent.name
   );
   const [respondentContact, setRespondentContact] = useState(
-    complaintInstance.respondent.contact
+    complaint.respondent.contact
   );
   const [respondentSpecialNotes, setRespondentSpecialNotes] = useState(
-    complaintInstance.respondent.specialNotes
+    complaint.respondent.specialNotes
   );
 
-  const [crimeType, setCrimeType] = useState(complaintInstance.crimeType);
-  const [crimeDetail, setCrimeDetail] = useState(complaintInstance.crimeDetail);
-  const [siteName, setSiteName] = useState(complaintInstance.siteName);
-  const [siteUrl, setSiteUrl] = useState(complaintInstance.siteUrl);
-  const [crimeName, setCrimeName] = useState(complaintInstance.crimeName);
+  const [crimeType, setCrimeType] = useState(complaint.crimeType);
+  const [crimeDetail, setCrimeDetail] = useState(complaint.crimeDetail);
+  const [siteName, setSiteName] = useState(complaint.siteName);
+  const [siteUrl, setSiteUrl] = useState(complaint.siteUrl);
+  const [crimeName, setCrimeName] = useState(complaint.crimeName);
   const [intentToPunish, setIntentToPunish] = useState(
-    complaintInstance.intentToPunish
+    complaint.intentToPunish
   );
   const [incidentDescription, setIncidentDescription] = useState(
-    complaintInstance.incidentDescription
+    complaint.incidentDescription
   );
   const [incidentDetails, setIncidentDetails] = useState(
-    complaintInstance.incidentDetails
+    complaint.incidentDetails
   );
 
   const [evidences, setEvidences] = useState<(File | Evidence)[]>(
-    complaintInstance.evidences
+    complaint.evidences
   );
 
   const navigate = useNavigate();
@@ -183,12 +156,12 @@ const PetitionPage = () => {
                     <div>
                       <DatePicker
                         value={
-                          complaintInstance.complaintDate
-                            ? dayjs(complaintInstance.complaintDate)
+                          complaint.complaintDate
+                            ? dayjs(complaint.complaintDate)
                             : null
                         }
                         onChange={(newDate) => {
-                          complaintInstance.update({
+                          complaint.update({
                             complaintDate: newDate
                               ? dayjs(newDate).format("YYYY-MM-DD")
                               : "",
@@ -236,7 +209,7 @@ const PetitionPage = () => {
                       />
                     </div>
                   ) : (
-                    <span>{complaintInstance.complaintDate}</span>
+                    <span>{complaint.complaintDate}</span>
                   )}
                 </div>
 
@@ -541,7 +514,7 @@ const PetitionPage = () => {
                 {isUpdate ? (
                   <ImageInput files={evidences} setFiles={setEvidences} />
                 ) : (
-                  complaintInstance?.evidences.map((evidence, index) => {
+                  complaint?.evidences.map((evidence, index) => {
                     return (
                       <S.PetitionInfoContents key={index}>
                         {evidence.fileName}
