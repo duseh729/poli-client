@@ -41,8 +41,6 @@ const PetitionPage = () => {
     })
   );
 
-  const location = useLocation();
-
   const [isUpdate, setIsUpdate] = useState(false);
 
   const [complainantName, setComplainantName] = useState(
@@ -79,7 +77,7 @@ const PetitionPage = () => {
     complaint?.incidentDetails || ""
   );
 
-  const [evidences, setEvidences] = useState<File | Evidence[]>(
+  const [evidences, setEvidences] = useState<(File | Evidence)[]>(
     complaint?.evidences || []
   );
 
@@ -116,8 +114,7 @@ const PetitionPage = () => {
     };
 
     const payloadString = JSON.stringify(serverPayload);
-    const res = await updatePetition(id, payloadString);
-    console.log(res);
+    const res = await updatePetition(Number(id), payloadString);
   };
 
   const toggleIsUpdate = async () => {

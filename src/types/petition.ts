@@ -30,7 +30,7 @@ export type ComplaintData = {
   intentToPunish: string; // 처벌의사 (true: 처벌 원함, false: 원치 않음)
   incidentDescription: string; // 피해사실 (간단 요약)
   incidentDetails: string; // 피해상황 (상세 설명)
-  evidences: File | Evidence[]; // 증거자료 목록
+  evidences: (File | Evidence)[]; // 증거자료 목록
   complaintDate: string; // 진정 접수일 (YYYY-MM-DD)
 };
 

@@ -78,23 +78,12 @@ const ImageInput = ({ files = [], setFiles }: ImageInputProps) => {
   };
 
   const handleRemove = (index: number) => {
+    if (!Array.isArray(files)) return; // files가 단일 File이면 무시
     setFiles(files.filter((_, i) => i !== index));
   };
 
-  // 서버 전송용 FormData 변환
-  const getFormData = () => {
-    const formData = new FormData();
-    files.forEach((f) => {
-      if (f instanceof File) {
-        formData.append("files", f);
-      }
-      // Evidence는 이미 서버에 있으므로 전송 필요 없음
-    });
-    return formData;
-  };
-
   return (
-    <div style={{position:"relative"}}>
+    <div style={{ position: "relative" }}>
       <S.ImageInputContainer
         onDragOver={(e) => {
           e.preventDefault();
@@ -131,7 +120,7 @@ const ImageInput = ({ files = [], setFiles }: ImageInputProps) => {
       />
 
       <S.ImageInputWrapper>
-        {files.length > 0 ? (
+        {Array.isArray(files) && files.length > 0 ? (
           files.map((f, index) => {
             const fileName = f instanceof File ? f.name : f.fileName;
             const fileUrl =
