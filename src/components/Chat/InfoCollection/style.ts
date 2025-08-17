@@ -105,6 +105,7 @@ export const ExampleText = styled.p`
   font-size: 14px;
   color: #808996;
   margin: 20px 0;
+  line-height: 150%;
 `;
 
 export const CheckBoxGroup = styled.div`

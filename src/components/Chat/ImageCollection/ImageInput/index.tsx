@@ -120,35 +120,35 @@ const ImageInput = ({ files = [], setFiles }: ImageInputProps) => {
       />
 
       <S.ImageInputWrapper>
-        {Array.isArray(files) && files.length > 0 ? (
-          files.map((f, index) => {
-            const fileName = f instanceof File ? f.name : f.fileName;
-            const fileUrl =
-              f instanceof File ? URL.createObjectURL(f) : f.fileUrl;
+        {Array.isArray(files) && files.length > 0
+          ? files.map((f, index) => {
+              const fileName = f instanceof File ? f.name : f.fileName;
+              const fileUrl =
+                f instanceof File ? URL.createObjectURL(f) : f.fileUrl;
 
-            return (
-              <S.ImageInputList key={index}>
-                <div style={{ display: "flex", alignItems: "center" }}>
-                  <img src={check} alt="check" />
-                  <span
-                    style={{ cursor: "pointer" }}
-                    onClick={() => window.open(fileUrl, "_blank")}
-                  >
-                    {fileName}
-                  </span>
-                </div>
-                <div
-                  style={{ cursor: "pointer" }}
-                  onClick={() => handleRemove(index)}
-                >
-                  <img src={cancel} alt="cancel" />
-                </div>
-              </S.ImageInputList>
-            );
-          })
-        ) : (
-          <div>파일이 없습니다</div>
-        )}
+              return (
+                <>
+                  <S.ImageInputList key={index}>
+                    <div style={{ display: "flex", alignItems: "center", gap: 4 }}>
+                      <img src={check} alt="check" />
+                      <span
+                        style={{ cursor: "pointer" }}
+                        onClick={() => window.open(fileUrl, "_blank")}
+                      >
+                        {fileName}
+                      </span>
+                    </div>
+                    <div
+                      style={{ cursor: "pointer" }}
+                      onClick={() => handleRemove(index)}
+                    >
+                      <img src={cancel} alt="cancel" />
+                    </div>
+                  </S.ImageInputList>
+                </>
+              );
+            })
+          : null}
       </S.ImageInputWrapper>
       <S.ImageInputListBlur />
     </div>

@@ -338,7 +338,7 @@ const Chat = ({ messages: initialMessages, roomId, isInit }: ChatProps) => {
 
   return (
     <S.ChatContainer>
-      <S.ChatWindow ref={chatWindowRef} style={{ paddingBottom: footerHeight }}>
+      <S.ChatWindow ref={chatWindowRef} style={{ paddingBottom: `${footerHeight + 60}px` }}>
         {sortedMessages.map((message, index) => (
           <S.MessageContainer key={index}>
             {message.role === "USER" ? (

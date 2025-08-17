@@ -71,7 +71,8 @@ export const ImageInputButton = styled.button`
 export const ImageInputWrapper = styled.div`
   display: flex;
   flex-direction: column;
-  height: 100px;
+  min-height: 40px;
+  max-height: 100px;
   overflow-y: scroll;
   margin-top: 20px;
 
