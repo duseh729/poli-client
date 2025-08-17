@@ -84,7 +84,7 @@ const Chat = ({ messages: initialMessages, roomId, isInit }: ChatProps) => {
     if (chatFooterRef.current) {
       setFooterHeight(chatFooterRef.current.offsetHeight);
     }
-  }, []);
+  }, [isPetition]);
 
   /**
    * 외부 데이터(messagesData)로 덮어쓰기 제어
@@ -288,7 +288,7 @@ const Chat = ({ messages: initialMessages, roomId, isInit }: ChatProps) => {
         top: chatWindowRef.current.scrollHeight,
       });
     }
-  }, [chatMessages, currentBotMessage, autoScroll]);
+  }, [chatMessages, currentBotMessage, autoScroll, isPetition]);
 
   /** 정렬해서 렌더 (원본 배열 변경 금지) */
   const sortedMessages = [...chatMessages].sort(
