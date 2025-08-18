@@ -34,8 +34,8 @@ type ChatProps = {
   isInit: boolean;
 };
 
-const BLOCK_SIZE = 8; // 한 번에 붙일 글자 수 (조정 가능)
-const TICK_DELAY_MS = 10; // 반복 간격(ms) — 작을수록 더 빠름
+const BLOCK_SIZE = 2; // 한 번에 붙일 글자 수 (조정 가능)
+const TICK_DELAY_MS = 30; // 반복 간격(ms) — 작을수록 더 빠름
 
 const Chat = ({ messages: initialMessages, roomId, isInit }: ChatProps) => {
   const [inputValue, setInputValue] = useState<string>("");
@@ -105,69 +105,64 @@ const Chat = ({ messages: initialMessages, roomId, isInit }: ChatProps) => {
 
   /** 타이핑 루프 시작 */
   const startTypingLoop = () => {
-    if (intervalRef.current) return; // 이미 동작 중이면 무시
+  if (intervalRef.current) return; // 이미 동작 중이면 무시
 
-    intervalRef.current = setInterval(() => {
-      const buf = bufferRef.current;
-      if (buf.length > 0) {
-        // BLOCK_SIZE만큼 꺼내서 붙임
-        const take = buf.splice(0, BLOCK_SIZE).join("");
-        setCurrentBotMessage((prev) => prev + take);
-        // console.log(streamEndedRef.current)
-      } else {
-        if (buf.length === 0 && streamEndedRef.current) {
-          // 스트림이 끝났고, 버퍼도 완전히 비었을 때만 종료
-          if (intervalRef.current) {
-            clearInterval(intervalRef.current);
-            intervalRef.current = null;
+  intervalRef.current = setInterval(() => {
+    const buf = bufferRef.current;
+    if (buf.length > 0) {
+      // BLOCK_SIZE만큼 꺼내서 붙임
+      const take = buf.splice(0, BLOCK_SIZE).join("");
+      setCurrentBotMessage((prev) => prev + take);
+    } else {
+      if (streamEndedRef.current) {
+        // 스트림 끝났고 버퍼도 완전히 비었음 → finalize
+        if (intervalRef.current) {
+          clearInterval(intervalRef.current);
+          intervalRef.current = null;
+        }
+        setIsTyping(false);
+
+        if (!appendedFinalRef.current) {
+          appendedFinalRef.current = true;
+
+          const finalText = currentBotMessageRef.current;
+
+          setChatMessages((prev) => [
+            ...prev,
+            {
+              createdAt: new Date().toISOString(),
+              message: currentBotMessageRef.current,
+              role: "AI",
+            },
+          ]);
+
+          // ✅ 최종 텍스트에서 체크
+          if (
+            finalText.includes("진정서 작성이 완료되었습니다.") ||
+            finalText.includes("진정서가 완성되었습니다. ")
+          ) {
+            (async () => {
+              try {
+                await initPetition(roomId, finalText);
+                setIsPetition(true);
+              } catch (err) {
+                console.error(err);
+              }
+            })();
+          } else {
+            // console.log("진정서가 발행되는 시점 아님");
           }
-          // console.log("########### 117", isTyping)
-          setIsTyping(false);
-          // console.log("########### 119", isTyping)
 
-          if (!appendedFinalRef.current) {
-            appendedFinalRef.current = true;
-
-            const finalText = currentBotMessageRef.current;
-
-            setChatMessages((prev) => [
-              ...prev,
-              {
-                createdAt: new Date().toISOString(),
-                message: currentBotMessageRef.current,
-                role: "AI",
-              },
-            ]);
-
-            // ✅ 최종 텍스트에서 체크
-            if (
-              finalText.includes("진정서 작성이 완료되었습니다.") ||
-              finalText.includes("진정서가 완성되었습니다. ")
-            ) {
-              (async () => {
-                try {
-                  await initPetition(roomId, finalText);
-                  setIsPetition(true);
-                } catch (err) {
-                  console.error(err);
-                }
-              })();
-            }else{
-              // console.log("진정서가 발행되는 시점 아님")
-            }
-            currentBotMessageRef.current = "";
-            setCurrentBotMessage("");
-          }
-        } else {
-          // 버퍼 비었지만 아직 스트림 진행 중 → 대기
-          if (intervalRef.current) {
-            clearInterval(intervalRef.current);
-            intervalRef.current = null;
-          }
+          currentBotMessageRef.current = "";
+          setCurrentBotMessage("");
         }
       }
-    }, TICK_DELAY_MS);
-  };
+      // ❌ else 구문에서 interval 끄지 않음
+      // 스트림이 진행 중일 수 있으므로 그냥 대기만 한다.
+    }
+  }, TICK_DELAY_MS);
+};
+
 
   useEffect(()=>{
     // console.log(currentBotMessage)
