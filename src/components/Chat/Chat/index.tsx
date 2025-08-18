@@ -34,8 +34,8 @@ type ChatProps = {
   isInit: boolean;
 };
 
-const BLOCK_SIZE = 2; // 한 번에 붙일 글자 수 (조정 가능)
-const TICK_DELAY_MS = 30; // 반복 간격(ms) — 작을수록 더 빠름
+const BLOCK_SIZE = 8; // 한 번에 붙일 글자 수 (조정 가능)
+const TICK_DELAY_MS = 10; // 반복 간격(ms) — 작을수록 더 빠름
 
 const Chat = ({ messages: initialMessages, roomId, isInit }: ChatProps) => {
   const [inputValue, setInputValue] = useState<string>("");
@@ -113,8 +113,9 @@ const Chat = ({ messages: initialMessages, roomId, isInit }: ChatProps) => {
         // BLOCK_SIZE만큼 꺼내서 붙임
         const take = buf.splice(0, BLOCK_SIZE).join("");
         setCurrentBotMessage((prev) => prev + take);
+        // console.log(streamEndedRef.current)
       } else {
-        if (buf.length === 0) {
+        if (buf.length === 0 && streamEndedRef.current) {
           // 스트림이 끝났고, 버퍼도 완전히 비었을 때만 종료
           if (intervalRef.current) {
             clearInterval(intervalRef.current);
@@ -151,6 +152,8 @@ const Chat = ({ messages: initialMessages, roomId, isInit }: ChatProps) => {
                   console.error(err);
                 }
               })();
+            }else{
+              // console.log("진정서가 발행되는 시점 아님")
             }
             currentBotMessageRef.current = "";
             setCurrentBotMessage("");
@@ -165,6 +168,10 @@ const Chat = ({ messages: initialMessages, roomId, isInit }: ChatProps) => {
       }
     }, TICK_DELAY_MS);
   };
+
+  useEffect(()=>{
+    // console.log(currentBotMessage)
+  }, [currentBotMessage])
 
   useEffect(() => {
     // console.log("Chat component mounted", isTyping);
