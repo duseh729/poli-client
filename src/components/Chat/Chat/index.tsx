@@ -58,6 +58,9 @@ const Chat = ({ messages: initialMessages, roomId, isInit }: ChatProps) => {
   const [currentBotMessage, setCurrentBotMessage] = useState("");
   const [isTyping, setIsTyping] = useState(false);
 
+  // 진정서 관련
+  const [isVisiblePetitionButton, setIsVisiblePetitionButton] = useState(false);
+
   const bufferRef = useRef<string[]>([]); // 표시 대기 중인 글자들
   const intervalRef = useRef<NodeJS.Timeout | null>(null);
   const currentBotMessageRef = useRef(""); // 전체 누적 원문
@@ -105,68 +108,71 @@ const Chat = ({ messages: initialMessages, roomId, isInit }: ChatProps) => {
 
   /** 타이핑 루프 시작 */
   const startTypingLoop = () => {
-  if (intervalRef.current) return; // 이미 동작 중이면 무시
+    if (intervalRef.current) return; // 이미 동작 중이면 무시
 
-  intervalRef.current = setInterval(() => {
-    const buf = bufferRef.current;
-    if (buf.length > 0) {
-      // BLOCK_SIZE만큼 꺼내서 붙임
-      const take = buf.splice(0, BLOCK_SIZE).join("");
-      setCurrentBotMessage((prev) => prev + take);
-    } else {
-      if (streamEndedRef.current) {
-        // 스트림 끝났고 버퍼도 완전히 비었음 → finalize
-        if (intervalRef.current) {
-          clearInterval(intervalRef.current);
-          intervalRef.current = null;
-        }
-        setIsTyping(false);
-
-        if (!appendedFinalRef.current) {
-          appendedFinalRef.current = true;
-
-          const finalText = currentBotMessageRef.current;
-
-          setChatMessages((prev) => [
-            ...prev,
-            {
-              createdAt: new Date().toISOString(),
-              message: currentBotMessageRef.current,
-              role: "AI",
-            },
-          ]);
-
-          // ✅ 최종 텍스트에서 체크
-          if (
-            finalText.includes("진정서 작성이 완료되었습니다.") ||
-            finalText.includes("진정서가 완성되었습니다. ")
-          ) {
-            (async () => {
-              try {
-                await initPetition(roomId, finalText);
-                setIsPetition(true);
-              } catch (err) {
-                console.error(err);
-              }
-            })();
-          } else {
-            // console.log("진정서가 발행되는 시점 아님");
+    intervalRef.current = setInterval(() => {
+      const buf = bufferRef.current;
+      if (buf.length > 0) {
+        // BLOCK_SIZE만큼 꺼내서 붙임
+        const take = buf.splice(0, BLOCK_SIZE).join("");
+        setCurrentBotMessage((prev) => prev + take);
+      } else {
+        if (streamEndedRef.current) {
+          // 스트림 끝났고 버퍼도 완전히 비었음 → finalize
+          if (intervalRef.current) {
+            clearInterval(intervalRef.current);
+            intervalRef.current = null;
           }
+          setIsTyping(false);
 
-          currentBotMessageRef.current = "";
-          setCurrentBotMessage("");
+          if (!appendedFinalRef.current) {
+            appendedFinalRef.current = true;
+
+            const finalText = currentBotMessageRef.current;
+
+            setChatMessages((prev) => [
+              ...prev,
+              {
+                createdAt: new Date().toISOString(),
+                message: currentBotMessageRef.current,
+                role: "AI",
+              },
+            ]);
+
+            // ✅ 최종 텍스트에서 체크
+            // 진정서 생성
+            if (
+              finalText.includes("진정서 작성이 완료되었습니다.") ||
+              finalText.includes("진정서가 완성되었습니다. ")
+            ) {
+              (async () => {
+                try {
+                  setIsVisiblePetitionButton(true);
+                  await initPetition(roomId, finalText);
+                  setIsPetition(true);
+                } catch (err) {
+                  console.error(err);
+                } finally {
+                  setIsVisiblePetitionButton(false);
+                }
+              })();
+            } else {
+              // console.log("진정서가 발행되는 시점 아님");
+            }
+
+            currentBotMessageRef.current = "";
+            setCurrentBotMessage("");
+          }
         }
+        // ❌ else 구문에서 interval 끄지 않음
+        // 스트림이 진행 중일 수 있으므로 그냥 대기만 한다.
       }
-      // ❌ else 구문에서 interval 끄지 않음
-      // 스트림이 진행 중일 수 있으므로 그냥 대기만 한다.
-    }
-  }, TICK_DELAY_MS);
-};
+    }, TICK_DELAY_MS);
+  };
 
-
-  useEffect(()=>{
+  useEffect(() => {
     // console.log(currentBotMessage)
-  }, [currentBotMessage])
+  }, [currentBotMessage]);
 
   useEffect(() => {
     // console.log("Chat component mounted", isTyping);
@@ -417,7 +423,8 @@ const Chat = ({ messages: initialMessages, roomId, isInit }: ChatProps) => {
       </S.ChatWindow>
 
       <S.ChatFooter ref={chatFooterRef}>
-        {isPetition ? (
+        {isVisiblePetitionButton ? <S.PendingPetition>진정서 문서화 중 •••</S.PendingPetition> : null}
+        {isPetition && !isVisiblePetitionButton ? (
           <S.PetitionButton
             onClick={() => {
               navigate(`/petition/${roomId}`);
