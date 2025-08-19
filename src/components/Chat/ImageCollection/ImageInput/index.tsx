@@ -14,6 +14,7 @@ export interface Evidence {
 interface ImageInputProps {
   files?: (File | Evidence)[];
   setFiles: (files: (File | Evidence)[]) => void;
+  isBlur?: boolean;
 }
 
 const MAX_FILE_SIZE = 400 * 1024 * 1024;
@@ -25,7 +26,11 @@ const allowedTypes = [
   "image/png",
 ];
 
-const ImageInput = ({ files = [], setFiles }: ImageInputProps) => {
+const ImageInput = ({
+  files = [],
+  setFiles,
+  isBlur = true,
+}: ImageInputProps) => {
   const [dragActive, setDragActive] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
@@ -152,7 +157,7 @@ const ImageInput = ({ files = [], setFiles }: ImageInputProps) => {
             })
           : null}
       </S.ImageInputWrapper>
-      {files.length >= 4 ? <S.ImageInputListBlur /> : null}
+      {files.length >= 4 && isBlur ? <S.ImageInputListBlur /> : null}
     </div>
   );
 };

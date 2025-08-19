@@ -612,7 +612,11 @@ const PetitionPage = () => {
 
               <S.PetitionInfoContentsWrapper>
                 {isUpdate ? (
-                  <ImageInput files={evidences} setFiles={setEvidences} />
+                  <ImageInput
+                    files={evidences}
+                    setFiles={setEvidences}
+                    isBlur={false}
+                  />
                 ) : (
                   complaint?.evidences?.map((evidence, index) => {
                     return (
