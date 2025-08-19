@@ -129,7 +129,9 @@ const ImageInput = ({ files = [], setFiles }: ImageInputProps) => {
               return (
                 <>
                   <S.ImageInputList key={index}>
-                    <div style={{ display: "flex", alignItems: "center", gap: 4 }}>
+                    <div
+                      style={{ display: "flex", alignItems: "center", gap: 4 }}
+                    >
                       <img src={check} alt="check" />
                       <span
                         style={{ cursor: "pointer" }}
@@ -150,7 +152,7 @@ const ImageInput = ({ files = [], setFiles }: ImageInputProps) => {
             })
           : null}
       </S.ImageInputWrapper>
-      <S.ImageInputListBlur />
+      {files.length >= 4 ? <S.ImageInputListBlur /> : null}
     </div>
   );
 };
