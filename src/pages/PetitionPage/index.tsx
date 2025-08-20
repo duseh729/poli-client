@@ -221,6 +221,10 @@ const PetitionPage = () => {
     setComplaintDate(complaint.complaintDate || null);
   }, [complaint]);
 
+  const handleData = (data: string)=>{
+    return data.length == 0 ? "미입력" : data
+  }
+
   return (
     <S.Container>
       <S.PetitionWrapper>
@@ -361,7 +365,7 @@ const PetitionPage = () => {
                       />
                     ) : (
                       <S.PetitionInfoContents>
-                        {complainantName}
+                        {handleData(complainantName)}
                       </S.PetitionInfoContents>
                     )}
                   </S.BasicWrapper>
@@ -375,7 +379,7 @@ const PetitionPage = () => {
                       />
                     ) : (
                       <S.PetitionInfoContents>
-                        {complainantAddress}
+                        {handleData(complainantAddress)}
                       </S.PetitionInfoContents>
                     )}
                   </S.BasicWrapper>
@@ -389,7 +393,7 @@ const PetitionPage = () => {
                       />
                     ) : (
                       <S.PetitionInfoContents>
-                        {complainantContact}
+                        {handleData(complainantContact)}
                       </S.PetitionInfoContents>
                     )}
                   </S.BasicWrapper>
@@ -410,7 +414,7 @@ const PetitionPage = () => {
                       />
                     ) : (
                       <S.PetitionInfoContents>
-                        {respondentName}
+                        {handleData(respondentName)}
                       </S.PetitionInfoContents>
                     )}
                   </S.BasicWrapper>
@@ -423,7 +427,7 @@ const PetitionPage = () => {
                       />
                     ) : (
                       <S.PetitionInfoContents>
-                        {respondentContact}
+                        {handleData(respondentContact)}
                       </S.PetitionInfoContents>
                     )}
                   </S.BasicWrapper>
@@ -438,7 +442,7 @@ const PetitionPage = () => {
                       />
                     ) : (
                       <S.PetitionInfoContents>
-                        {respondentSpecialNotes}
+                        {handleData(respondentSpecialNotes)}
                       </S.PetitionInfoContents>
                     )}
                   </S.BasicWrapper>
@@ -500,7 +504,7 @@ const PetitionPage = () => {
                       />
                     ) : (
                       <S.PetitionInfoContents>
-                        {siteName}
+                        {handleData(siteName)}
                       </S.PetitionInfoContents>
                     )}
                   </S.Wrapper>
@@ -514,7 +518,7 @@ const PetitionPage = () => {
                         setValue={(newValue) => setSiteUrl(newValue)}
                       />
                     ) : (
-                      <S.PetitionInfoContents>{siteUrl}</S.PetitionInfoContents>
+                      <S.PetitionInfoContents>{handleData(siteUrl)}</S.PetitionInfoContents>
                     )}
                   </S.Wrapper>
                 </S.ColumnWrapper>
@@ -537,7 +541,7 @@ const PetitionPage = () => {
                         />
                       ) : (
                         <S.PetitionInfoContents>
-                          {crimeName}
+                          {handleData(crimeName)}
                         </S.PetitionInfoContents>
                       )}
                     </S.Wrapper>
@@ -552,7 +556,7 @@ const PetitionPage = () => {
                         />
                       ) : (
                         <S.PetitionInfoContents>
-                          {intentToPunish}
+                          {handleData(intentToPunish)}
                         </S.PetitionInfoContents>
                       )}
                     </S.Wrapper>
@@ -575,7 +579,7 @@ const PetitionPage = () => {
                   />
                 ) : (
                   <S.PetitionInfoContents>
-                    {incidentDescription}
+                    {handleData(incidentDescription)}
                   </S.PetitionInfoContents>
                 )}
               </S.Wrapper>
@@ -591,7 +595,7 @@ const PetitionPage = () => {
                   />
                 ) : (
                   <S.PetitionInfoContents>
-                    {incidentDetails}
+                    {handleData(incidentDetails)}
                   </S.PetitionInfoContents>
                 )}
               </S.Wrapper>
