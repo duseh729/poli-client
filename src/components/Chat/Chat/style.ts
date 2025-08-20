@@ -285,10 +285,10 @@ export const LoadingSpinner = styled.img`
 
   @keyframes spin {
     0% {
-      transform: rotate(360deg);
+      transform: rotate(0deg);
     }
     100% {
-      transform: rotate(0deg);
+      transform: rotate(360deg);
     }
   }
 `;
