@@ -239,6 +239,8 @@ export const PetitionInfoContents = styled(motion.span)`
 
   overflow-wrap: anywhere;
   word-break: break-all;
+
+  cursor: pointer;
 `;
 
 export const PetitionDefalutInfoWrapper = styled(motion.div)`

@@ -221,9 +221,9 @@ const PetitionPage = () => {
     setComplaintDate(complaint.complaintDate || null);
   }, [complaint]);
 
-  const handleData = (data: string)=>{
-    return data.length == 0 ? "미입력" : data
-  }
+  const handleData = (data: string) => {
+    return data.length == 0 ? "미입력" : data;
+  };
 
   return (
     <S.Container>
@@ -518,7 +518,9 @@ const PetitionPage = () => {
                         setValue={(newValue) => setSiteUrl(newValue)}
                       />
                     ) : (
-                      <S.PetitionInfoContents>{handleData(siteUrl)}</S.PetitionInfoContents>
+                      <S.PetitionInfoContents>
+                        {handleData(siteUrl)}
+                      </S.PetitionInfoContents>
                     )}
                   </S.Wrapper>
                 </S.ColumnWrapper>
@@ -624,7 +626,10 @@ const PetitionPage = () => {
                 ) : (
                   complaint?.evidences?.map((evidence, index) => {
                     return (
-                      <S.PetitionInfoContents key={index}>
+                      <S.PetitionInfoContents
+                        key={index}
+                        onClick={() => window.open(evidence.fileUrl, "_blank")}
+                      >
                         {evidence.fileName}
                       </S.PetitionInfoContents>
                     );
