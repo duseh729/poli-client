@@ -15,9 +15,9 @@ const Main = () => (
       />
     </S.LogoContainer>
     <S.Title>
-      사이버 사기, 폴리와 함께 빠르고 든든하게
+      사이버 사기, 폴리와 함께 <S.ResponsiveBr />빠르고 든든하게
       <br />
-      상담부터 진정서까지 한 번에 해결하세요!
+      상담부터 진정서까지 <S.ResponsiveBr />한 번에 해결하세요!
     </S.Title>
   </S.Container>
 );

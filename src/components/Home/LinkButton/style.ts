@@ -1,5 +1,6 @@
 import styled from "@emotion/styled";
 import { css } from "@emotion/react";
+import { media } from "@/constants/media";
 
 export const Button = styled.button`
   display: inline-flex;
@@ -9,6 +10,7 @@ export const Button = styled.button`
   align-items: center;
   gap: 12px;
   flex-shrink: 0;
+
   border-radius: 100px;
   background: #1e1e1e;
   color: white;
@@ -21,6 +23,13 @@ export const Button = styled.button`
   cursor: pointer;
   &:hover {
     background: #374151;
+  }
+
+  ${media.mobile} {
+    display: flex;
+    padding: 10px 16px 10px 20px;
+
+    font-size: 18px;
   }
 `;
 
