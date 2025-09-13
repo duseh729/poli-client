@@ -26,7 +26,7 @@ export const Title = styled.h1`
 `;
 
 export const ResponsiveBr = styled.br`
-  @media (min-width: 768px) {
+  @media (min-width: 600px) {
     display: none;
   }
 `;
