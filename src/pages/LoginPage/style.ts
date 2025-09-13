@@ -9,7 +9,7 @@ export const Container = styled.div`
   justify-content: center;
   align-items: center;
 
-  ${media.mobile}{
+  ${media.mobile} {
     padding: 0 16px;
   }
 `;
@@ -31,7 +31,7 @@ export const Title = styled.header`
   margin-bottom: 32px;
   line-height: 150%;
 
-  ${media.mobile}{
+  ${media.mobile} {
     font-size: 28px;
   }
 `;
@@ -62,9 +62,9 @@ export const Input = styled.input<{ hasError?: boolean }>`
     top: 0;
   }
 
-  ${media.mobile}{
+  ${media.mobile} {
     height: 54px;
-    font-size: 18px
+    font-size: 18px;
   }
 `;
 
@@ -96,9 +96,9 @@ export const Button = styled.button`
     background-color: #3b82f6;
   }
 
-  ${media.mobile}{
+  ${media.mobile} {
     height: 54px;
-    font-size: 18px
+    font-size: 18px;
   }
 `;
 
@@ -124,8 +124,8 @@ export const ErrorText = styled.div`
   min-height: 20px;
   padding-left: 17px;
 
-  ${media.mobile}{
-  min-height: 12px;
+  ${media.mobile} {
+    min-height: 12px;
     font-size: 12px;
   }
 `;
