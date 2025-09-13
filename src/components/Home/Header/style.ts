@@ -1,6 +1,7 @@
 import styled from "@emotion/styled";
 import { css } from "@emotion/react";
 import { Link } from "react-router-dom";
+import { media } from "@/constants/media";
 
 export const Container = styled.div`
   display: flex;
@@ -8,6 +9,11 @@ export const Container = styled.div`
   align-items: center;
   margin: 0 auto;
   padding: 21px 60px 20px 60px;
+
+  ${media.mobile}{
+    padding: 20px 16px;
+    height: 56px;
+  }
 `;
 
 export const StyledLink = styled(Link)`
