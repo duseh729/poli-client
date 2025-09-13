@@ -1,3 +1,4 @@
+import { media } from "@/constants/media";
 import styled from "@emotion/styled";
 import { Link } from "react-router-dom";
 
@@ -7,13 +8,18 @@ export const Container = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+
+  ${media.mobile}{
+    padding: 0 16px;
+  }
 `;
 
 export const Form = styled.form`
   display: flex;
   flex-direction: column;
   align-items: center;
-  width: 410px;
+  max-width: 410px;
+  width: 100%;
   border-radius: 8px;
 `;
 
@@ -23,10 +29,16 @@ export const Title = styled.header`
   font-weight: 700;
   font-size: 40px;
   margin-bottom: 32px;
+  line-height: 150%;
+
+  ${media.mobile}{
+    font-size: 28px;
+  }
 `;
 
 export const InputContainer = styled.div`
-  width: 410px;
+  max-width: 410px;
+  width: 100%;
 `;
 
 export const InputWrapper = styled.div`
@@ -35,10 +47,12 @@ export const InputWrapper = styled.div`
 
 export const Input = styled.input<{ hasError?: boolean }>`
   width: 100%;
-  padding: 20px;
+  height: 70px;
   border: 1px solid ${({ hasError }) => (hasError ? "red" : "#808996")};
   border-radius: 35px;
-  font-size: 16px;
+  font-size: 22px;
+  font-weight: 600;
+  padding: 0 20px;
   &:focus {
     outline: none;
     border-color: ${({ hasError }) => (hasError ? "red" : "#3b82f6")};
@@ -46,6 +60,11 @@ export const Input = styled.input<{ hasError?: boolean }>`
   &:focus + .focus-text {
     opacity: 1;
     top: 0;
+  }
+
+  ${media.mobile}{
+    height: 54px;
+    font-size: 18px
   }
 `;
 
@@ -68,13 +87,18 @@ export const Button = styled.button`
   color: white;
   border: none;
   border-radius: 35px;
-  font-size: 18px;
-  font-weight: bold;
+  font-size: 26px;
+  font-weight: 600;
   cursor: pointer;
   margin-bottom: 48px;
   font-family: "Wanted Sans";
   &:hover {
     background-color: #3b82f6;
+  }
+
+  ${media.mobile}{
+    height: 54px;
+    font-size: 18px
   }
 `;
 
@@ -99,4 +123,9 @@ export const ErrorText = styled.div`
   font-weight: 500;
   min-height: 20px;
   padding-left: 17px;
+
+  ${media.mobile}{
+  min-height: 12px;
+    font-size: 12px;
+  }
 `;
