@@ -25,7 +25,7 @@ export const Sidebar = styled(motion.div)`
   }
 `;
 
-export const Backdrop = styled.div`
+export const Backdrop = styled(motion.div)`
   display: none;
 
   ${media.mobile} {
