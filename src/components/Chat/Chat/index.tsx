@@ -454,12 +454,11 @@ const Chat = ({ messages: initialMessages, roomId, isInit }: ChatProps) => {
                 placeholder="친구에게 말하듯이 편하게, 사건에 대해 말해 주세요."
                 onChange={(e) => setInputValue(e.target.value)}
                 onKeyPress={(e) => {
-                  if (e.key === "Enter" && !e.shiftKey && !isPending) {
+                  if (e.key === "Enter" && !e.shiftKey && !isPending && !isTyping) {
                     e.preventDefault();
                     handleSend();
                   }
                 }}
-                disabled={isPending || isTyping}
               />
               <S.SendButton
                 onClick={() => {
