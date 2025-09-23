@@ -1,18 +1,43 @@
 import styled from "@emotion/styled";
 import { motion } from "framer-motion";
+import { media } from "@/constants/media";
 
 export const Container = styled(motion.div)`
   display: flex;
   height: 100%;
 `;
 
-export const Sidebar = styled.div`
+export const Sidebar = styled(motion.div)`
   width: 260px;
   height: 100vh;
   border-right: 1px solid #dddce3;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  background-color: white;
+  z-index: 101;
+
+  ${media.mobile} {
+    position: fixed;
+    top: 0;
+    left: 0;
+    border-right: 1px solid #dddce3;
+  }
+`;
+
+export const Backdrop = styled.div`
+  display: none;
+
+  ${media.mobile} {
+    display: block;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 100;
+  }
 `;
 
 export const LogoImage = styled.img`
@@ -205,6 +230,10 @@ export const OutletContainer = styled(motion.div)`
   display: flex;
   justify-content: center;
   align-items: center;
+
+  ${media.mobile} {
+    padding-top: 56px;
+  }
 `;
 
 export const MenuSelectIcon = styled.img`
