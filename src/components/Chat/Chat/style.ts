@@ -2,6 +2,7 @@ import { COLORS } from "@/constants/color";
 import styled from "@emotion/styled";
 import { motion } from "framer-motion";
 import TextareaAutosize from "react-textarea-autosize";
+import { media } from "@/constants/media";
 
 type HeadingProps = {
   level: number;
@@ -297,7 +298,12 @@ export const ChatFooter = styled.div`
   position: fixed;
   bottom: 0;
   background-color: white;
-  width: 770px;
+  max-width: 770px;
+  width: 100%;
+
+  ${media.mobile} {
+    padding: 0px 16px;
+  }
 `;
 
 export const PendingPetition = styled.div`
@@ -363,6 +369,7 @@ export const InputWrapper = styled.div`
   display: flex;
   flex-direction: column;
   width: 100%;
+  max-width: 770px;
   position: relative;
   padding: 18px;
   background-color: #f6f8fb;
@@ -436,11 +443,7 @@ export const SendButton = styled.button`
 `;
 
 export const RecommendMessage = styled.button<{ disabled?: boolean }>`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
   padding: 4px 10px;
-  gap: 10px;
   border-radius: 14px;
   border: 1px solid #c0cbd9;
   background-color: transparent;
@@ -459,6 +462,14 @@ export const RecommendMessage = styled.button<{ disabled?: boolean }>`
   &:disabled:hover {
     border-color: #c0cbd9;
     color: #808996;
+  }
+
+  ${media.mobile} {
+    border: 1px solid var(--grey-4, #c0cbd9);
+    background: #fff;
+
+    /* Shadow-Btn-floating */
+    box-shadow: 0 0 4px 0 rgba(0, 0, 0, 0.16);
   }
 `;
 
@@ -576,4 +587,51 @@ export const ProgressText = styled.span<{ progress: number }>`
   color: ${(props) => (props.progress === 100 ? "#0059FF" : "#2e3034")};
   font-weight: 600;
   font-size: 14px;
+`;
+
+export const RecommendMessageWrapper = styled.div`
+  display: flex;
+  gap: 8px;
+
+  ${media.mobile} {
+    flex-direction: column;
+    gap: 10px;
+  }
+`;
+
+export const RecommendToggleButton = styled.button`
+  border-radius: 16px;
+  padding: 4px 10px;
+  background-color: ${COLORS.GRAY4};
+  font-size: 12px;
+  font-family: "Wanted Sans";
+  font-weight: 400;
+  line-height: 150%;
+  color: #fff;
+  border: none;
+  cursor: pointer;
+
+  ${media.mobile} {
+    width: fit-content;
+  }
+`;
+
+export const RecommendMessageList = styled.div`
+  display: flex;
+  gap: 8px;
+
+  ${media.mobile} {
+    flex-direction: column;
+    gap: 10px;
+  }
+`;
+
+export const RecommendContainer = styled.div`
+  position: absolute;
+  bottom: calc(100% + 10px);
+  left: 0px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 8px;
 `;

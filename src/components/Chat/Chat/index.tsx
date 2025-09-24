@@ -27,6 +27,7 @@ import { useNavigate } from "react-router-dom";
 import { getPetition, initPetition } from "@/api/petition";
 import { useComplaintStore } from "@/stores/petition";
 import Complaint from "@/types/petition";
+import useWindowWidth from "@/hooks/useWindowWidth";
 
 type ChatProps = {
   messages: ChatMessage[];
@@ -80,8 +81,18 @@ const Chat = ({ messages: initialMessages, roomId, isInit }: ChatProps) => {
   const [autoScroll, setAutoScroll] = useState(true);
 
   const [isPetition, setIsPetition] = useState(false);
+  const [showRecommendMessages, setShowRecommendMessages] = useState(false);
 
   const navigate = useNavigate();
+  const width = useWindowWidth();
+
+  useEffect(() => {
+    if (width > 600) {
+      setShowRecommendMessages(true);
+    } else {
+      setShowRecommendMessages(false);
+    }
+  }, [width]);
 
   useEffect(() => {
     if (chatFooterRef.current) {
@@ -423,7 +434,9 @@ const Chat = ({ messages: initialMessages, roomId, isInit }: ChatProps) => {
       </S.ChatWindow>
 
       <S.ChatFooter ref={chatFooterRef}>
-        {isVisiblePetitionButton ? <S.PendingPetition>진정서 문서화 중 •••</S.PendingPetition> : null}
+        {isVisiblePetitionButton ? (
+          <S.PendingPetition>진정서 문서화 중 •••</S.PendingPetition>
+        ) : null}
         {isPetition && !isVisiblePetitionButton ? (
           <S.PetitionButton
             onClick={() => {
@@ -451,10 +464,19 @@ const Chat = ({ messages: initialMessages, roomId, isInit }: ChatProps) => {
             >
               <S.Textarea
                 value={inputValue}
-                placeholder="친구에게 말하듯이 편하게, 사건에 대해 말해 주세요."
+                placeholder={
+                  width <= 600
+                    ? "사건에 대해 말해주세요"
+                    : "친구에게 말하듯이 편하게, 사건에 대해 말해 주세요."
+                }
                 onChange={(e) => setInputValue(e.target.value)}
                 onKeyPress={(e) => {
-                  if (e.key === "Enter" && !e.shiftKey && !isPending && !isTyping) {
+                  if (
+                    e.key === "Enter" &&
+                    !e.shiftKey &&
+                    !isPending &&
+                    !isTyping
+                  ) {
                     e.preventDefault();
                     handleSend();
                   }
@@ -470,7 +492,7 @@ const Chat = ({ messages: initialMessages, roomId, isInit }: ChatProps) => {
               </S.SendButton>
             </div>
             {/* 추천 질문 영역 */}
-            <div style={{ display: "flex", gap: "8px" }}>
+            <div style={{ display: "flex", gap: "8px", alignItems: "center" }}>
               <div
                 style={{
                   borderRadius: 16,
@@ -481,24 +503,48 @@ const Chat = ({ messages: initialMessages, roomId, isInit }: ChatProps) => {
                   fontWeight: 400,
                   lineHeight: "150%",
                   color: "#fff",
+                  cursor: "pointer",
+                }}
+                onClick={() => {
+                  if (width <= 600) {
+                    setShowRecommendMessages((prev) => !prev);
+                  }
                 }}
               >
                 추천 질문
               </div>
-              {recommendMessages.map((msg, index) => {
-                return (
+              {width > 600 &&
+                showRecommendMessages &&
+                recommendMessages.map((msg, index) => {
+                  return (
+                    <S.RecommendMessage
+                      key={index}
+                      onClick={() => {
+                        handleSend(msg.constents);
+                      }}
+                      disabled={isPending || isTyping}
+                    >
+                      {msg.constents}
+                    </S.RecommendMessage>
+                  );
+                })}
+            </div>
+            {width <= 600 && showRecommendMessages && (
+              <S.RecommendContainer>
+                {recommendMessages.map((msg, index) => (
                   <S.RecommendMessage
                     key={index}
                     onClick={() => {
                       handleSend(msg.constents);
+                      setShowRecommendMessages(false); // Hide after selection
                     }}
                     disabled={isPending || isTyping}
                   >
                     {msg.constents}
                   </S.RecommendMessage>
-                );
-              })}
-            </div>
+                ))}
+              </S.RecommendContainer>
+            )}
           </S.InputWrapper>
           <S.DisclaimerText>
             폴리가 제공한 법률상담에 대해 어떠한 민사, 형사상의 책임도 지지
