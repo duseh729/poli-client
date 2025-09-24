@@ -44,7 +44,7 @@ const ImageCollection = ({
       exit={{ opacity: 0, scale: 0.9, y: 20 }}
       transition={{ duration: 0.5 }}
     >
-      <S.FormWrapper style={{ height: `calc(100vh - ${formHeight}px)` }}>
+      <S.FormWrapper formHeight={formHeight}>
         <S.Form>
           <S.Title>
             <S.TitleText>
