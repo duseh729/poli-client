@@ -1,3 +1,4 @@
+import { media } from "@/constants/media";
 import styled from "@emotion/styled";
 
 export const ImageInputContainer = styled.div`
@@ -77,6 +78,11 @@ export const ImageInputWrapper = styled.div`
   margin-top: 20px;
 
   scrollbar-width: thin;
+
+  ${media.mobile}{
+    min-height: 0px;
+    margin-top: ${({ fileLength }: { fileLength: number }) => (fileLength > 0 ? '20px' : '0px')};
+  }
 `;
 
 export const ImageInputList = styled.div`

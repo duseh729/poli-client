@@ -112,7 +112,7 @@ const ImageInput = ({
           업로드 가능한 파일 유형: heic, pdf, jpg, jpeg, png | 최대 400MB
         </S.ImageInputLimitedText>
         <S.ImageInputButton onClick={handleButtonClick}>
-          찾기
+          증거 자료 찾기
         </S.ImageInputButton>
       </S.ImageInputContainer>
 
@@ -124,7 +124,7 @@ const ImageInput = ({
         multiple
       />
 
-      <S.ImageInputWrapper>
+      <S.ImageInputWrapper fileLength={files.length}>
         {Array.isArray(files) && files.length > 0
           ? files.map((f, index) => {
               const fileName = f instanceof File ? f.name : f.fileName;
@@ -132,27 +132,25 @@ const ImageInput = ({
                 f instanceof File ? URL.createObjectURL(f) : f.fileUrl;
 
               return (
-                <>
-                  <S.ImageInputList key={index}>
-                    <div
-                      style={{ display: "flex", alignItems: "center", gap: 4 }}
-                    >
-                      <img src={check} alt="check" />
-                      <span
-                        style={{ cursor: "pointer" }}
-                        onClick={() => window.open(fileUrl, "_blank")}
-                      >
-                        {fileName}
-                      </span>
-                    </div>
-                    <div
+                <S.ImageInputList key={index}>
+                  <div
+                    style={{ display: "flex", alignItems: "center", gap: 4 }}
+                  >
+                    <img src={check} alt="check" />
+                    <span
                       style={{ cursor: "pointer" }}
-                      onClick={() => handleRemove(index)}
+                      onClick={() => window.open(fileUrl, "_blank")}
                     >
-                      <img src={cancel} alt="cancel" />
-                    </div>
-                  </S.ImageInputList>
-                </>
+                      {fileName}
+                    </span>
+                  </div>
+                  <div
+                    style={{ cursor: "pointer" }}
+                    onClick={() => handleRemove(index)}
+                  >
+                    <img src={cancel} alt="cancel" />
+                  </div>
+                </S.ImageInputList>
               );
             })
           : null}
