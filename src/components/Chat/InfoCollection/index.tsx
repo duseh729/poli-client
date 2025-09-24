@@ -96,7 +96,7 @@ const InfoCollection = ({
       transition={{ duration: 0.5 }}
     >
       <LocalizationProvider dateAdapter={AdapterDayjs} adapterLocale="ko">
-        <S.FormWrapper style={{ height: `calc(100vh - ${formHeight}px)` }}>
+        <S.FormWrapper formHeight={formHeight}>
           <S.Form>
             <S.Title>
               <S.TitleText>
@@ -122,137 +122,139 @@ const InfoCollection = ({
                   날짜와 시간을 선택해 주세요.
                 </S.Label>
                 <S.InputRow>
-                  <div>
-                    <DatePicker
-                      value={selectedDate}
-                      onChange={(newDate) => setSelectedDate(newDate)}
-                      format="YYYY.MM.DD"
-                      slotProps={{
-                        textField: {
-                          placeholder: "날짜",
-                          inputProps: {
-                            style: {
-                              color: "#0F0F10",
-                              fontFamily: "Wanted Sans",
-                              fontSize: "14px",
-                              fontWeight: 500,
-                            },
+                  <DatePicker
+                    value={selectedDate}
+                    onChange={(newDate) => setSelectedDate(newDate)}
+                    format="YYYY.MM.DD"
+                    slotProps={{
+                      textField: {
+                        placeholder: "날짜",
+                        inputProps: {
+                          style: {
+                            color: "#0F0F10",
+                            fontFamily: "Wanted Sans",
+                            fontSize: "14px",
+                            fontWeight: 500,
                           },
                         },
-                        popper: {
-                          sx: {
-                            "& .MuiPaper-root": {
-                              width: "340px",
+                      },
+                      popper: {
+                        sx: {
+                          "& .MuiPaper-root": {
+                            maxWidth: "340px",
+                            width: "100%",
+                            borderRadius: "10px",
+                          },
+                        },
+                      },
+                    }}
+                    sx={{
+                      maxWidth: "340px",
+                      width: "100%",
+                      "& .MuiOutlinedInput-root": {
+                        height: "56px",
+                        backgroundColor: "#f6f8fb",
+                        borderRadius: "10px",
+                        "& fieldset": {
+                          borderColor: "#c0cbd9",
+                        },
+                        "&:hover fieldset": {
+                          borderColor: "#0059ff",
+                        },
+                        "&.Mui-focused fieldset": {
+                          border: "1px solid #0059ff",
+                        },
+                      },
+                    }}
+                  />
+                  <TimePicker
+                    value={selectedTime}
+                    format="a hh:mm"
+                    minutesStep={1}
+                    ampm={true}
+                    onChange={(newTime) => setSelectedTime(newTime)}
+                    slotProps={{
+                      textField: {
+                        placeholder: "시간",
+                        inputProps: {
+                          style: {
+                            color: "#0F0F10",
+                            fontFamily: "Wanted Sans",
+                            fontSize: "14px",
+                            fontWeight: 500,
+                          },
+                        },
+                      },
+                      popper: {
+                        sx: {
+                          maxWidth: "340px",
+                          width: "100%",
+                          "& .MuiPaper-root": {
+                            maxWidth: "340px",
+                            width: "100%",
+                            borderRadius: "10px",
+                          },
+                          "& .MuiMultiSectionDigitalClock-root": {
+                            display: "flex",
+                          },
+                          "& .MuiMultiSectionDigitalClockSection-root": {
+                            flex: "1 1 33.33%",
+                            textAlign: "center",
+                            overflowY: "auto",
+                            height: "200px",
+                            display: "flex",
+                            flexDirection: "column",
+                            alignItems: "center",
+                            "::-webkit-scrollbar": {
+                              width: "8px",
+                            },
+                            "::-webkit-scrollbar-thumb": {
+                              backgroundColor: "#c0cbd9",
                               borderRadius: "10px",
                             },
+                            "::-webkit-scrollbar-track": {
+                              background: "#f6f8fb",
+                            },
+                          },
+                          "& .Mui-selected": {
+                            backgroundColor: "#BDD5FF !important",
+                            color: "#0F0F10 !important",
+                            fontWeight: 600,
+                            fontFamily: "Wanted Sans",
+                            width: "100%",
+                            display: "block",
+                            padding: "8px 12px",
+                            boxSizing: "border-box",
+                            borderRadius: "7px",
+                          },
+                          "& .MuiTypography-root": {
+                            fontSize: "22px",
+                            fontWeight: 500,
+                            color: "#0F0F10 !important",
+                            fontFamily: "Wanted Sans",
                           },
                         },
-                      }}
-                      sx={{
-                        width: "340px",
-                        "& .MuiOutlinedInput-root": {
-                          height: "56px",
-                          backgroundColor: "#f6f8fb",
-                          borderRadius: "10px",
-                          "& fieldset": {
-                            borderColor: "#c0cbd9",
-                          },
-                          "&:hover fieldset": {
-                            borderColor: "#0059ff",
-                          },
-                          "&.Mui-focused fieldset": {
-                            border: "1px solid #0059ff",
-                          },
+                      },
+                    }}
+                    sx={{
+                      maxWidth: "340px",
+                      width: "100%",
+                      "& .MuiOutlinedInput-root": {
+                        height: "56px",
+                        backgroundColor: "#f6f8fb",
+                        borderRadius: "10px",
+                        "& fieldset": {
+                          borderColor: "#c0cbd9",
                         },
-                      }}
-                    />
-                  </div>
-                  <div>
-                    <TimePicker
-                      value={selectedTime}
-                      format="a hh:mm"
-                      minutesStep={1}
-                      ampm={true}
-                      onChange={(newTime) => setSelectedTime(newTime)}
-                      slotProps={{
-                        textField: {
-                          placeholder: "시간",
-                          inputProps: {
-                            style: {
-                              color: "#0F0F10",
-                              fontFamily: "Wanted Sans",
-                              fontSize: "14px",
-                              fontWeight: 500,
-                            },
-                          },
+                        "&:hover fieldset": {
+                          borderColor: "#0059ff",
                         },
-                        popper: {
-                          sx: {
-                            "& .MuiPaper-root": {
-                              width: "340px",
-                              borderRadius: "10px",
-                            },
-                            "& .MuiMultiSectionDigitalClock-root": {
-                              display: "flex",
-                            },
-                            "& .MuiMultiSectionDigitalClockSection-root": {
-                              flex: "1 1 33.33%",
-                              textAlign: "center",
-                              overflowY: "auto",
-                              height: "200px",
-                              display: "flex",
-                              flexDirection: "column",
-                              alignItems: "center",
-                              "::-webkit-scrollbar": {
-                                width: "8px",
-                              },
-                              "::-webkit-scrollbar-thumb": {
-                                backgroundColor: "#c0cbd9",
-                                borderRadius: "10px",
-                              },
-                              "::-webkit-scrollbar-track": {
-                                background: "#f6f8fb",
-                              },
-                            },
-                            "& .Mui-selected": {
-                              backgroundColor: "#BDD5FF !important",
-                              color: "#0F0F10 !important",
-                              fontWeight: 600,
-                              fontFamily: "Wanted Sans",
-                              width: "100%",
-                              display: "block",
-                              padding: "8px 12px",
-                              boxSizing: "border-box",
-                              borderRadius: "7px",
-                            },
-                            "& .MuiTypography-root": {
-                              fontSize: "22px",
-                              fontWeight: 500,
-                              color: "#0F0F10 !important",
-                              fontFamily: "Wanted Sans",
-                            },
-                          },
+                        "&.Mui-focused fieldset": {
+                          border: "1px solid #0059ff",
                         },
-                      }}
-                      sx={{
-                        width: "340px",
-                        "& .MuiOutlinedInput-root": {
-                          height: "56px",
-                          backgroundColor: "#f6f8fb",
-                          borderRadius: "10px",
-                          "& fieldset": {
-                            borderColor: "#c0cbd9",
-                          },
-                          "&:hover fieldset": {
-                            borderColor: "#0059ff",
-                          },
-                          "&.Mui-focused fieldset": {
-                            border: "1px solid #0059ff",
-                          },
-                        },
-                      }}
-                    />
-                  </div>
+                      },
+                    }}
+                  />
                 </S.InputRow>
               </S.FormGroup>
               <S.FormGroup style={{ marginTop: 34 }}>

@@ -2,10 +2,16 @@ import styled from "@emotion/styled";
 import { css } from "@emotion/react";
 import { motion } from "framer-motion";
 import { COLORS } from "@/constants/color";
+import { media } from "@/constants/media";
 
 export const Container = styled(motion.div)`
   height: 100%;
+  width: 100%;
   position: relative;
+
+  ${media.mobile} {
+    padding: 8px 16px;
+  }
 `;
 
 export const FormWrapper = styled.div`
@@ -13,13 +19,27 @@ export const FormWrapper = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  min-width: 770px;
+  height: ${(props: { formHeight: number }) => `calc(100vh - ${props.formHeight}px)`};
+  
+  ${media.mobile} {
+    overflow: auto;
+    min-width: auto;
+    padding-bottom: 120px;
+    height: auto;
+  }
 `;
 
 export const Form = styled.form`
   border-radius: 20px;
-  width: 770px;
-  height: auto;
+  max-width: 770px;
+  width: 100%;
+  /* height: auto; */
   border: 1px solid #a5c6ff;
+
+  ${media.mobile} {
+    width: 100%;
+  }
 `;
 
 export const Title = styled.h2`
@@ -53,7 +73,8 @@ export const Highlight = styled.span`
 `;
 
 export const Input = styled.input`
-  width: 340px;
+  width: 100%;
+  max-width: 340px;
   height: 56px;
   padding: 10px;
   border: 1px solid #c0cbd9;
@@ -65,8 +86,12 @@ export const Input = styled.input`
 
 export const InputRow = styled.div`
   display: flex;
-  justify-content: space-between;
+  /* justify-content: space-between; */
   gap: 10px;
+
+  ${media.mobile} {
+    flex-direction: column;
+  }
 `;
 
 export const textAreaStyle = (isMaxLength: boolean) => css`
@@ -164,6 +189,11 @@ export const FooterWrapper = styled.div`
   background: white;
   width: 100%;
   padding-bottom: 15px;
+
+  ${media.mobile} {
+    position: fixed;
+    width: calc(100% - 16px);
+  }
 `;
 
 export const StartButton = styled.button`
@@ -172,7 +202,6 @@ export const StartButton = styled.button`
   border-radius: 100px;
   color: #ffffff;
   font-size: 18px;
-  padding: 15px 30px;
   width: 100%;
   height: 70px;
   box-sizing: border-box;
@@ -185,6 +214,11 @@ export const StartButton = styled.button`
   &:disabled {
     background: #c0cbd9;
     cursor: not-allowed;
+  }
+
+  ${media.mobile} {
+    height: 54px;
+    width: calc(100% - 16px);
   }
 `;
 
