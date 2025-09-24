@@ -35,24 +35,6 @@ function App() {
       <Global styles={GlobalStyles} />
       <AppRouter />
       <Toaster position="top-center" />
-      {/* {showLoader && (
-        <div
-          css={css`
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.3);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            z-index: 9999;
-          `}
-        >
-          <BeatLoader color="#3498db" loading={showLoader} size={25} />
-        </div>
-      )} */}
       {import.meta.env.MODE === "development" && <ReactQueryDevtools />}
     </QueryClientProvider>
   );

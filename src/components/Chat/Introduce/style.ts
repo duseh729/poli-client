@@ -1,13 +1,25 @@
 import styled from "@emotion/styled";
 import { css } from "@emotion/react";
 import { COLORS } from "@/constants/color";
+import { media } from "@/constants/media";
+
+export const ResponsiveBr = styled.br`
+  @media (min-width: 600px) {
+    display: none;
+  }
+`;
 
 export const Container = styled.div`
   display: flex;
   flex-direction: column;
-  /* align-items: center; */
+  align-items: center;
   justify-content: center;
   height: 100vh;
+
+  ${media.mobile} {
+    height: auto;
+    padding: 24px 16px 8px 16px;
+  }
 `;
 
 export const MainTitle = styled.h1`
@@ -17,6 +29,13 @@ export const MainTitle = styled.h1`
   font-style: normal;
   font-weight: 700;
   line-height: 150%; /* 54px */
+
+  ${media.mobile} {
+    text-align: center;
+
+    font-size: 30px;
+    line-height: 140%; /* 42px */
+  }
 `;
 
 export const Subtitle = styled.p`
@@ -25,6 +44,15 @@ export const Subtitle = styled.p`
   color: #2e3034;
   font-weight: 500;
   line-height: 150%;
+  text-align: center;
+
+  ${media.mobile} {
+    color: var(--grey-5, #808996);
+    text-align: center;
+
+    font-size: 16px;
+    margin-bottom: 62px;
+  }
 `;
 
 export const CardContainer = styled.div`
@@ -32,6 +60,13 @@ export const CardContainer = styled.div`
   justify-content: center;
   gap: 36px;
   margin: 32px 0 80px 0;
+
+  ${media.mobile} {
+    width: 100%;
+    flex-direction: column;
+    gap: 8px;
+    margin-bottom: 40px;
+  }
 `;
 
 export const Card = styled.div`
@@ -45,18 +80,45 @@ export const Card = styled.div`
   border: 1px solid #a5c6ff;
   border-radius: 32px;
   cursor: pointer;
+
+  ${media.mobile} {
+    flex-direction: row;
+    width: 100%;
+    height: 100%;
+    padding: 12px;
+    align-items: flex-start;
+    justify-content: flex-start;
+    border-radius: 8px;
+    gap: 12px;
+  }
 `;
 
 export const CardIcon = styled.img`
   width: 40px;
   height: 40px;
+
+  ${media.mobile} {
+    width: 24px;
+    height: 24px;
+  }
 `;
 
-export const CardName = styled.span`
+export const MoblieCardWrapper = styled.div`
+  ${media.mobile} {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+`;
+export const CardName = styled.p`
   color: #808996;
   font-size: 14px;
   font-weight: 600;
   margin: 31px 0 15px 0;
+
+  ${media.mobile}{
+    margin: 0px;
+  }
 `;
 
 export const CardText = styled.p`
@@ -131,6 +193,10 @@ export const Footer = styled.footer`
   font-weight: 500;
   color: #808996;
   margin-top: 20px;
+
+  ${media.mobile}{
+    margin-top: 12px;
+  }
 `;
 
 export const logoStyle = css`

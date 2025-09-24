@@ -233,6 +233,8 @@ export const OutletContainer = styled(motion.div)`
 
   ${media.mobile} {
     padding-top: 56px;
+    height: 100%;
+    box-sizing: border-box;
   }
 `;
 
