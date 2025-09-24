@@ -15,9 +15,14 @@ type ListItemProps = {
 export const ChatContainer = styled.div`
   display: flex;
   flex-direction: column;
-  width: 770px;
+  max-width: 770px;
+  width: 100%;
   height: 93vh;
   box-sizing: border-box;
+
+  ${media.mobile}{
+    padding: 0 32px 0 16px;
+  }
 `;
 
 export const ChatWindow = styled.div`
@@ -26,7 +31,6 @@ export const ChatWindow = styled.div`
   margin-bottom: 10px;
   display: flex;
   flex-direction: column;
-  align-items: center;
   overflow-y: auto;
 
   overflow: auto;
@@ -48,7 +52,7 @@ export const ChatWindow = styled.div`
 `;
 
 export const MessageContainer = styled.div`
-  width: 100%;
+  /* width: 100%; */
   margin: 15px 0;
 `;
 
@@ -249,7 +253,8 @@ export const Message = styled(motion.div)`
 `;
 
 export const UserMessageWrapper = styled(motion.div)`
-  max-width: 100%;
+  width: 100%;
+  max-width: 770px;
   display: flex;
   justify-content: flex-end;
 `;
@@ -300,10 +305,6 @@ export const ChatFooter = styled.div`
   background-color: white;
   max-width: 770px;
   width: 100%;
-
-  ${media.mobile} {
-    padding: 0px 16px;
-  }
 `;
 
 export const PendingPetition = styled.div`

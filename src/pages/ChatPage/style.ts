@@ -12,13 +12,6 @@ export const Wrapper = styled(motion.div)`
   align-items: center;
 `;
 
-export const Main = styled.div`
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  margin: auto;
-`;
-
 export const Title = styled.div`
   display: flex;
   align-items: center;
