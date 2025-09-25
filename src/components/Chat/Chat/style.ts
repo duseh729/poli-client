@@ -19,19 +19,19 @@ export const ChatContainer = styled.div`
   width: 100%;
   height: 93vh;
   box-sizing: border-box;
-
-  ${media.mobile}{
-    padding: 0 32px 0 16px;
-  }
 `;
 
 export const ChatWindow = styled.div`
-  flex: 1;
+  width: 100%;
+  max-width: 770px;
+
   border-radius: 12px;
   margin-bottom: 10px;
   display: flex;
   flex-direction: column;
   overflow-y: auto;
+
+  box-sizing: border-box;
 
   overflow: auto;
   scrollbar-width: none; /* Firefox */
@@ -49,10 +49,13 @@ export const ChatWindow = styled.div`
   ::-webkit-scrollbar-track {
     background: #f6f8fb;
   }
+
+  ${media.mobile} {
+    padding: 0 16px;
+  }
 `;
 
 export const MessageContainer = styled.div`
-  /* width: 100%; */
   margin: 15px 0;
 `;
 
@@ -305,6 +308,11 @@ export const ChatFooter = styled.div`
   background-color: white;
   max-width: 770px;
   width: 100%;
+  box-sizing: border-box;
+
+  ${media.mobile} {
+    padding: 0 16px;
+  }
 `;
 
 export const PendingPetition = styled.div`
@@ -379,7 +387,8 @@ export const InputWrapper = styled.div`
 `;
 
 export const Textarea = styled(TextareaAutosize)`
-  flex: 1;
+  width: 100%;
+  max-width: 770px;
   font-size: 16px;
   font-weight: 500;
   border: none;
@@ -441,6 +450,29 @@ export const SendButton = styled.button`
     width: 15px;
     height: 15px;
   }
+`;
+
+export const RecommendButton = styled.div<{ showRecommendMessages: boolean }>`
+  border-radius: 16px;
+  padding: 4px 10px;
+  background-color: ${COLORS.GRAY4};
+  font-size: 12px;
+  font-family: "Wanted Sans";
+  font-weight: 400;
+  line-height: 150%;
+  color: #fff;
+  cursor: pointer;
+
+  border: 1px solid ${COLORS.GRAY4};
+  box-sizing: border-box;
+
+  ${(props) =>
+    props.showRecommendMessages &&
+    `
+    border: 1px solid var(--main-default, #0059ff);
+    background: var(--grey-1, #fff);
+    color: var(--grey-7, #2E3034);
+  `}
 `;
 
 export const RecommendMessage = styled.button<{ disabled?: boolean }>`

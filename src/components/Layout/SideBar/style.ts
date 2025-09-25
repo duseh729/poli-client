@@ -232,6 +232,7 @@ export const OutletContainer = styled(motion.div)`
   align-items: center;
 
   ${media.mobile} {
+    width: 100%;
     padding-top: 56px;
     height: 100%;
     box-sizing: border-box;

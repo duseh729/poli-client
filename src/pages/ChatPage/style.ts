@@ -10,7 +10,6 @@ export const Container = styled.div`
 export const Wrapper = styled(motion.div)`
   display: flex;
   justify-content: center;
-  align-items: center;
 `;
 
 export const Title = styled.div`

@@ -289,7 +289,8 @@ export const ChatFooter = styled.div`
   position: fixed;
   bottom: 0;
   background-color: white;
-  width: 770px;
+  width: 100%;
+  max-width: 770px;
 `;
 
 export const InputContainer = styled.div`

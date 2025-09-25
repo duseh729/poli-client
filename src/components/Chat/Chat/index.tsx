@@ -181,14 +181,6 @@ const Chat = ({ messages: initialMessages, roomId, isInit }: ChatProps) => {
     }, TICK_DELAY_MS);
   };
 
-  useEffect(() => {
-    // console.log(currentBotMessage)
-  }, [currentBotMessage]);
-
-  useEffect(() => {
-    // console.log("Chat component mounted", isTyping);
-  }, [isTyping]);
-
   /** 메시지 전송 */
   const handleSend = async (value?: string) => {
     // if (isPending || isTyping) return;
@@ -329,7 +321,7 @@ const Chat = ({ messages: initialMessages, roomId, isInit }: ChatProps) => {
     // console.log(roomId)
     const fetchPetition = async () => {
       try {
-        const res = await getPetition(roomId);
+        await getPetition(roomId);
         // console.log(isPetition)
         setIsPetition(true);
       } catch (error) {
@@ -447,16 +439,6 @@ const Chat = ({ messages: initialMessages, roomId, isInit }: ChatProps) => {
             진정서 확인하기
           </S.PetitionButton>
         ) : null}
-        {/* {showProgress && (
-          <S.ProgrssWrapper>
-            <S.ProgressBox progress={progress}>
-              {progress === 100 && <img src={progressOn} alt="progress-on" />}
-              <S.ProgressText progress={progress}>
-                {`진정서 작성 중  ${progress}%`}
-              </S.ProgressText>
-            </S.ProgressBox>
-          </S.ProgrssWrapper>
-        )} */}
         <S.InputContainer>
           <S.InputWrapper>
             <div
@@ -493,26 +475,16 @@ const Chat = ({ messages: initialMessages, roomId, isInit }: ChatProps) => {
             </div>
             {/* 추천 질문 영역 */}
             <div style={{ display: "flex", gap: "8px", alignItems: "center" }}>
-              <div
-                style={{
-                  borderRadius: 16,
-                  padding: "4px 10px",
-                  backgroundColor: `${COLORS.GRAY4}`,
-                  fontSize: 12,
-                  fontFamily: "Wanted Sans",
-                  fontWeight: 400,
-                  lineHeight: "150%",
-                  color: "#fff",
-                  cursor: "pointer",
-                }}
+              <S.RecommendButton
                 onClick={() => {
                   if (width <= 600) {
                     setShowRecommendMessages((prev) => !prev);
                   }
                 }}
+                showRecommendMessages={showRecommendMessages}
               >
                 추천 질문
-              </div>
+              </S.RecommendButton>
               {width > 600 &&
                 showRecommendMessages &&
                 recommendMessages.map((msg, index) => {
