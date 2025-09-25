@@ -1,3 +1,4 @@
+import { media } from "@/constants/media";
 import styled from "@emotion/styled";
 import { motion } from "framer-motion";
 
@@ -21,4 +22,8 @@ export const Title = styled.div`
   font-size: 20px;
   font-weight: 700;
   border-bottom: 1px solid #dddce3;
+  
+  ${media.mobile}{
+    display: none;
+  }
 `;

@@ -4,6 +4,7 @@ import * as S from "./style";
 import { useChatMessages } from "@/api/chat";
 import Chat from "@/components/Chat/Chat";
 import { useChatRoomsStore } from "@/stores";
+import useWindowWidth from "@/hooks/useWindowWidth";
 
 const ChatPage = () => {
   const { id } = useParams<{ id: string }>();
