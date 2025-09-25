@@ -1,4 +1,5 @@
 import { COLORS } from "@/constants/color";
+import { media } from "@/constants/media";
 import styled from "@emotion/styled";
 import { motion } from "framer-motion";
 import TextareaAutosize from "react-textarea-autosize";
@@ -14,18 +15,21 @@ type ListItemProps = {
 export const ChatContainer = styled.div`
   display: flex;
   flex-direction: column;
-  width: 770px;
+  max-width: 770px;
+  width: 100%;
   height: 93vh;
   box-sizing: border-box;
 `;
 
 export const ChatWindow = styled.div`
-  flex: 1;
+  width: 100%;
+  max-width: 770px;
+
   border-radius: 12px;
   margin-bottom: 10px;
   display: flex;
   flex-direction: column;
-  align-items: center;
+
   overflow-y: auto;
 
   overflow: auto;
@@ -44,10 +48,13 @@ export const ChatWindow = styled.div`
   ::-webkit-scrollbar-track {
     background: #f6f8fb;
   }
+
+  ${media.mobile} {
+    padding: 0 16px;
+  }
 `;
 
 export const MessageContainer = styled.div`
-  width: 100%;
   margin: 15px 0;
 `;
 
@@ -66,6 +73,10 @@ export const BotIcon = styled.img`
 `;
 
 export const Message = styled(motion.div)`
+  width: 100%;
+  max-width: 770px;
+
+  pointer-events: auto; /* 추가 */
   background-color: transparent;
   color: #0f0f10;
   padding: 10px 0;
@@ -289,8 +300,13 @@ export const ChatFooter = styled.div`
   position: fixed;
   bottom: 0;
   background-color: white;
+  max-width: 770px;
   width: 100%;
   max-width: 770px;
+
+  ${media.mobile} {
+    padding: 0 16px;
+  }
 `;
 
 export const InputContainer = styled.div`
@@ -306,6 +322,7 @@ export const InputWrapper = styled.div`
   display: flex;
   flex-direction: column;
   width: 100%;
+  max-width: 770px;
   position: relative;
   padding: 18px;
   background-color: #f6f8fb;
@@ -314,7 +331,8 @@ export const InputWrapper = styled.div`
 `;
 
 export const Textarea = styled(TextareaAutosize)`
-  flex: 1;
+  width: 100%;
+  max-width: 770px;
   font-size: 16px;
   font-weight: 500;
   border: none;
@@ -378,12 +396,32 @@ export const SendButton = styled.button`
   }
 `;
 
-export const RecommendMessage = styled.button<{ disabled?: boolean }>`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+export const RecommendButton = styled.div<{ showRecommendMessages: boolean }>`
+  border-radius: 16px;
   padding: 4px 10px;
-  gap: 10px;
+  background-color: ${COLORS.GRAY4};
+  font-size: 12px;
+  font-family: "Wanted Sans";
+  font-weight: 400;
+  line-height: 150%;
+  color: #fff;
+  cursor: pointer;
+  box-sizing: border-box;
+  border: 1px solid transparent;
+
+  ${media.mobile} {
+    ${(props) =>
+      props.showRecommendMessages &&
+      `
+    border-color: var(--main-default, #0059ff);
+    background: var(--grey-1, #fff);
+    color: var(--grey-7, #2E3034);
+  `}
+  }
+`;
+
+export const RecommendMessage = styled.button<{ disabled?: boolean }>`
+  padding: 4px 10px;
   border-radius: 14px;
   border: 1px solid #c0cbd9;
   background-color: transparent;
@@ -403,6 +441,24 @@ export const RecommendMessage = styled.button<{ disabled?: boolean }>`
     border-color: #c0cbd9;
     color: #808996;
   }
+
+  ${media.mobile} {
+    border: 1px solid var(--grey-4, #c0cbd9);
+    background: #fff;
+
+    /* Shadow-Btn-floating */
+    box-shadow: 0 0 4px 0 rgba(0, 0, 0, 0.16);
+  }
+`;
+
+export const RecommendContainer = styled.div`
+  position: absolute;
+  bottom: calc(100% + 10px);
+  left: 0px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 8px;
 `;
 
 export const DisclaimerText = styled.p`

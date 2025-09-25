@@ -29,6 +29,7 @@ export const ChatWindow = styled.div`
   margin-bottom: 10px;
   display: flex;
   flex-direction: column;
+
   overflow-y: auto;
 
   box-sizing: border-box;
@@ -466,13 +467,15 @@ export const RecommendButton = styled.div<{ showRecommendMessages: boolean }>`
   border: 1px solid ${COLORS.GRAY4};
   box-sizing: border-box;
 
-  ${(props) =>
-    props.showRecommendMessages &&
-    `
-    border: 1px solid var(--main-default, #0059ff);
+  ${media.mobile} {
+    ${(props) =>
+      props.showRecommendMessages &&
+      `
+    border-color: var(--main-default, #0059ff);
     background: var(--grey-1, #fff);
     color: var(--grey-7, #2E3034);
   `}
+  }
 `;
 
 export const RecommendMessage = styled.button<{ disabled?: boolean }>`

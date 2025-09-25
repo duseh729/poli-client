@@ -5,28 +5,43 @@ import remarkGfm from "remark-gfm";
 import * as S from "./style";
 import chatArrow from "@/assets/chat-arrow.svg";
 import poliChat from "@/assets/poli-chat-icon-sm.svg";
-import progressOn from "@/assets/progress-on.svg";
 import "highlight.js/styles/github.css";
 import loadingSpinner from "@/assets/loading-spinner.svg";
 import { COLORS } from "@/constants/color";
+import useWindowWidth from "@/hooks/useWindowWidth";
 
 type ChatProps = {
   message: string;
   botMessage: string;
   isPending: boolean;
   isTyping: boolean;
+  handleSend: (message: string) => void;
 };
 
-const InitChat = ({ message, botMessage, isPending, isTyping }: ChatProps) => {
+const InitChat = ({
+  message,
+  botMessage,
+  isPending,
+  isTyping,
+  handleSend,
+}: ChatProps) => {
   const [inputValue, setInputValue] = useState<string>("");
   const chatWindowRef = useRef<HTMLDivElement>(null);
   const [autoScroll, setAutoScroll] = useState(true);
 
-  // const showProgress = true;
-  // const progress = 0;
-
   const chatFooterRef = useRef<HTMLDivElement>(null);
   const [footerHeight, setFooterHeight] = useState(0);
+
+  const [showRecommendMessages, setShowRecommendMessages] = useState(false);
+  const width = useWindowWidth();
+
+  useEffect(() => {
+    if (width > 600) {
+      setShowRecommendMessages(true);
+    } else {
+      setShowRecommendMessages(false);
+    }
+  }, [width]);
 
   useEffect(() => {
     if (chatFooterRef.current) {
@@ -49,7 +64,6 @@ const InitChat = ({ message, botMessage, isPending, isTyping }: ChatProps) => {
     };
 
     const handleWheel = (e: WheelEvent) => {
-      // 휠을 위로 굴릴 경우 자동 스크롤 끔
       if (e.deltaY < 0) {
         setAutoScroll(false);
       }
@@ -79,9 +93,16 @@ const InitChat = ({ message, botMessage, isPending, isTyping }: ChatProps) => {
     { constents: "진정서를 작성해줘." },
   ];
 
+  const handleLocalSend = () => {
+    if (inputValue.trim() !== "") {
+      handleSend(inputValue);
+      setInputValue("");
+    }
+  };
+
   return (
     <S.ChatContainer>
-      <S.ChatWindow ref={chatWindowRef} style={{ paddingBottom: footerHeight }}>
+      <S.ChatWindow ref={chatWindowRef} style={{ paddingBottom: `${footerHeight + 60}px` }}>
         <S.MessageContainer>
           <S.UserMessageWrapper>
             <S.UserMessage
@@ -135,16 +156,6 @@ const InitChat = ({ message, botMessage, isPending, isTyping }: ChatProps) => {
         )}
       </S.ChatWindow>
       <S.ChatFooter ref={chatFooterRef}>
-        {/* {showProgress && (
-          <S.ProgrssWrapper>
-            <S.ProgressBox progress={progress}>
-              {progress === 0 ? null : <img src={progressOn} alt="progress-on" />}
-              <S.ProgressText progress={progress}>
-                진정서 작성 중 0%
-              </S.ProgressText>
-            </S.ProgressBox>
-          </S.ProgrssWrapper>
-        )} */}
         <S.InputContainer>
           <S.InputWrapper>
             <div
@@ -152,42 +163,68 @@ const InitChat = ({ message, botMessage, isPending, isTyping }: ChatProps) => {
             >
               <S.Textarea
                 value={inputValue}
-                placeholder="친구에게 말하듯이 편하게, 사건에 대해 말해 주세요."
-                disabled={isPending || isTyping}
+                placeholder={
+                  width <= 600
+                    ? "사건에 대해 말해주세요"
+                    : "친구에게 말하듯이 편하게, 사건에 대해 말해 주세요."
+                }
+                onChange={(e) => setInputValue(e.target.value)}
+                onKeyPress={(e) => {
+                  if (e.key === "Enter" && !e.shiftKey && !isPending && !isTyping) {
+                    e.preventDefault();
+                    handleLocalSend();
+                  }
+                }}
               />
               <S.SendButton
+                onClick={handleLocalSend}
                 disabled={isPending || isTyping || inputValue.length === 0}
               >
                 <img src={chatArrow} alt="send" />
               </S.SendButton>
             </div>
             {/* 추천 질문 영역 */}
-            <div style={{ display: "flex", gap: "8px" }}>
-              <div
-                style={{
-                  borderRadius: 16,
-                  padding: "4px 10px",
-                  backgroundColor: `${COLORS.GRAY4}`,
-                  fontSize: 12,
-                  fontFamily: "Wanted Sans",
-                  fontWeight: 400,
-                  lineHeight: "150%",
-                  color: "#fff",
+            <div style={{ display: "flex", gap: "8px", alignItems: "center" }}>
+              <S.RecommendButton
+                onClick={() => {
+                  if (width <= 600) {
+                    setShowRecommendMessages((prev) => !prev);
+                  }
                 }}
+                showRecommendMessages={showRecommendMessages}
               >
                 추천 질문
-              </div>
-              {recommendMessages.map((msg, index) => {
-                return (
+              </S.RecommendButton>
+              {width > 600 &&
+                showRecommendMessages &&
+                recommendMessages.map((msg, index) => {
+                  return (
+                    <S.RecommendMessage
+                      key={index}
+                      onClick={() => handleSend(msg.constents)}
+                      disabled={isPending || isTyping}
+                    >
+                      {msg.constents}
+                    </S.RecommendMessage>
+                  );
+                })}
+            </div>
+            {width <= 600 && showRecommendMessages && (
+              <S.RecommendContainer>
+                {recommendMessages.map((msg, index) => (
                   <S.RecommendMessage
                     key={index}
+                    onClick={() => {
+                      handleSend(msg.constents);
+                      setShowRecommendMessages(false); // Hide after selection
+                    }}
                     disabled={isPending || isTyping}
                   >
                     {msg.constents}
                   </S.RecommendMessage>
-                );
-              })}
-            </div>
+                ))}
+              </S.RecommendContainer>
+            )}
           </S.InputWrapper>
           <S.DisclaimerText>
             폴리가 제공한 법률상담에 대해 어떠한 민사, 형사상의 책임도 지지

@@ -152,6 +152,11 @@ const InitChatPage = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  const handleSend = (message: string) => {
+    // Placeholder function to satisfy TypeScript
+    console.log("Message to send:", message);
+  };
+
   return (
     <S.Container>
       <S.Title></S.Title>
@@ -161,14 +166,13 @@ const InitChatPage = () => {
         exit={{ opacity: 0, scale: 0.9, y: 20 }}
         transition={{ duration: 0.5 }}
       >
-        <S.Main>
-          <InitChat
-            message={requestBody.message}
-            botMessage={botMessage}
-            isPending={isPending || isTyping}
-            isTyping={isTyping}
-          />
-        </S.Main>
+        <InitChat
+          message={requestBody.message}
+          botMessage={botMessage}
+          isPending={isPending || isTyping}
+          isTyping={isTyping}
+          handleSend={handleSend}
+        />
       </S.Wrapper>
     </S.Container>
   );
