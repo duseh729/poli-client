@@ -61,6 +61,10 @@ export const Wrapper = styled(motion.div)`
   width: 100%;
   align-items: flex-start;
 
+  ${media.mobile}{
+    display: block
+  }
+
   & > :first-child {
     flex: 1;
     min-width: 170px;
@@ -88,7 +92,7 @@ export const PetitionWrapper = styled(motion.div)`
 `;
 
 export const PdfWrapper = styled(motion.div)`
-  padding: 20px;
+  padding: 0px 20px;
 
   ${media.mobile} {
     padding: 0;
@@ -237,6 +241,17 @@ export const PetitionInfoWrapper = styled(motion.div)`
   }
 `;
 
+export const PetitionInfoFlex = styled(motion.div)`
+  display: flex;
+  flex-direction: row;
+  gap: 20px;
+  
+  ${media.mobile} {
+    flex-direction: column;
+    gap: 24px;
+  }
+  ` 
+
 export const PetitionInfoTitle = styled(motion.p)`
   color: #2d76ff;
   font-family: "Wanted Sans";
@@ -311,3 +326,12 @@ export const PetitionDefalutInfoWrapper = styled(motion.div)`
     background: #f4f7f9;
   }
 `;
+
+export const InputWrapper = styled.div`
+  display: flex;
+
+  ${media.mobile}{
+    flex-direction: column;
+    gap: 8px;
+  }
+`

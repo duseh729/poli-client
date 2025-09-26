@@ -131,34 +131,53 @@ const PetitionPage = () => {
   const handleDownload = async () => {
     if (!pdfRef.current) return;
 
-    // DOM → canvas 변환
-    const canvas = await html2canvas(pdfRef.current, {
-      ignoreElements: (element) => element.classList.contains("pdf-ignore"), // 특정 클래스 무시
-    });
-    const imgData = canvas.toDataURL("image/png");
+    const pdfElement = pdfRef.current;
+    const originalWidth = pdfElement.style.width;
+    // 모바일 환경에서 진정서 내보내기 시 모바일 레이아웃으로 export 되는 문제가 있습니다.
+    // 이를 해결하기 위해, 화면 너비가 1024px 미만일 경우
+    // PDF export를 위해 임시로 데스크톱 뷰처럼 보이도록 고정 너비를 설정합니다.
+    const isMobile = window.innerWidth < 1024;
 
-    // PDF 생성
-    const pdf = new jsPDF("p", "mm", "a4");
-    const imgWidth = 210; // A4 가로 크기 (mm)
-    const pageHeight = 297; // A4 세로 크기 (mm)
-    const imgHeight = (canvas.height * imgWidth) / canvas.width;
-
-    let heightLeft = imgHeight;
-    let position = 0;
-
-    // 페이지 나눔 처리
-    pdf.addImage(imgData, "PNG", 0, position, imgWidth, imgHeight);
-    heightLeft -= pageHeight;
-
-    while (heightLeft > 0) {
-      position = heightLeft - imgHeight;
-      pdf.addPage();
-      pdf.addImage(imgData, "PNG", 0, position, imgWidth, imgHeight);
-      heightLeft -= pageHeight;
+    if (isMobile) {
+      pdfElement.style.width = "920px";
     }
 
-    // 다운로드
-    pdf.save("download.pdf");
+    try {
+      // DOM → canvas 변환
+      const canvas = await html2canvas(pdfElement, {
+        ignoreElements: (element) => element.classList.contains("pdf-ignore"), // 특정 클래스 무시
+      });
+      const imgData = canvas.toDataURL("image/png");
+
+      // PDF 생성
+      const pdf = new jsPDF("p", "mm", "a4");
+      const imgWidth = 210; // A4 가로 크기 (mm)
+      const pageHeight = 297; // A4 세로 크기 (mm)
+      const imgHeight = (canvas.height * imgWidth) / canvas.width;
+
+      let heightLeft = imgHeight;
+      let position = 0;
+
+      // 페이지 나눔 처리
+      pdf.addImage(imgData, "PNG", 0, position, imgWidth, imgHeight);
+      heightLeft -= pageHeight;
+
+      while (heightLeft > 0) {
+        position = heightLeft - imgHeight;
+        pdf.addPage();
+        pdf.addImage(imgData, "PNG", 0, position, imgWidth, imgHeight);
+        heightLeft -= pageHeight;
+      }
+
+      // 다운로드
+      pdf.save("download.pdf");
+    } finally {
+      // export가 완료된 후 원래 너비로 복원합니다.
+      if (isMobile) {
+        pdfElement.style.width = originalWidth;
+        pdfElement.style.padding = "20px";
+      }
+    }
   };
 
   const crimeOptions = [
@@ -352,7 +371,7 @@ const PetitionPage = () => {
           >
             <h3>사건 기본 정보</h3>
 
-            <div style={{ display: "flex", gap: 20 }}>
+            <S.PetitionInfoFlex>
               <S.PetitionDefalutInfoWrapper>
                 <S.PetitionInfoTitle>진정인(본인)</S.PetitionInfoTitle>
 
@@ -449,7 +468,7 @@ const PetitionPage = () => {
                   </S.BasicWrapper>
                 </S.BasicColumnWrapper>
               </S.PetitionDefalutInfoWrapper>
-            </div>
+            </S.PetitionInfoFlex>
           </S.PetitionInfoWrapper>
 
           {/* 사건 유형 정보 */}
@@ -462,6 +481,7 @@ const PetitionPage = () => {
                 <S.PetitionInfoContentsTitle>
                   범죄유형
                 </S.PetitionInfoContentsTitle>
+                <S.ResponsiveBr />
                 <S.PetitionInfoContents>{crimeType}</S.PetitionInfoContents>
               </S.Wrapper>
 
@@ -469,6 +489,7 @@ const PetitionPage = () => {
                 <S.PetitionInfoContentsTitle>
                   세부유형
                 </S.PetitionInfoContentsTitle>
+                <S.ResponsiveBr />
                 {isUpdate ? (
                   <DropdownInput
                     value={crimeDetail}
@@ -498,6 +519,7 @@ const PetitionPage = () => {
                     <S.PetitionInfoContentsTitle>
                       사이트명
                     </S.PetitionInfoContentsTitle>
+                    <S.ResponsiveBr />
                     {isUpdate ? (
                       <Input
                         value={siteName}
@@ -513,6 +535,7 @@ const PetitionPage = () => {
                     <S.PetitionInfoContentsTitle>
                       사이트 주소
                     </S.PetitionInfoContentsTitle>
+                    <S.ResponsiveBr />
                     {isUpdate ? (
                       <Input
                         value={siteUrl}
@@ -537,6 +560,7 @@ const PetitionPage = () => {
                       <S.PetitionInfoContentsTitle>
                         진정죄명
                       </S.PetitionInfoContentsTitle>
+                      <S.ResponsiveBr />
                       {isUpdate ? (
                         <Input
                           value={crimeName}
@@ -552,6 +576,7 @@ const PetitionPage = () => {
                       <S.PetitionInfoContentsTitle>
                         처벌의사
                       </S.PetitionInfoContentsTitle>
+                      <S.ResponsiveBr />
                       {isUpdate ? (
                         <Input
                           value={intentToPunish}
@@ -575,6 +600,7 @@ const PetitionPage = () => {
                 <S.PetitionInfoContentsTitle>
                   피해사실
                 </S.PetitionInfoContentsTitle>
+                <S.ResponsiveBr />
                 {isUpdate ? (
                   <Input
                     value={incidentDescription}
@@ -590,6 +616,7 @@ const PetitionPage = () => {
                 <S.PetitionInfoContentsTitle>
                   피해상황
                 </S.PetitionInfoContentsTitle>
+                <S.ResponsiveBr />
                 {isUpdate ? (
                   <Input
                     value={incidentDetails}
@@ -610,7 +637,7 @@ const PetitionPage = () => {
             <h3>부가 정보</h3>
             <S.PetitionInfoTitle>증거자료</S.PetitionInfoTitle>
 
-            <div style={{ display: "flex" }}>
+            <S.InputWrapper>
               <S.PetitionInfoContentsTitleWrapper>
                 <S.PetitionInfoContentsTitle>
                   증거자료
@@ -637,7 +664,7 @@ const PetitionPage = () => {
                   })
                 )}
               </S.PetitionInfoContentsWrapper>
-            </div>
+            </S.InputWrapper>
           </S.PetitionInfoWrapper>
         </S.PdfWrapper>
       </S.PetitionWrapper>
