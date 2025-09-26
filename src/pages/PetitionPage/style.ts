@@ -20,11 +20,11 @@ export const Container = styled(motion.div)`
   }
 `;
 
-export const ResponsiveBr = styled.br`
+export const ResponsiveBr = styled.br<{ isUpdate?: boolean }>`
   display: none;
 
   ${media.mobile} {
-    display: block;
+    display: ${({ isUpdate }) => (isUpdate ? "none" : "block")};
   }
 `;
 
@@ -40,7 +40,7 @@ export const BasicColumnWrapper = styled(motion.div)`
   gap: 8px;
 `;
 
-export const BasicWrapper = styled(motion.div)`
+export const BasicWrapper = styled(motion.div)<{ isUpdate?: boolean }>`
   display: flex;
   flex-direction: row;
   width: 100%;
@@ -53,17 +53,32 @@ export const BasicWrapper = styled(motion.div)`
   & > span:last-of-type {
     flex: 2;
   }
+
+  ${({ isUpdate }) =>
+    isUpdate &&
+    `
+    ${media.mobile} {
+        flex-direction: column;
+        gap: 8px;
+
+        & > span:first-of-type {
+            flex: none;
+        }
+        & > span:last-of-type {
+            flex: none;
+        }
+        & > *:last-child {
+            width: 100%;
+        }
+    }
+  `}
 `;
 
-export const Wrapper = styled(motion.div)`
+export const Wrapper = styled(motion.div)<{ isUpdate?: boolean }>`
   display: flex;
   flex-direction: row;
   width: 100%;
   align-items: flex-start;
-
-  ${media.mobile}{
-    display: block
-  }
 
   & > :first-child {
     flex: 1;
@@ -72,6 +87,29 @@ export const Wrapper = styled(motion.div)`
   & > :last-child {
     flex: 5;
   }
+
+  ${media.mobile} {
+    display: block;
+  }
+
+  ${({ isUpdate }) =>
+    isUpdate &&
+    `
+    ${media.mobile} {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+
+        & > :first-child {
+            flex: none;
+            min-width: auto;
+        }
+        & > :last-child {
+            flex: none;
+            width: 100%;
+        }
+    }
+  `}
 `;
 
 export const PetitionWrapper = styled(motion.div)`
@@ -245,12 +283,12 @@ export const PetitionInfoFlex = styled(motion.div)`
   display: flex;
   flex-direction: row;
   gap: 20px;
-  
+
   ${media.mobile} {
     flex-direction: column;
     gap: 24px;
   }
-  ` 
+`;
 
 export const PetitionInfoTitle = styled(motion.p)`
   color: #2d76ff;
@@ -330,8 +368,112 @@ export const PetitionDefalutInfoWrapper = styled(motion.div)`
 export const InputWrapper = styled.div`
   display: flex;
 
-  ${media.mobile}{
+  ${media.mobile} {
     flex-direction: column;
     gap: 8px;
   }
-`
+`;
+
+// 피해장소, 진정취지 wrapper
+export const RowColumnWrapper = styled.div<{ isUpdate?: boolean }>`
+  display: flex;
+  gap: 28px;
+
+  ${({ isUpdate }) =>
+    isUpdate &&
+    `${media.mobile}{
+    flex-direction: column;
+    gap: 16px;
+    }`}
+`;
+
+export const FloatingButtonWrapper = styled.div`
+  display: flex;
+  gap: 8px;
+  width: 100%;
+
+  & > button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 12px 8px;
+    gap: 7px;
+    flex: 1;
+
+    border-radius: 8px;
+    border: 0.8px solid #dddce3;
+    background: #fff;
+
+    cursor: pointer;
+
+    img {
+      width: 24px;
+      height: 24px;
+    }
+    span {
+      overflow: hidden;
+      color: #404652;
+      text-overflow: ellipsis;
+      font-family: "Wanted Sans";
+      font-size: 16px;
+      font-style: normal;
+      font-weight: 500;
+      line-height: 150%; /* 24px */
+    }
+  }
+`;
+
+export const FloatingContainer = styled.div`
+  display: none;
+
+  ${media.mobile} {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 100;
+
+    display: flex;
+    justify-content: center;
+
+    padding: 16px 16px 8px 16px;
+    background: white;
+    border-top: 1px solid #eaeaea;
+
+    transition: transform 0.3s ease-in-out;
+    transform: translateY(100%);
+
+    &.visible {
+      transform: translateY(0);
+    }
+  }
+`;
+
+export const FloatingContent = styled.div`
+  width: 100%;
+  max-width: 968px; /* Align with main content */
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+`;
+
+export const FloatingClose = styled.div`
+  display: flex;
+  position: absolute;
+  top: -48px;
+  justify-content: center;
+
+  button {
+    display: flex;
+    padding: 3px;
+    justify-content: center;
+    align-items: center;
+    flex-shrink: 0;
+    /* Shadow-Btn-floating */
+    box-shadow: 0 0 4px 0 rgba(0, 0, 0, 0.16);
+
+    border: none;
+    border-radius: 50%;
+    background-color: white;
+  }
+`;

@@ -42,6 +42,7 @@ const PetitionPage = () => {
   );
 
   const [isUpdate, setIsUpdate] = useState(false);
+  const [isFloatingVisible, setIsFloatingVisible] = useState(false);
 
   const [complainantName, setComplainantName] = useState(
     complaint?.complainant?.name || ""
@@ -88,6 +89,28 @@ const PetitionPage = () => {
   const navigate = useNavigate();
 
   const pdfRef = useRef<HTMLDivElement>(null);
+  const buttonWrapperRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        setIsFloatingVisible(!entry.isIntersecting);
+      },
+      { rootMargin: "-56px 0px 0px 0px" }
+    );
+
+    const currentRef = buttonWrapperRef.current;
+
+    if (currentRef) {
+      observer.observe(currentRef);
+    }
+
+    return () => {
+      if (currentRef) {
+        observer.unobserve(currentRef);
+      }
+    };
+  }, []);
 
   const putPetition = async () => {
     const serverPayload: ComplaintData = {
@@ -139,7 +162,7 @@ const PetitionPage = () => {
     const isMobile = window.innerWidth < 1024;
 
     if (isMobile) {
-      pdfElement.style.width = "920px";
+      pdfElement.style.width = "1024px";
     }
 
     try {
@@ -175,7 +198,6 @@ const PetitionPage = () => {
       // export가 완료된 후 원래 너비로 복원합니다.
       if (isMobile) {
         pdfElement.style.width = originalWidth;
-        pdfElement.style.padding = "20px";
       }
     }
   };
@@ -263,7 +285,7 @@ const PetitionPage = () => {
           <S.PetitionTitleWrapper>
             <div>
               <h3>
-                진정서 : <S.ResponsiveBr></S.ResponsiveBr>
+                진정서 : <S.ResponsiveBr isUpdate={isUpdate}></S.ResponsiveBr>
                 <span>당근마켓 사기 사건</span>
               </h3>
             </div>
@@ -341,7 +363,7 @@ const PetitionPage = () => {
                   style={{ display: "flex", alignItems: "flex-end" }}
                   className="pdf-ignore"
                 >
-                  <S.PetitionButtonWrapper>
+                  <S.PetitionButtonWrapper ref={buttonWrapperRef}>
                     {isUpdate ? (
                       <button onClick={toggleIsUpdate}>
                         <img src={buttonCheck} alt="진정서 수정 완료" />
@@ -376,7 +398,7 @@ const PetitionPage = () => {
                 <S.PetitionInfoTitle>진정인(본인)</S.PetitionInfoTitle>
 
                 <S.BasicColumnWrapper>
-                  <S.BasicWrapper>
+                  <S.BasicWrapper isUpdate={isUpdate}>
                     <S.PetitionInfoContents>이름:</S.PetitionInfoContents>
                     {isUpdate ? (
                       <Input
@@ -390,7 +412,7 @@ const PetitionPage = () => {
                     )}
                   </S.BasicWrapper>
 
-                  <S.BasicWrapper>
+                  <S.BasicWrapper isUpdate={isUpdate}>
                     <S.PetitionInfoContents>주소:</S.PetitionInfoContents>
                     {isUpdate ? (
                       <Input
@@ -404,7 +426,7 @@ const PetitionPage = () => {
                     )}
                   </S.BasicWrapper>
 
-                  <S.BasicWrapper>
+                  <S.BasicWrapper isUpdate={isUpdate}>
                     <S.PetitionInfoContents>연락처:</S.PetitionInfoContents>
                     {isUpdate ? (
                       <Input
@@ -423,7 +445,7 @@ const PetitionPage = () => {
                 <S.PetitionInfoTitle>피진정인(가해자)</S.PetitionInfoTitle>
 
                 <S.BasicColumnWrapper>
-                  <S.BasicWrapper>
+                  <S.BasicWrapper isUpdate={isUpdate}>
                     <S.PetitionInfoContents>
                       이름(닉네임):
                     </S.PetitionInfoContents>
@@ -438,7 +460,7 @@ const PetitionPage = () => {
                       </S.PetitionInfoContents>
                     )}
                   </S.BasicWrapper>
-                  <S.BasicWrapper>
+                  <S.BasicWrapper isUpdate={isUpdate}>
                     <S.PetitionInfoContents>연락처:</S.PetitionInfoContents>
                     {isUpdate ? (
                       <Input
@@ -451,7 +473,7 @@ const PetitionPage = () => {
                       </S.PetitionInfoContents>
                     )}
                   </S.BasicWrapper>
-                  <S.BasicWrapper>
+                  <S.BasicWrapper isUpdate={isUpdate}>
                     <S.PetitionInfoContents>특이사항:</S.PetitionInfoContents>
                     {isUpdate ? (
                       <Input
@@ -477,19 +499,19 @@ const PetitionPage = () => {
             <S.PetitionInfoTitle>범죄유형</S.PetitionInfoTitle>
 
             <S.ColumnWrapper>
-              <S.Wrapper>
+              <S.Wrapper isUpdate={isUpdate}>
                 <S.PetitionInfoContentsTitle>
                   범죄유형
                 </S.PetitionInfoContentsTitle>
-                <S.ResponsiveBr />
+                <S.ResponsiveBr isUpdate={isUpdate} />
                 <S.PetitionInfoContents>{crimeType}</S.PetitionInfoContents>
               </S.Wrapper>
 
-              <S.Wrapper>
+              <S.Wrapper isUpdate={isUpdate}>
                 <S.PetitionInfoContentsTitle>
                   세부유형
                 </S.PetitionInfoContentsTitle>
-                <S.ResponsiveBr />
+                <S.ResponsiveBr isUpdate={isUpdate} />
                 {isUpdate ? (
                   <DropdownInput
                     value={crimeDetail}
@@ -509,17 +531,17 @@ const PetitionPage = () => {
             <h3>상세 피해 상황</h3>
 
             {/* 피해장소, 진정취지 wrapper */}
-            <div style={{ display: "flex", gap: 28 }}>
+            <S.RowColumnWrapper isUpdate={isUpdate}>
               {/* 피해장소 */}
               <div style={{ flex: "1 1 0", minWidth: 0 }}>
                 <S.PetitionInfoTitle>피해장소</S.PetitionInfoTitle>
 
                 <S.ColumnWrapper>
-                  <S.Wrapper>
+                  <S.Wrapper isUpdate={isUpdate}>
                     <S.PetitionInfoContentsTitle>
                       사이트명
                     </S.PetitionInfoContentsTitle>
-                    <S.ResponsiveBr />
+                    <S.ResponsiveBr isUpdate={isUpdate} />
                     {isUpdate ? (
                       <Input
                         value={siteName}
@@ -531,11 +553,11 @@ const PetitionPage = () => {
                       </S.PetitionInfoContents>
                     )}
                   </S.Wrapper>
-                  <S.Wrapper>
+                  <S.Wrapper isUpdate={isUpdate}>
                     <S.PetitionInfoContentsTitle>
                       사이트 주소
                     </S.PetitionInfoContentsTitle>
-                    <S.ResponsiveBr />
+                    <S.ResponsiveBr isUpdate={isUpdate} />
                     {isUpdate ? (
                       <Input
                         value={siteUrl}
@@ -554,53 +576,51 @@ const PetitionPage = () => {
               <div style={{ flex: "1 1 0", minWidth: 0 }}>
                 <S.PetitionInfoTitle>진정취지</S.PetitionInfoTitle>
 
-                <div style={{ display: "flex" }}>
-                  <S.ColumnWrapper>
-                    <S.Wrapper>
-                      <S.PetitionInfoContentsTitle>
-                        진정죄명
-                      </S.PetitionInfoContentsTitle>
-                      <S.ResponsiveBr />
-                      {isUpdate ? (
-                        <Input
-                          value={crimeName}
-                          setValue={(newValue) => setCrimeName(newValue)}
-                        />
-                      ) : (
-                        <S.PetitionInfoContents>
-                          {handleData(crimeName)}
-                        </S.PetitionInfoContents>
-                      )}
-                    </S.Wrapper>
-                    <S.Wrapper>
-                      <S.PetitionInfoContentsTitle>
-                        처벌의사
-                      </S.PetitionInfoContentsTitle>
-                      <S.ResponsiveBr />
-                      {isUpdate ? (
-                        <Input
-                          value={intentToPunish}
-                          setValue={(newValue) => setIntentToPunish(newValue)}
-                        />
-                      ) : (
-                        <S.PetitionInfoContents>
-                          {handleData(intentToPunish)}
-                        </S.PetitionInfoContents>
-                      )}
-                    </S.Wrapper>
-                  </S.ColumnWrapper>
-                </div>
+                <S.ColumnWrapper>
+                  <S.Wrapper isUpdate={isUpdate}>
+                    <S.PetitionInfoContentsTitle>
+                      진정죄명
+                    </S.PetitionInfoContentsTitle>
+                    <S.ResponsiveBr isUpdate={isUpdate} />
+                    {isUpdate ? (
+                      <Input
+                        value={crimeName}
+                        setValue={(newValue) => setCrimeName(newValue)}
+                      />
+                    ) : (
+                      <S.PetitionInfoContents>
+                        {handleData(crimeName)}
+                      </S.PetitionInfoContents>
+                    )}
+                  </S.Wrapper>
+                  <S.Wrapper isUpdate={isUpdate}>
+                    <S.PetitionInfoContentsTitle>
+                      처벌의사
+                    </S.PetitionInfoContentsTitle>
+                    <S.ResponsiveBr isUpdate={isUpdate} />
+                    {isUpdate ? (
+                      <Input
+                        value={intentToPunish}
+                        setValue={(newValue) => setIntentToPunish(newValue)}
+                      />
+                    ) : (
+                      <S.PetitionInfoContents>
+                        {handleData(intentToPunish)}
+                      </S.PetitionInfoContents>
+                    )}
+                  </S.Wrapper>
+                </S.ColumnWrapper>
               </div>
-            </div>
+            </S.RowColumnWrapper>
             {/* 피해상황 */}
             <S.PetitionInfoTitle>피해상황</S.PetitionInfoTitle>
 
             <S.ColumnWrapper>
-              <S.Wrapper>
+              <S.Wrapper isUpdate={isUpdate}>
                 <S.PetitionInfoContentsTitle>
                   피해사실
                 </S.PetitionInfoContentsTitle>
-                <S.ResponsiveBr />
+                <S.ResponsiveBr isUpdate={isUpdate} />
                 {isUpdate ? (
                   <Input
                     value={incidentDescription}
@@ -612,11 +632,11 @@ const PetitionPage = () => {
                   </S.PetitionInfoContents>
                 )}
               </S.Wrapper>
-              <S.Wrapper>
+              <S.Wrapper isUpdate={isUpdate}>
                 <S.PetitionInfoContentsTitle>
                   피해상황
                 </S.PetitionInfoContentsTitle>
-                <S.ResponsiveBr />
+                <S.ResponsiveBr isUpdate={isUpdate} />
                 {isUpdate ? (
                   <Input
                     value={incidentDetails}
@@ -668,6 +688,41 @@ const PetitionPage = () => {
           </S.PetitionInfoWrapper>
         </S.PdfWrapper>
       </S.PetitionWrapper>
+      <S.ResponsiveBr></S.ResponsiveBr>
+      <S.ResponsiveBr></S.ResponsiveBr>
+      <S.ResponsiveBr></S.ResponsiveBr>
+      <S.ResponsiveBr></S.ResponsiveBr>
+      <S.ResponsiveBr></S.ResponsiveBr>
+      {isFloatingVisible && (
+        <S.FloatingContainer className={"visible"}>
+          <S.FloatingContent>
+            <S.FloatingButtonWrapper>
+              {isUpdate ? (
+                <button onClick={toggleIsUpdate}>
+                  <img src={buttonCheck} alt="진정서 수정 완료" />
+                  <span>수정 완료</span>
+                </button>
+              ) : (
+                <>
+                  <button onClick={toggleIsUpdate}>
+                    <img src={edit} alt="진정서 수정" />
+                    <span>내용 수정</span>
+                  </button>
+                  <button onClick={handleDownload}>
+                    <img src={exportIcon} alt="진정서 내보내기" />
+                    <span>내보내기</span>
+                  </button>
+                </>
+              )}
+            </S.FloatingButtonWrapper>
+          </S.FloatingContent>
+          <S.FloatingClose>
+            <button onClick={() => navigate(-1)}>
+              <img src={close} alt="이전 페이지로 가기" />
+            </button>
+          </S.FloatingClose>
+        </S.FloatingContainer>
+      )}
     </S.Container>
   );
 };

@@ -14,10 +14,6 @@ export const Input = styled.input`
   font-style: normal;
   font-weight: 500;
   line-height: 150%;
-
-  ${media.mobile}{
-    
-  }
 `;
 
 export const Textarea = styled.textarea`
