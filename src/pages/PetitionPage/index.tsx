@@ -228,7 +228,7 @@ const PetitionPage = () => {
   return (
     <S.Container>
       <S.PetitionWrapper>
-        <div ref={pdfRef} style={{ padding: 20 }}>
+        <S.PdfWrapper ref={pdfRef}>
           {/* 헤더 영역 */}
           <S.PetitionHeaderWrapper className="pdf-ignore">
             <span>작성완료</span>
@@ -244,7 +244,8 @@ const PetitionPage = () => {
           <S.PetitionTitleWrapper>
             <div>
               <h3>
-                진정서 : <span>당근마켓 사기 사건</span>
+                진정서 : <S.ResponsiveBr></S.ResponsiveBr>
+                <span>당근마켓 사기 사건</span>
               </h3>
             </div>
 
@@ -321,7 +322,7 @@ const PetitionPage = () => {
                   style={{ display: "flex", alignItems: "flex-end" }}
                   className="pdf-ignore"
                 >
-                  <div style={{ display: "flex", gap: 8 }}>
+                  <S.PetitionButtonWrapper>
                     {isUpdate ? (
                       <button onClick={toggleIsUpdate}>
                         <img src={buttonCheck} alt="진정서 수정 완료" />
@@ -339,7 +340,7 @@ const PetitionPage = () => {
                         </button>
                       </>
                     )}
-                  </div>
+                  </S.PetitionButtonWrapper>
                 </div>
               </S.PetionTitleContents>
             </LocalizationProvider>
@@ -638,7 +639,7 @@ const PetitionPage = () => {
               </S.PetitionInfoContentsWrapper>
             </div>
           </S.PetitionInfoWrapper>
-        </div>
+        </S.PdfWrapper>
       </S.PetitionWrapper>
     </S.Container>
   );

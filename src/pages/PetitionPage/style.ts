@@ -1,3 +1,4 @@
+import { media } from "@/constants/media";
 import styled from "@emotion/styled";
 import { motion } from "framer-motion";
 
@@ -12,6 +13,18 @@ export const Container = styled(motion.div)`
   scrollbar-width: none; /* Firefox */
   &::-webkit-scrollbar {
     display: none; /* Chrome, Safari */
+  }
+
+  ${media.mobile} {
+    padding: 12px 16px;
+  }
+`;
+
+export const ResponsiveBr = styled.br`
+  display: none;
+
+  ${media.mobile} {
+    display: block;
   }
 `;
 
@@ -68,6 +81,18 @@ export const PetitionWrapper = styled(motion.div)`
   border: 1.5px solid rgba(192, 214, 255, 0.75);
   background: #fff;
   box-shadow: 0 4px 16.7px 2px rgba(0, 0, 0, 0.06);
+
+  ${media.mobile} {
+    padding: 16px;
+  }
+`;
+
+export const PdfWrapper = styled(motion.div)`
+  padding: 20px;
+
+  ${media.mobile} {
+    padding: 0;
+  }
 `;
 
 export const PetitionHeaderWrapper = styled(motion.div)`
@@ -102,6 +127,10 @@ export const PetitionTitleWrapper = styled(motion.div)`
   flex-direction: column;
   margin: 40px 0;
 
+  ${media.mobile} {
+    margin: 16px 0px 20px 0px;
+  }
+
   h3 {
     color: #1a1b1c;
     font-family: "Wanted Sans";
@@ -110,9 +139,17 @@ export const PetitionTitleWrapper = styled(motion.div)`
     font-weight: 600;
     line-height: 140%; /* 44.8px */
 
+    ${media.mobile} {
+      font-size: 22px;
+    }
+
     span {
       font-size: 29px;
       font-weight: 500;
+
+      ${media.mobile} {
+        font-size: 22px;
+      }
     }
   }
 `;
@@ -121,6 +158,11 @@ export const PetionTitleContents = styled(motion.div)`
   display: flex;
   justify-content: space-between;
   margin-top: 20px;
+
+  ${media.mobile} {
+    flex-direction: column;
+    gap: 16px;
+  }
 
   & > div {
     & > span {
@@ -131,33 +173,47 @@ export const PetionTitleContents = styled(motion.div)`
       font-weight: 500;
       line-height: 140%; /* 28px */
     }
+  }
+`;
 
-    button {
-      display: flex;
-      align-items: flex-end;
-      padding: 8px;
-      gap: 7px;
+export const PetitionButtonWrapper = styled(motion.div)`
+  display: flex;
+  gap: 8px;
 
-      border-radius: 8px;
-      border: 0.8px solid #dddce3;
-      background: #fff;
+  ${media.mobile} {
+    width: 100%;
+  }
 
-      cursor: pointer;
+  button {
+    display: flex;
+    align-items: flex-end;
+    padding: 8px;
+    gap: 7px;
 
-      img {
-        width: 24px;
-        height: 24px;
-      }
-      span {
-        overflow: hidden;
-        color: #404652;
-        text-overflow: ellipsis;
-        font-family: "Wanted Sans";
-        font-size: 16px;
-        font-style: normal;
-        font-weight: 500;
-        line-height: 150%; /* 24px */
-      }
+    border-radius: 8px;
+    border: 0.8px solid #dddce3;
+    background: #fff;
+
+    cursor: pointer;
+
+    ${media.mobile} {
+      flex: 1;
+      justify-content: center;
+    }
+
+    img {
+      width: 24px;
+      height: 24px;
+    }
+    span {
+      overflow: hidden;
+      color: #404652;
+      text-overflow: ellipsis;
+      font-family: "Wanted Sans";
+      font-size: 16px;
+      font-style: normal;
+      font-weight: 500;
+      line-height: 150%; /* 24px */
     }
   }
 `;
