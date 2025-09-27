@@ -137,7 +137,7 @@ const PetitionPage = () => {
     };
 
     const payloadString = JSON.stringify(serverPayload);
-    const res = await updatePetition(Number(id), payloadString);
+    await updatePetition(Number(id), payloadString);
   };
 
   const toggleIsUpdate = async () => {
@@ -162,7 +162,7 @@ const PetitionPage = () => {
     const isMobile = window.innerWidth < 1024;
 
     if (isMobile) {
-      pdfElement.style.width = "1024px";
+      pdfElement.style.width = "960px";
     }
 
     try {
