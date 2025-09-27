@@ -142,6 +142,7 @@ export const ConsultationItem = styled.div<{ selected?: boolean }>`
 `;
 
 export const ConsultationItemText = styled.p`
+  flex: 1;
   display: inline-block;
   max-width: 100%;
   font-size: 14px;
@@ -240,7 +241,8 @@ export const OutletContainer = styled(motion.div)`
 `;
 
 export const MenuSelectIcon = styled.img`
-  padding: 2x;
+  padding: 2px;
+  z-index: 2;
 `;
 
 export const Paddding = styled.div`

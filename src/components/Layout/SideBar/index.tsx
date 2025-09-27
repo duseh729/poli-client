@@ -57,7 +57,7 @@ const LeftSideBar = () => {
 
   const { id } = useParams<{ id: string }>(); // URL 파라미터에서 방 ID 읽기
 
-  const { isOpen, toggle } = useSidebarStore();
+  const { isOpen, close } = useSidebarStore();
   const [isMobile, setIsMobile] = useState(window.innerWidth < 600);
 
   useEffect(() => {
@@ -68,7 +68,6 @@ const LeftSideBar = () => {
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
   }, []);
-
 
   useEffect(() => {
     if (profileFooterRef.current) {
@@ -123,8 +122,8 @@ const LeftSideBar = () => {
     setSelectedRoomId(roomId);
     const rect = event.currentTarget.getBoundingClientRect();
     setMenuPosition({
-      top: rect.top + rect.height + 10,
-      left: rect.right - 20,
+      top: rect.top - rect.height -35,
+      left: rect.left - 200,
     });
   };
 
@@ -136,7 +135,7 @@ const LeftSideBar = () => {
       },
     });
     if (isMobile) {
-      toggle();
+      close();
     }
   };
 
@@ -193,7 +192,14 @@ const LeftSideBar = () => {
         transition={{ duration: 0.5 }}
       >
         <AnimatePresence>
-          {isOpen && isMobile && <S.Backdrop onClick={toggle} initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} />}
+          {isOpen && isMobile && (
+            <S.Backdrop
+              onClick={close}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+            />
+          )}
         </AnimatePresence>
         <S.Sidebar
           variants={sidebarVariants}
@@ -206,15 +212,21 @@ const LeftSideBar = () => {
                 <S.LogoImage
                   src={poliSmBox}
                   alt="POLI Small Box Logo"
-                  onClick={() =>
-                    navigate(ROUTES.MAIN, { state: { showNextScreen: 1 } })
-                  }
+                  onClick={() => {
+                    navigate(ROUTES.MAIN, { state: { showNextScreen: 1 } });
+                    if (isMobile) {
+                      close();
+                    }
+                  }}
                 />
               </div>
               <S.SidebarButton
-                onClick={() =>
-                  navigate(ROUTES.MAIN, { state: { showNextScreen: 2 } })
-                }
+                onClick={() => {
+                  navigate(ROUTES.MAIN, { state: { showNextScreen: 2 } });
+                  if (isMobile) {
+                    close();
+                  }
+                }}
               >
                 <S.SidebarButtonIcon src={chatLogo} alt="Chat Icon" />
                 <S.SidebarText>새 상담 시작</S.SidebarText>
