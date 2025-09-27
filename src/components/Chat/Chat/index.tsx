@@ -47,11 +47,6 @@ const Chat = ({ messages: initialMessages, roomId, isInit }: ChatProps) => {
   const { data: messagesData, isLoading } = useChatMessages(roomId);
   const { refetch } = useChatRooms();
 
-  // const { data } = useChatRoomProgress(roomId);
-  // const { fulfilled, percentage } = data ?? {};
-  // const showProgress = !fulfilled;
-  // const progress = percentage ?? 0;
-
   const chatFooterRef = useRef<HTMLDivElement>(null);
   const [footerHeight, setFooterHeight] = useState(0);
 
@@ -85,6 +80,8 @@ const Chat = ({ messages: initialMessages, roomId, isInit }: ChatProps) => {
 
   const navigate = useNavigate();
   const width = useWindowWidth();
+  const recommendRef = useRef<HTMLDivElement>(null);
+  const recommendButtonRef = useRef<HTMLButtonElement>(null);
 
   useEffect(() => {
     if (width > 600) {
@@ -93,6 +90,29 @@ const Chat = ({ messages: initialMessages, roomId, isInit }: ChatProps) => {
       setShowRecommendMessages(false);
     }
   }, [width]);
+
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (
+        recommendRef.current &&
+        !recommendRef.current.contains(event.target as Node) &&
+        recommendButtonRef.current &&
+        !recommendButtonRef.current.contains(event.target as Node)
+      ) {
+        setShowRecommendMessages(false);
+      }
+    };
+
+    if (showRecommendMessages && width <= 600) {
+      document.addEventListener("mousedown", handleClickOutside);
+    } else {
+      document.removeEventListener("mousedown", handleClickOutside);
+    }
+
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [showRecommendMessages, width]);
 
   useEffect(() => {
     if (chatFooterRef.current) {
@@ -476,6 +496,7 @@ const Chat = ({ messages: initialMessages, roomId, isInit }: ChatProps) => {
             {/* 추천 질문 영역 */}
             <div style={{ display: "flex", gap: "8px", alignItems: "center" }}>
               <S.RecommendButton
+                ref={recommendButtonRef}
                 onClick={() => {
                   if (width <= 600) {
                     setShowRecommendMessages((prev) => !prev);
@@ -502,7 +523,7 @@ const Chat = ({ messages: initialMessages, roomId, isInit }: ChatProps) => {
                 })}
             </div>
             {width <= 600 && showRecommendMessages && (
-              <S.RecommendContainer>
+              <S.RecommendContainer ref={recommendRef}>
                 {recommendMessages.map((msg, index) => (
                   <S.RecommendMessage
                     key={index}
