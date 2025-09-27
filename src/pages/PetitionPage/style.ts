@@ -484,3 +484,74 @@ export const FloatingClose = styled.div`
     background-color: white;
   }
 `;
+
+// 모달
+
+export const ModalBackground = styled.div`
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+`;
+
+export const ModalContainer = styled.div`
+  background-color: white;
+  padding: 46px 16px 22px 16px;
+  border-radius: 12px;
+  width: 90%;
+  max-width: 380px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+`;
+
+export const ModalIcon = styled.div`
+  display: flex;
+  width: 75px;
+  height: 75px;
+  justify-content: center;
+  align-items: center;
+
+  margin-bottom: 18px;
+`;
+
+export const ModalTitle = styled.h2`
+  color: #1a1b1c;
+  text-align: center;
+  font-family: Pretendard;
+  font-size: 18px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 140%; /* 25.2px */
+`;
+
+export const ModalText = styled.p`
+  color: #9098a4;
+  text-align: center;
+  font-family: "Wanted Sans";
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 160%; /* 25.6px */
+
+  margin-bottom: 28px;
+`;
+
+export const ModalButton = styled.button`
+  width: 100%;
+  padding: 16px 10px;
+  background-color: #0059ff;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+`;

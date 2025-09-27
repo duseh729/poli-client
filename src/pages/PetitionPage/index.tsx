@@ -14,6 +14,7 @@ import * as S from "./style";
 import close from "@/assets/close.svg";
 import exportIcon from "@/assets/exportIcon.svg";
 import edit from "@/assets/edit.svg";
+import petitionUpdateIcon from "@/assets/petition-update.svg";
 import Complaint, { ComplaintData, Evidence } from "@/types/petition";
 import buttonCheck from "@/assets/button-check.svg";
 import "dayjs/locale/ko";
@@ -21,6 +22,30 @@ import Input from "@/components/Petition/Input";
 import ImageInput from "@/components/Chat/ImageCollection/ImageInput";
 import DropdownInput from "@/components/Petition/DropdownInput";
 import { getPetition, updatePetition } from "@/api/petition";
+
+// 성공 모달 프롭 타입
+interface SuccessModalProps {
+  onClose: () => void;
+  onConfirm: () => void;
+}
+
+// 성공 모달 컴포넌트
+const SuccessModal = ({ onClose, onConfirm }: SuccessModalProps) => (
+  <S.ModalBackground onClick={onClose}>
+    <S.ModalContainer onClick={(e) => e.stopPropagation()}>
+      <S.ModalIcon>
+        <img src={petitionUpdateIcon} alt="Update Success" />
+      </S.ModalIcon>
+      <S.ModalTitle>진정서 수정을 완료하였습니다.</S.ModalTitle>
+      <S.ModalText>
+        확인 버튼을 누르시면
+        <br />
+        진정서 확인 페이지로 이동합니다.
+      </S.ModalText>
+      <S.ModalButton onClick={onConfirm}>확인</S.ModalButton>
+    </S.ModalContainer>
+  </S.ModalBackground>
+);
 
 const PetitionPage = () => {
   const { id } = useParams<{ id: string }>();
@@ -86,6 +111,8 @@ const PetitionPage = () => {
     complaint?.complaintDate || null
   );
 
+  const [isSuccessModalVisible, setIsSuccessModalVisible] = useState(false); // 모달 상태 추가
+
   const navigate = useNavigate();
 
   const pdfRef = useRef<HTMLDivElement>(null);
@@ -144,11 +171,20 @@ const PetitionPage = () => {
     try {
       if (isUpdate) {
         await putPetition();
+        setIsUpdate(false); // 수정 모드 종료
+        setIsSuccessModalVisible(true); // 성공 모달 띄우기
+      } else {
+        setIsUpdate(true); // 수정 모드 시작
       }
-      setIsUpdate(!isUpdate);
     } catch (err) {
       console.error("Failed to update petition:", err);
     }
+  };
+
+  const handleConfirmModal = () => {
+    setIsSuccessModalVisible(false);
+    // 필요하다면 여기서 다른 페이지로 navigate
+    // navigate(`/petition/${id}`); // 예: 확인 페이지로 이동
   };
 
   const handleDownload = async () => {
@@ -268,6 +304,13 @@ const PetitionPage = () => {
 
   return (
     <S.Container>
+      {isSuccessModalVisible && (
+        <SuccessModal
+          onClose={() => setIsSuccessModalVisible(false)}
+          onConfirm={handleConfirmModal}
+        />
+      )}
+
       <S.PetitionWrapper>
         <S.PdfWrapper ref={pdfRef}>
           {/* 헤더 영역 */}
@@ -683,16 +726,18 @@ const PetitionPage = () => {
                     isBlur={false}
                   />
                 ) : (
-                  complaint?.evidences?.map((evidence, index) => {
-                    return (
-                      <S.PetitionInfoContents
-                        key={index}
-                        onClick={() => window.open(evidence.fileUrl, "_blank")}
-                      >
-                        {evidence.fileName}
-                      </S.PetitionInfoContents>
-                    );
-                  })
+                  complaint?.evidences
+                    ?.filter((evidence) => evidence.fileName && evidence.fileUrl)
+                    .map((evidence, index) => {
+                      return (
+                        <S.PetitionInfoContents
+                          key={index}
+                          onClick={() => window.open(evidence.fileUrl, "_blank")}
+                        >
+                          {evidence.fileName}
+                        </S.PetitionInfoContents>
+                      );
+                    })
                 )}
               </S.PetitionInfoContentsWrapper>
             </S.InputWrapper>
