@@ -198,7 +198,8 @@ const PetitionPage = () => {
     const isMobile = window.innerWidth < 1024;
 
     if (isMobile) {
-      pdfElement.style.width = "960px";
+      pdfElement.style.width = "920px";
+      pdfElement.style.padding = "0px 20px"
     }
 
     try {
