@@ -17,6 +17,12 @@ export const Container = styled(motion.div)`
   position: relative;
 `;
 
+export const FormContainer = styled.div`
+  ${media.mobile} {
+    padding: 8px 16px;
+  }
+`;
+
 export const FormWrapper = styled.div`
   display: flex;
   flex-direction: column;
@@ -69,6 +75,8 @@ export const Label = styled.label`
   color: #808996;
   margin: 0 0 16px 0;
   font-weight: 600;
+  line-height: 150%; /* 27px */
+
   ${media.mobile} {
     font-family: "Wanted Sans";
     font-size: 14px;
@@ -120,7 +128,7 @@ export const textAreaStyle = (isMaxLength: boolean) => css`
   background-color: #f6f8fb;
   color: #0f0f10;
   font-weight: 500;
-  line-height: 24px;
+  line-height: 150%;
   overflow-y: scroll;
   scrollbar-width: none;
   -ms-overflow-style: none;
@@ -143,7 +151,7 @@ export const charCountStyle = (isMaxLength: boolean) => css`
 export const ExampleText = styled.p`
   font-size: 14px;
   color: #808996;
-  margin: 20px 0;
+  margin: 12px 0 10px 0;
   line-height: 150%;
 `;
 

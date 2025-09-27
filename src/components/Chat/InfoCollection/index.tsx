@@ -96,7 +96,7 @@ const InfoCollection = ({
       transition={{ duration: 0.5 }}
     >
       <LocalizationProvider dateAdapter={AdapterDayjs} adapterLocale="ko">
-        <div style={{ padding: "8px 16px" }}>
+        <S.FormContainer>
           <S.FormWrapper formHeight={formHeight}>
             <S.Form>
               <S.Title>
@@ -290,7 +290,7 @@ const InfoCollection = ({
               </S.FormGroupWrapper>
             </S.Form>
           </S.FormWrapper>
-        </div>
+        </S.FormContainer>
 
         <S.FooterWrapper ref={footerRef}>
           <S.StartButton

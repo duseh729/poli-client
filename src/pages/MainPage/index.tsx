@@ -1,5 +1,5 @@
 /** @jsxImportSource @emotion/react */
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useLocation } from "react-router-dom";
 import * as S from "./style";
 import Introduce from "@/components/Chat/Introduce";
@@ -22,12 +22,19 @@ const MainPage = () => {
 
   const [initMessage, setInitMessage] = useState<InitMessageType | null>(null);
   const [situationDescription, setSituationDescription] = useState("");
+  const containerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     if (location.state?.showNextScreen) {
       setShowNextScreen(location.state.showNextScreen);
     }
   }, [location.state]);
+
+  useEffect(() => {
+    if (showNextScreen === 3 && containerRef.current) {
+      containerRef.current.scrollTo(0, 0);
+    }
+  }, [showNextScreen]);
 
   const handleNextStep = () => {
     if (showNextScreen === 1) {
@@ -41,6 +48,7 @@ const MainPage = () => {
 
   return (
     <S.Container
+      ref={containerRef}
       initial={{ opacity: 0, scale: 0.9, y: 20 }}
       animate={{ opacity: 1, scale: 1, y: 0 }}
       exit={{ opacity: 0, scale: 0.9, y: 20 }}
