@@ -46,26 +46,24 @@ const MainPage = () => {
       exit={{ opacity: 0, scale: 0.9, y: 20 }}
       transition={{ duration: 0.5 }}
     >
-      <S.Main>
-        {showNextScreen === 1 ? (
-          <Introduce handleNextStep={handleNextStep} />
-        ) : showNextScreen === 2 ? (
-          <InfoCollection
-            handleNextStep={handleNextStep}
-            setIsEnableNext={setIsEnableNext}
-            isEnableNext={isEnableNext}
-            initMessage={initMessage}
-            setInitMessage={setInitMessage}
-            situationDescription={situationDescription}
-            setSituationDescription={setSituationDescription}
-          />
-        ) : (
-          <ImageCollection
-            initMessage={initMessage}
-            situationDescription={situationDescription}
-          />
-        )}
-      </S.Main>
+      {showNextScreen === 1 ? (
+        <Introduce handleNextStep={handleNextStep} />
+      ) : showNextScreen === 2 ? (
+        <InfoCollection
+          handleNextStep={handleNextStep}
+          setIsEnableNext={setIsEnableNext}
+          isEnableNext={isEnableNext}
+          initMessage={initMessage}
+          setInitMessage={setInitMessage}
+          situationDescription={situationDescription}
+          setSituationDescription={setSituationDescription}
+        />
+      ) : (
+        <ImageCollection
+          initMessage={initMessage}
+          situationDescription={situationDescription}
+        />
+      )}
     </S.Container>
   );
 };

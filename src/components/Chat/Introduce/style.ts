@@ -14,7 +14,10 @@ export const Container = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  width: 100%;
   height: 100vh;
+  box-sizing: border-box;
+  overflow-y: auto;
 
   ${media.mobile} {
     height: auto;
@@ -51,7 +54,7 @@ export const Subtitle = styled.p`
     text-align: center;
 
     font-size: 16px;
-    margin-bottom: 62px;
+    margin-bottom: 32px;
   }
 `;
 
@@ -65,7 +68,7 @@ export const CardContainer = styled.div`
     width: 100%;
     flex-direction: column;
     gap: 8px;
-    margin-bottom: 40px;
+    margin: 0 0 40px 0;
   }
 `;
 
@@ -116,7 +119,7 @@ export const CardName = styled.p`
   font-weight: 600;
   margin: 31px 0 15px 0;
 
-  ${media.mobile}{
+  ${media.mobile} {
     margin: 0px;
   }
 `;
@@ -154,37 +157,10 @@ export const StartButton = styled.button`
     position: relative;
     z-index: 2;
   }
-`;
 
-export const StartButtonCircle = styled.div`
-  position: absolute;
-  filter: blur(70px);
-  top: -150px;
-  right: 25%;
-  width: 250px;
-  height: 250px;
-  border-radius: 50%;
-  background: #764a86;
-`;
-export const StartButtonCircle2 = styled.div`
-  position: absolute;
-  filter: blur(40px);
-  bottom: -130px;
-  left: 20px;
-  width: 100px;
-  height: 100px;
-  border-radius: 50%;
-  background: #764a86;
-`;
-export const StartButtonCircle3 = styled.div`
-  position: absolute;
-  filter: blur(1000px);
-  top: -250px;
-  left: 0;
-  width: 100%;
-  height: 500px;
-  border-radius: 50%;
-  background: #00ffff;
+  ${media.mobile} {
+    height: 54px;
+  }
 `;
 
 export const Footer = styled.footer`
@@ -193,20 +169,31 @@ export const Footer = styled.footer`
   font-weight: 500;
   color: #808996;
   margin-top: 20px;
+  font-family: "Wanted Sans";
 
-  ${media.mobile}{
-    margin-top: 12px;
+  ${media.mobile} {
+    line-height: 150%; /* 18px */
   }
 `;
 
-export const logoStyle = css`
-  width: 60px;
+export const FixedFooter = styled.div`
+  /* Shadow-Btn-area */
+  box-shadow: 0 -1px 12px 0 rgba(0, 0, 0, 0.16);
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: #fff;
+  padding: 16px;
+  display: flex;
+  justify-content: center;
+  border-top: 1px solid #e8ecf1;
 `;
 
-export const textLogoStyle = css`
-  width: 150px;
-`;
-
-export const boldStyle = css`
-  font-weight: bold;
+export const FixedFooterContent = styled.div`
+  width: 100%;
+  max-width: 600px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 `;

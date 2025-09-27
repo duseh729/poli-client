@@ -56,14 +56,19 @@ const Introduce = ({ handleNextStep }: IntroduceProps) => {
         </S.Card>
       </S.CardContainer>
 
-      <S.StartButton onClick={handleNextStep}>
-        <span>시작하기</span>
-      </S.StartButton>
-      
-      <S.Footer>
-        폴리가 제공한 법률상담에 대해 어떠한 민사, 형사상의 책임도 지지
-        않습니다. 최종 결정에는 반드시 변호사의 조력을 받으십시오.
-      </S.Footer>
+      <div style={{ height: "100px", width: "100%", flexShrink: 0 }}></div>
+
+      <S.FixedFooter>
+        <S.FixedFooterContent>
+          <S.StartButton onClick={handleNextStep}>
+            <span>시작하기</span>
+          </S.StartButton>
+          <S.Footer>
+            폴리가 제공한 법률상담에 대해 어떠한 민사, 형사상의 책임도 지지
+            않습니다. 최종 결정에는 반드시 변호사의 조력을 받으십시오.
+          </S.Footer>
+        </S.FixedFooterContent>
+      </S.FixedFooter>
     </S.Container>
   );
 };

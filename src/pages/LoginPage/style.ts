@@ -51,7 +51,6 @@ export const Input = styled.input<{ hasError?: boolean }>`
   border: 1px solid ${({ hasError }) => (hasError ? "red" : "#808996")};
   border-radius: 35px;
   font-size: 22px;
-  font-weight: 600;
   padding: 0 20px;
   &:focus {
     outline: none;
