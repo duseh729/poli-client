@@ -70,6 +70,23 @@ const LeftSideBar = () => {
   }, []);
 
   useEffect(() => {
+    if (isOpen && isMobile) {
+      // Add a dummy history state when the sidebar opens
+      window.history.pushState(null, "", location.pathname);
+
+      const handlePopState = () => {
+        close(); // Close the sidebar on back button press
+      };
+
+      window.addEventListener("popstate", handlePopState);
+
+      return () => {
+        window.removeEventListener("popstate", handlePopState);
+      };
+    }
+  }, [isOpen, isMobile, close, location.pathname]);
+
+  useEffect(() => {
     if (profileFooterRef.current) {
       setFooterHeight(profileFooterRef.current.offsetHeight);
     }
@@ -122,8 +139,8 @@ const LeftSideBar = () => {
     setSelectedRoomId(roomId);
     const rect = event.currentTarget.getBoundingClientRect();
     setMenuPosition({
-      top: rect.top - rect.height -35,
-      left: rect.left - 200,
+      top: rect.top + rect.height + 10,
+      left: rect.right - 20,
     });
   };
 
