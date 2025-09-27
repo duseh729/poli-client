@@ -207,6 +207,12 @@ export const PetionTitleContents = styled(motion.div)`
   }
 
   & > div {
+    width: 70%;
+
+    ${media.mobile} {
+      width: 100%;
+    }
+
     & > span {
       color: #626262;
       font-family: "Wanted Sans";
@@ -220,6 +226,7 @@ export const PetionTitleContents = styled(motion.div)`
 
 export const PetitionButtonWrapper = styled(motion.div)`
   display: flex;
+  justify-content: flex-end;
   gap: 8px;
 
   ${media.mobile} {

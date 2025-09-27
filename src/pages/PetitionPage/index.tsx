@@ -292,7 +292,12 @@ const PetitionPage = () => {
 
             <LocalizationProvider dateAdapter={AdapterDayjs} adapterLocale="ko">
               <S.PetionTitleContents>
-                <div style={{ display: "flex", flexDirection: "column" }}>
+                <div
+                  style={{
+                    display: "flex",
+                    flexDirection: "column",
+                  }}
+                >
                   <span
                     style={{
                       fontSize: 16,
@@ -329,14 +334,16 @@ const PetitionPage = () => {
                           popper: {
                             sx: {
                               "& .MuiPaper-root": {
-                                width: "340px",
+                                width: "100%",
+                                maxWidth: "450px",
                                 borderRadius: "10px",
                               },
                             },
                           },
                         }}
                         sx={{
-                          width: "340px",
+                          width: "100%",
+                          maxWidth: "450px",
                           "& .MuiOutlinedInput-root": {
                             height: "56px",
                             backgroundColor: "#f6f8fb",
