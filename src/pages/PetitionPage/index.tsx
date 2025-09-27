@@ -230,6 +230,7 @@ const PetitionPage = () => {
     clone.style.left = "-9999px";
     clone.style.top = "0px";
     clone.style.width = "960px";
+    clone.style.padding = "0px 20px"
     document.body.appendChild(clone);
 
     try {
