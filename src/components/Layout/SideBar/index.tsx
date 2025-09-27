@@ -139,8 +139,8 @@ const LeftSideBar = () => {
     setSelectedRoomId(roomId);
     const rect = event.currentTarget.getBoundingClientRect();
     setMenuPosition({
-      top: rect.top + rect.height + 10,
-      left: rect.right - 20,
+      top: rect.top - rect.height - 35,
+      left: rect.right - 160,
     });
   };
 
