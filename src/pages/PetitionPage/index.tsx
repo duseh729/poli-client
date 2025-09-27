@@ -197,8 +197,7 @@ const PetitionPage = () => {
       // 데스크톱 환경에서는 기존 로직을 사용합니다.
       try {
         const canvas = await html2canvas(pdfElement, {
-          ignoreElements: (element) =>
-            element.classList.contains("pdf-ignore"),
+          ignoreElements: (element) => element.classList.contains("pdf-ignore"),
         });
         const imgData = canvas.toDataURL("image/png");
         const pdf = new jsPDF("p", "mm", "a4");
@@ -230,7 +229,7 @@ const PetitionPage = () => {
     clone.style.left = "-9999px";
     clone.style.top = "0px";
     clone.style.width = "960px";
-    clone.style.padding = "0px 20px"
+    clone.style.padding = "0px 20px";
     document.body.appendChild(clone);
 
     try {
@@ -356,12 +355,7 @@ const PetitionPage = () => {
 
             <LocalizationProvider dateAdapter={AdapterDayjs} adapterLocale="ko">
               <S.PetionTitleContents>
-                <div
-                  style={{
-                    display: "flex",
-                    flexDirection: "column",
-                  }}
-                >
+                <S.PetitionDateTextWrapper>
                   <span
                     style={{
                       fontSize: 16,
@@ -428,7 +422,7 @@ const PetitionPage = () => {
                   ) : (
                     <span>{complaint.complaintDate}</span>
                   )}
-                </div>
+                </S.PetitionDateTextWrapper>
 
                 <div
                   style={{
@@ -748,7 +742,9 @@ const PetitionPage = () => {
                   />
                 ) : (
                   complaint?.evidences
-                    ?.filter((evidence) => evidence.fileName && evidence.fileUrl)
+                    ?.filter(
+                      (evidence) => evidence.fileName && evidence.fileUrl
+                    )
                     .map((evidence, index) => (
                       <S.PetitionInfoContents
                         key={index}
@@ -791,11 +787,11 @@ const PetitionPage = () => {
               )}
             </S.FloatingButtonWrapper>
           </S.FloatingContent>
-            <S.FloatingClose>
-              <button onClick={() => navigate(-1)}>
-                <img src={close} alt="이전 페이지로 가기" />
-              </button>
-            </S.FloatingClose>
+          <S.FloatingClose>
+            <button onClick={() => navigate(-1)}>
+              <img src={close} alt="이전 페이지로 가기" />
+            </button>
+          </S.FloatingClose>
         </S.FloatingContainer>
       )}
     </S.Container>

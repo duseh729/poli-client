@@ -1,6 +1,6 @@
 import { media } from "@/constants/media";
 import styled from "@emotion/styled";
-import { motion } from "framer-motion";
+import { m, motion } from "framer-motion";
 
 export const Container = styled(motion.div)`
   width: 100%;
@@ -224,6 +224,22 @@ export const PetionTitleContents = styled(motion.div)`
   }
 `;
 
+export const PetitionDateTextWrapper = styled(motion.div)`
+  display: flex;
+  flex-direction: column;
+
+  span {
+    font-family: "Wanted Sans";
+    line-height: 140%; /* 22.4px */
+  }
+
+  span:nth-child(2) {
+    ${media.mobile} {
+      font-size: 16px;
+    }
+  }
+`;
+
 export const PetitionButtonWrapper = styled(motion.div)`
   display: flex;
   justify-content: flex-end;
@@ -283,6 +299,10 @@ export const PetitionInfoWrapper = styled(motion.div)`
     font-style: normal;
     font-weight: 600;
     line-height: 140%; /* 25.2px */
+
+    ${media.mobile} {
+      font-size: 16px;
+    }
   }
 `;
 
@@ -305,6 +325,10 @@ export const PetitionInfoTitle = styled(motion.p)`
   font-weight: 600;
   line-height: 140%; /* 22.4px */
   margin-bottom: 8px;
+
+  ${media.mobile} {
+    font-size: 14px;
+  }
 `;
 
 export const PetitionInfoContentsTitleWrapper = styled(motion.span)`
@@ -335,6 +359,10 @@ export const PetitionInfoContentsTitle = styled.span`
   line-height: 140%; /* 25.2px */
 
   opacity: 0.6;
+
+  ${media.mobile}{
+    font-size: 14px;
+  }
 `;
 
 export const PetitionInfoContentsWrapper = styled(motion.span)`
@@ -357,6 +385,10 @@ export const PetitionInfoContents = styled(motion.span)`
   word-break: break-all;
 
   cursor: pointer;
+
+  ${media.mobile} {
+    font-size: 16px;
+  }
 `;
 
 export const PetitionDefalutInfoWrapper = styled(motion.div)`
