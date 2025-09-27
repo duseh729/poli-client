@@ -190,35 +190,60 @@ const PetitionPage = () => {
   const handleDownload = async () => {
     if (!pdfRef.current) return;
 
-    const pdfElement = pdfRef.current;
-    const originalWidth = pdfElement.style.width;
-    // 모바일 환경에서 진정서 내보내기 시 모바일 레이아웃으로 export 되는 문제가 있습니다.
-    // 이를 해결하기 위해, 화면 너비가 1024px 미만일 경우
-    // PDF export를 위해 임시로 데스크톱 뷰처럼 보이도록 고정 너비를 설정합니다.
     const isMobile = window.innerWidth < 1024;
+    const pdfElement = pdfRef.current;
 
-    if (isMobile) {
-      pdfElement.style.width = "920px";
-      pdfElement.style.padding = "0px 20px"
+    if (!isMobile) {
+      // 데스크톱 환경에서는 기존 로직을 사용합니다.
+      try {
+        const canvas = await html2canvas(pdfElement, {
+          ignoreElements: (element) =>
+            element.classList.contains("pdf-ignore"),
+        });
+        const imgData = canvas.toDataURL("image/png");
+        const pdf = new jsPDF("p", "mm", "a4");
+        const imgWidth = 210;
+        const pageHeight = 297;
+        const imgHeight = (canvas.height * imgWidth) / canvas.width;
+        let heightLeft = imgHeight;
+        let position = 0;
+
+        pdf.addImage(imgData, "PNG", 0, position, imgWidth, imgHeight);
+        heightLeft -= pageHeight;
+
+        while (heightLeft > 0) {
+          position = heightLeft - imgHeight;
+          pdf.addPage();
+          pdf.addImage(imgData, "PNG", 0, position, imgWidth, imgHeight);
+          heightLeft -= pageHeight;
+        }
+        pdf.save("download.pdf");
+      } catch (error) {
+        console.error("PDF generation failed:", error);
+      }
+      return;
     }
 
+    // 모바일 환경에서는 UI 깨짐 방지를 위해 복제해서 사용합니다.
+    const clone = pdfElement.cloneNode(true) as HTMLElement;
+    clone.style.position = "absolute";
+    clone.style.left = "-9999px";
+    clone.style.top = "0px";
+    clone.style.width = "960px";
+    document.body.appendChild(clone);
+
     try {
-      // DOM → canvas 변환
-      const canvas = await html2canvas(pdfElement, {
-        ignoreElements: (element) => element.classList.contains("pdf-ignore"), // 특정 클래스 무시
+      const canvas = await html2canvas(clone, {
+        ignoreElements: (element) => element.classList.contains("pdf-ignore"),
       });
       const imgData = canvas.toDataURL("image/png");
-
-      // PDF 생성
       const pdf = new jsPDF("p", "mm", "a4");
-      const imgWidth = 210; // A4 가로 크기 (mm)
-      const pageHeight = 297; // A4 세로 크기 (mm)
+      const imgWidth = 210;
+      const pageHeight = 297;
       const imgHeight = (canvas.height * imgWidth) / canvas.width;
-
       let heightLeft = imgHeight;
       let position = 0;
 
-      // 페이지 나눔 처리
       pdf.addImage(imgData, "PNG", 0, position, imgWidth, imgHeight);
       heightLeft -= pageHeight;
 
@@ -228,14 +253,11 @@ const PetitionPage = () => {
         pdf.addImage(imgData, "PNG", 0, position, imgWidth, imgHeight);
         heightLeft -= pageHeight;
       }
-
-      // 다운로드
       pdf.save("download.pdf");
+    } catch (error) {
+      console.error("PDF generation failed:", error);
     } finally {
-      // export가 완료된 후 원래 너비로 복원합니다.
-      if (isMobile) {
-        pdfElement.style.width = originalWidth;
-      }
+      document.body.removeChild(clone);
     }
   };
 
@@ -257,8 +279,6 @@ const PetitionPage = () => {
     const fetchPetition = async () => {
       try {
         const petition = await getPetition(Number(id));
-        // console.log(petition)
-        // petition이 문자열일 경우
         let parsedPetition;
         if (typeof petition === "string") {
           parsedPetition = JSON.parse(petition);
@@ -266,9 +286,7 @@ const PetitionPage = () => {
           parsedPetition = petition;
         }
 
-        // extracted_data가 있으면 그걸 쓰고, 없으면 parsedPetition 전체 사용
         const dataToUse = parsedPetition.extracted_data ?? parsedPetition;
-
         const complaintObj = new Complaint(dataToUse);
         setComplaint(complaintObj);
       } catch (err) {
@@ -277,7 +295,8 @@ const PetitionPage = () => {
     };
 
     fetchPetition();
-  }, []);
+  }, [id]);
+
   useEffect(() => {
     if (!complaint) return;
 
@@ -729,16 +748,14 @@ const PetitionPage = () => {
                 ) : (
                   complaint?.evidences
                     ?.filter((evidence) => evidence.fileName && evidence.fileUrl)
-                    .map((evidence, index) => {
-                      return (
-                        <S.PetitionInfoContents
-                          key={index}
-                          onClick={() => window.open(evidence.fileUrl, "_blank")}
-                        >
-                          {evidence.fileName}
-                        </S.PetitionInfoContents>
-                      );
-                    })
+                    .map((evidence, index) => (
+                      <S.PetitionInfoContents
+                        key={index}
+                        onClick={() => window.open(evidence.fileUrl, "_blank")}
+                      >
+                        {evidence.fileName}
+                      </S.PetitionInfoContents>
+                    ))
                 )}
               </S.PetitionInfoContentsWrapper>
             </S.InputWrapper>
@@ -751,7 +768,7 @@ const PetitionPage = () => {
       <S.ResponsiveBr></S.ResponsiveBr>
       <S.ResponsiveBr></S.ResponsiveBr>
       {isFloatingVisible && (
-        <S.FloatingContainer className={"visible"}>
+        <S.FloatingContainer className={isFloatingVisible ? "visible" : ""}>
           <S.FloatingContent>
             <S.FloatingButtonWrapper>
               {isUpdate ? (
@@ -773,11 +790,11 @@ const PetitionPage = () => {
               )}
             </S.FloatingButtonWrapper>
           </S.FloatingContent>
-          <S.FloatingClose>
-            <button onClick={() => navigate(-1)}>
-              <img src={close} alt="이전 페이지로 가기" />
-            </button>
-          </S.FloatingClose>
+            <S.FloatingClose>
+              <button onClick={() => navigate(-1)}>
+                <img src={close} alt="이전 페이지로 가기" />
+              </button>
+            </S.FloatingClose>
         </S.FloatingContainer>
       )}
     </S.Container>
