@@ -78,7 +78,7 @@ const InitChatPage = () => {
       const path = getDynamicPath(ROUTES.CHAT_ID, { id: newChatRoom.id });
 
       if (!isTyping) {
-        navigate(path, { state: { isInit: true } });
+        // navigate(path, { state: { isInit: true } });
       } else {
         setPendingNavigation(path);
       }
@@ -159,7 +159,6 @@ const InitChatPage = () => {
 
   return (
     <S.Container>
-      <S.Title></S.Title>
       <S.Wrapper
         initial={{ opacity: 0, scale: 0.9, y: 20 }}
         animate={{ opacity: 1, scale: 1, y: 0 }}
