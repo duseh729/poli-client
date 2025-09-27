@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import ReactMarkdown from "react-markdown";
 import rehypeHighlight from "rehype-highlight";
 import remarkGfm from "remark-gfm";
-import * as S from "./style";
+import * as S from "../../Chat/Chat/style";
 import chatArrow from "@/assets/chat-arrow.svg";
 import poliChat from "@/assets/poli-chat-icon-sm.svg";
 import "highlight.js/styles/github.css";
@@ -127,7 +127,10 @@ const InitChat = ({
 
   return (
     <S.ChatContainer>
-      <S.ChatWindow ref={chatWindowRef} style={{ paddingBottom: `${footerHeight + 60}px` }}>
+      <S.ChatWindow
+        ref={chatWindowRef}
+        style={{ paddingBottom: `${footerHeight + 60}px` }}
+      >
         <S.MessageContainer>
           <S.UserMessageWrapper>
             <S.UserMessage
@@ -146,37 +149,41 @@ const InitChat = ({
         </S.MessageContainer>
         {isTyping && botMessage && (
           <S.MessageContainer>
-            <S.BotIcon src={poliChat} alt="Bot" />
-            <S.Message
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ duration: 0.5 }}
-            >
-              <ReactMarkdown
-                remarkPlugins={[remarkGfm]}
-                rehypePlugins={[rehypeHighlight]}
-                components={{
-                  a: ({ node, ...props }) => (
-                    <a {...props} target="_blank" rel="noopener noreferrer" />
-                  ),
-                }}
+            <S.BotMessageWrapper>
+              <S.BotIcon src={poliChat} alt="Bot" />
+              <S.Message
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ duration: 0.5 }}
               >
-                {botMessage}
-              </ReactMarkdown>
-            </S.Message>
+                <ReactMarkdown
+                  remarkPlugins={[remarkGfm]}
+                  rehypePlugins={[rehypeHighlight]}
+                  components={{
+                    a: ({ node, ...props }) => (
+                      <a {...props} target="_blank" rel="noopener noreferrer" />
+                    ),
+                  }}
+                >
+                  {botMessage}
+                </ReactMarkdown>
+              </S.Message>
+            </S.BotMessageWrapper>
           </S.MessageContainer>
         )}
         {!isTyping && isPending && (
           <S.MessageContainer>
-            <S.BotIcon src={poliChat} alt="Bot" />
-            <S.LoadingMessage
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ duration: 0.5 }}
-            >
-              가장 도움을 줄 수 있는 답변을 준비하고 있습니다.{" "}
-              <S.LoadingSpinner src={loadingSpinner} alt="Loading" />
-            </S.LoadingMessage>
+            <S.BotMessageWrapper>
+              <S.BotIcon src={poliChat} alt="Bot" />
+              <S.LoadingMessage
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ duration: 0.5 }}
+              >
+                가장 도움을 줄 수 있는 답변을 준비하고 있습니다.{" "}
+                <S.LoadingSpinner src={loadingSpinner} alt="Loading" />
+              </S.LoadingMessage>
+            </S.BotMessageWrapper>
           </S.MessageContainer>
         )}
       </S.ChatWindow>
@@ -195,7 +202,12 @@ const InitChat = ({
                 }
                 onChange={(e) => setInputValue(e.target.value)}
                 onKeyPress={(e) => {
-                  if (e.key === "Enter" && !e.shiftKey && !isPending && !isTyping) {
+                  if (
+                    e.key === "Enter" &&
+                    !e.shiftKey &&
+                    !isPending &&
+                    !isTyping
+                  ) {
                     e.preventDefault();
                     handleLocalSend();
                   }
