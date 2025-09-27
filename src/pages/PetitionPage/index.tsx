@@ -367,7 +367,11 @@ const PetitionPage = () => {
                 </div>
 
                 <div
-                  style={{ display: "flex", alignItems: "flex-end" }}
+                  style={{
+                    display: "flex",
+                    alignItems: "flex-end",
+                    justifyContent: "flex-end",
+                  }}
                   className="pdf-ignore"
                 >
                   <S.PetitionButtonWrapper ref={buttonWrapperRef}>
