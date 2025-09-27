@@ -76,6 +76,9 @@ const LeftSideBar = () => {
 
       const handlePopState = () => {
         close(); // Close the sidebar on back button press
+
+        setMenuPosition(null);
+        setSelectedRoomId(null);
       };
 
       window.addEventListener("popstate", handlePopState);
