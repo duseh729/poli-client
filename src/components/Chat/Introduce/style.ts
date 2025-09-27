@@ -21,7 +21,6 @@ export const Container = styled.div`
 
   ${media.mobile} {
     height: auto;
-    padding: 24px 16px 8px 16px;
   }
 `;
 

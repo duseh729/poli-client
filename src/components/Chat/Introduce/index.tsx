@@ -1,15 +1,18 @@
 /** @jsxImportSource @emotion/react */
 import * as S from "./style.ts";
-import poliLgText from "@/assets/poli-sm-text2.svg";
 import affiDavitLogo from "@/assets/affidavit.svg";
 import messageLogo from "@/assets/message.svg";
 import notificationLogo from "@/assets/notification.svg";
+import useWindowWidth from "@/hooks/useWindowWidth";
 
 type IntroduceProps = {
   handleNextStep: () => void;
 };
 
 const Introduce = ({ handleNextStep }: IntroduceProps) => {
+  const width = useWindowWidth();
+  const isMobile = width <= 600;
+
   return (
     <S.Container>
       <S.MainTitle>
@@ -56,10 +59,24 @@ const Introduce = ({ handleNextStep }: IntroduceProps) => {
         </S.Card>
       </S.CardContainer>
 
-      <div style={{ height: "100px", width: "100%", flexShrink: 0 }}></div>
+      {isMobile && (
+        <div style={{ height: "110px", width: "100%", flexShrink: 0 }}></div>
+      )}
 
-      <S.FixedFooter>
-        <S.FixedFooterContent>
+      {isMobile ? (
+        <S.FixedFooter>
+          <S.FixedFooterContent>
+            <S.StartButton onClick={handleNextStep}>
+              <span>시작하기</span>
+            </S.StartButton>
+            <S.Footer>
+              폴리가 제공한 법률상담에 대해 어떠한 민사, 형사상의 책임도 지지
+              않습니다. 최종 결정에는 반드시 변호사의 조력을 받으십시오.
+            </S.Footer>
+          </S.FixedFooterContent>
+        </S.FixedFooter>
+      ) : (
+        <>
           <S.StartButton onClick={handleNextStep}>
             <span>시작하기</span>
           </S.StartButton>
@@ -67,8 +84,8 @@ const Introduce = ({ handleNextStep }: IntroduceProps) => {
             폴리가 제공한 법률상담에 대해 어떠한 민사, 형사상의 책임도 지지
             않습니다. 최종 결정에는 반드시 변호사의 조력을 받으십시오.
           </S.Footer>
-        </S.FixedFooterContent>
-      </S.FixedFooter>
+        </>
+      )}
     </S.Container>
   );
 };
