@@ -4,14 +4,17 @@ import { motion } from "framer-motion";
 import { COLORS } from "@/constants/color";
 import { media } from "@/constants/media";
 
+export const ResponsiveBr = styled.br`
+  display: none;
+  ${media.mobile} {
+    display: block;
+  }
+`;
+
 export const Container = styled(motion.div)`
   height: 100%;
   width: 100%;
   position: relative;
-
-  ${media.mobile} {
-    padding: 8px 16px;
-  }
 `;
 
 export const FormWrapper = styled.div`
@@ -20,8 +23,9 @@ export const FormWrapper = styled.div`
   justify-content: center;
   align-items: center;
   min-width: 770px;
-  height: ${(props: { formHeight: number }) => `calc(100vh - ${props.formHeight}px)`};
-  
+  height: ${(props: { formHeight: number }) =>
+    `calc(100vh - ${props.formHeight}px)`};
+
   ${media.mobile} {
     overflow: auto;
     min-width: auto;
@@ -64,12 +68,22 @@ export const Label = styled.label`
   font-size: 16px;
   color: #808996;
   margin: 0 0 16px 0;
-  font-weight: 500;
+  font-weight: 600;
+  ${media.mobile} {
+    font-family: "Wanted Sans";
+    font-size: 14px;
+    margin-bottom: 12px;
+  }
 `;
 
 export const Highlight = styled.span`
   color: #0f0f10;
   font-weight: 600;
+  line-height: 150%;
+  font-family: "Wanted Sans";
+  ${media.mobile} {
+    font-size: 16px;
+  }
 `;
 
 export const Input = styled.input`
@@ -192,7 +206,9 @@ export const FooterWrapper = styled.div`
 
   ${media.mobile} {
     position: fixed;
-    width: calc(100% - 16px);
+    width: 100%;
+    padding: 16px 16px 8px 16px;
+    box-shadow: 0 -1px 12px 0 rgba(0, 0, 0, 0.16);
   }
 `;
 
@@ -218,7 +234,7 @@ export const StartButton = styled.button`
 
   ${media.mobile} {
     height: 54px;
-    width: calc(100% - 16px);
+    width: 100%;
   }
 `;
 
@@ -241,6 +257,13 @@ export const TitleText = styled.span`
   font-weight: 600;
   text-align: center;
   padding: 20px 24px;
+  line-height: 150%; /* 27px */
+  font-family: "Wanted Sans";
+
+  ${media.mobile} {
+    font-size: 18px;
+    text-align: left;
+  }
 `;
 
 export const Duplication = styled.div<{ bold?: boolean }>`

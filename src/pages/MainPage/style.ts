@@ -10,4 +10,6 @@ export const Container = styled(motion.div)`
 `;
 
 export const Main = styled.div`
+  width: 100%;
+  max-width: 770px;
 `;

@@ -60,7 +60,7 @@ const Introduce = ({ handleNextStep }: IntroduceProps) => {
       </S.CardContainer>
 
       {isMobile && (
-        <div style={{ height: "110px", width: "100%", flexShrink: 0 }}></div>
+        <div style={{ height: "90px", width: "100%", flexShrink: 0 }}></div>
       )}
 
       {isMobile ? (

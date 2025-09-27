@@ -21,6 +21,7 @@ export const Container = styled.div`
 
   ${media.mobile} {
     height: auto;
+    padding: 24px 16px;
   }
 `;
 
@@ -59,8 +60,8 @@ export const Subtitle = styled.p`
 
 export const CardContainer = styled.div`
   display: flex;
-  justify-content: center;
-  gap: 36px;
+  width: 100%;
+  justify-content: space-between;
   margin: 32px 0 80px 0;
 
   ${media.mobile} {
