@@ -82,9 +82,9 @@ const ImageInput = ({
     handleFiles(droppedFiles);
   };
 
-  const handleRemove = (index: number) => {
-    if (!Array.isArray(files)) return; // files가 단일 File이면 무시
-    setFiles(files.filter((_, i) => i !== index));
+  const handleRemove = (fileToRemove: File | Evidence) => {
+    if (!Array.isArray(files)) return;
+    setFiles(files.filter((f) => f !== fileToRemove));
   };
 
   return (
@@ -126,33 +126,35 @@ const ImageInput = ({
 
       <S.ImageInputWrapper fileLength={files.length}>
         {Array.isArray(files) && files.length > 0
-          ? files.map((f, index) => {
-              const fileName = f instanceof File ? f.name : f.fileName;
-              const fileUrl =
-                f instanceof File ? URL.createObjectURL(f) : f.fileUrl;
+          ? files
+              .filter((f) => (f instanceof File ? f.name : f.fileName))
+              .map((f, index) => {
+                const fileName = f instanceof File ? f.name : f.fileName;
+                const fileUrl =
+                  f instanceof File ? URL.createObjectURL(f) : f.fileUrl;
 
-              return (
-                <S.ImageInputList key={index}>
-                  <div
-                    style={{ display: "flex", alignItems: "center", gap: 4 }}
-                  >
-                    <img src={check} alt="check" />
-                    <span
-                      style={{ cursor: "pointer" }}
-                      onClick={() => window.open(fileUrl, "_blank")}
+                return (
+                  <S.ImageInputList key={index}>
+                    <div
+                      style={{ display: "flex", alignItems: "center", gap: 4 }}
                     >
-                      {fileName}
-                    </span>
-                  </div>
-                  <div
-                    style={{ cursor: "pointer" }}
-                    onClick={() => handleRemove(index)}
-                  >
-                    <img src={cancel} alt="cancel" />
-                  </div>
-                </S.ImageInputList>
-              );
-            })
+                      <img src={check} alt="check" />
+                      <span
+                        style={{ cursor: "pointer" }}
+                        onClick={() => window.open(fileUrl, "_blank")}
+                      >
+                        {fileName}
+                      </span>
+                    </div>
+                    <div
+                      style={{ cursor: "pointer" }}
+                      onClick={() => handleRemove(f)}
+                    >
+                      <img src={cancel} alt="cancel" />
+                    </div>
+                  </S.ImageInputList>
+                );
+              })
           : null}
       </S.ImageInputWrapper>
       {files.length >= 4 && isBlur ? <S.ImageInputListBlur /> : null}
