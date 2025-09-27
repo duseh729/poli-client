@@ -84,6 +84,11 @@ export const Message = styled(motion.div)`
   white-space: pre-wrap;
   line-height: 24px;
   font-weight: 500;
+  
+  ${media.mobile} {
+    padding: 0;
+    flex: 1;
+  }
 
   /* 마크다운 스타일링 */
   h1,
@@ -246,7 +251,6 @@ export const Message = styled(motion.div)`
     table {
       display: block;
       overflow-x: auto;
-      white-space: nowrap;
     }
   }
 
@@ -261,9 +265,18 @@ export const UserMessageWrapper = styled(motion.div)`
   max-width: 770px;
   display: flex;
   justify-content: flex-end;
+
+  ${media.mobile}{
+    padding-left: 40px;
+  }
 `;
 
-export const BotMessageWrapper = styled(motion.div)``;
+export const BotMessageWrapper = styled(motion.div)`
+  ${media.mobile} {
+    display: flex;
+    gap: 12px;
+  }
+`;
 
 export const UserMessage = styled(motion.div)`
   padding: 16px;
