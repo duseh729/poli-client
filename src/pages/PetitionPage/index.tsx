@@ -14,6 +14,7 @@ import * as S from "./style";
 import close from "@/assets/close.svg";
 import exportIcon from "@/assets/exportIcon.svg";
 import edit from "@/assets/edit.svg";
+import expandIcon from "@/assets/expand.svg"; // 아이콘 import 추가
 import petitionUpdateIcon from "@/assets/petition-update.svg";
 import Complaint, { ComplaintData, Evidence } from "@/types/petition";
 import buttonCheck from "@/assets/button-check.svg";
@@ -418,6 +419,7 @@ const PetitionPage = () => {
                           },
                         }}
                       />
+                      <img src={expandIcon} alt="expand" />
                     </div>
                   ) : (
                     <span>{complaint.complaintDate}</span>

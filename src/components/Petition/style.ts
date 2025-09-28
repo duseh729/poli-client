@@ -14,6 +14,10 @@ export const Input = styled.input`
   font-style: normal;
   font-weight: 500;
   line-height: 150%;
+
+  ${media.mobile} {
+    font-size: 14px;
+  }
 `;
 
 export const Textarea = styled.textarea`
@@ -28,4 +32,7 @@ export const Textarea = styled.textarea`
   font-style: normal;
   font-weight: 500;
   line-height: 150%;
+  ${media.mobile} {
+    font-size: 14px;
+  }
 `;

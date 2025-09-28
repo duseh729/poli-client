@@ -238,6 +238,11 @@ export const PetitionDateTextWrapper = styled(motion.div)`
       font-size: 16px;
     }
   }
+
+  div{
+    display: flex;
+    align-items: center;
+  }
 `;
 
 export const PetitionButtonWrapper = styled(motion.div)`
