@@ -13,7 +13,7 @@ export const Container = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: space-between;
+  justify-content: center;
   width: 100%;
   height: 100vh;
   box-sizing: border-box;
@@ -22,6 +22,7 @@ export const Container = styled.div`
   ${media.mobile} {
     height: calc(100vh - 127px - 60px);
     padding: 24px 16px 16px 16px;
+    justify-content: space-between;
   }
 `;
 
@@ -133,10 +134,10 @@ export const CardText = styled.p`
   font-weight: 600;
   line-height: 150%;
 
-  ${media.mobile}{
+  ${media.mobile} {
     font-size: 16px;
 
-    br{
+    br {
       display: none;
     }
   }

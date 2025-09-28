@@ -23,7 +23,7 @@ const Input = ({
       // 높이를 먼저 초기화해야 정확한 scrollHeight를 계산할 수 있음
       textareaRef.current.style.height = "auto";
       // 실제 내용물의 높이(scrollHeight)를 textarea의 높이로 설정
-      textareaRef.current.style.height = `${textareaRef.current.scrollHeight}px`;
+      textareaRef.current.style.height = `${textareaRef.current.scrollHeight + 5}px`;
     }
   }, [value, multiline]); // value나 multiline prop이 바뀔 때 실행
 
