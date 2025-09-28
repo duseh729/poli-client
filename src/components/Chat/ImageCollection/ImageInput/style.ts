@@ -1,6 +1,13 @@
 import { media } from "@/constants/media";
 import styled from "@emotion/styled";
 
+export const ResponsiveBr = styled.br`
+  display: none;
+  ${media.mobile} {
+    display: block;
+  }
+`
+
 export const ImageInputContainer = styled.div`
   display: flex;
   padding: 20px 12px;
@@ -28,6 +35,11 @@ export const ImageInputText = styled.span`
   line-height: 150%; /* 21px */
 
   margin-top: 12px;
+
+  ${media.mobile}{
+    font-size: 13px;
+    margin-top: 6px;
+  }
 `;
 
 export const ImageInputLimitedText = styled.span`
@@ -40,6 +52,10 @@ export const ImageInputLimitedText = styled.span`
   font-style: normal;
   font-weight: 500;
   line-height: 150%; /* 18px */
+
+  ${media.mobile}{
+    font-size: 10px;
+  }
 `;
 
 export const ImageInputButton = styled.button`

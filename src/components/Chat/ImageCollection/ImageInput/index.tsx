@@ -106,10 +106,12 @@ const ImageInput = ({
       >
         <img style={{ padding: 12 }} src={poliInput} alt="poli input" />
         <S.ImageInputText>
-          업로드할 파일을 선택하거나 여기로 끌어다 놓으세요.
+          업로드할 파일을 선택하거나 <S.ResponsiveBr />
+          여기로 끌어다 놓으세요.
         </S.ImageInputText>
         <S.ImageInputLimitedText>
-          업로드 가능한 파일 유형: heic, pdf, jpg, jpeg, png | 최대 400MB
+          업로드 가능한 파일 유형: heic, pdf, jpg, jpeg, png |<S.ResponsiveBr />
+          최대 400MB까지 업로드 가능
         </S.ImageInputLimitedText>
         <S.ImageInputButton onClick={handleButtonClick}>
           증거 자료 찾기
