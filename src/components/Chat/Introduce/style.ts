@@ -173,6 +173,7 @@ export const Footer = styled.footer`
 
   ${media.mobile} {
     line-height: 150%; /* 18px */
+    margin-top: 12px;
   }
 `;
 
@@ -188,6 +189,7 @@ export const FixedFooter = styled.div`
   display: flex;
   justify-content: center;
   border-top: 1px solid #e8ecf1;
+  padding: 16px 16px 8px 16px;
 `;
 
 export const FixedFooterContent = styled.div`

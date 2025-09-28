@@ -252,6 +252,7 @@ export const Footer = styled.footer`
   font-weight: 500;
   color: #808996;
   margin-top: 12px;
+  line-height: 150%;
 `;
 
 export const Logo = styled.img`
