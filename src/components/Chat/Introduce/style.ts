@@ -120,7 +120,6 @@ export const MoblieCardWrapper = styled.div`
   ${media.mobile} {
     display: flex;
     flex-direction: column;
-    gap: 6px;
   }
 `;
 export const CardName = styled.p`
@@ -128,6 +127,7 @@ export const CardName = styled.p`
   font-size: 14px;
   font-weight: 600;
   margin: 31px 0 15px 0;
+  line-height: 150%;
 
   ${media.mobile} {
     margin: 0px;
