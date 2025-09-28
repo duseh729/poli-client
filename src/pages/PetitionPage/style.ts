@@ -239,10 +239,6 @@ export const PetitionDateTextWrapper = styled(motion.div)`
     }
   }
 
-  div {
-    display: flex;
-    align-items: center;
-  }
 `;
 
 export const PetitionButtonWrapper = styled(motion.div)`

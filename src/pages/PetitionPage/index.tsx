@@ -367,60 +367,66 @@ const PetitionPage = () => {
                     신고일자
                   </span>
                   {isUpdate ? (
-                    <div>
-                      <DatePicker
-                        value={complaintDate ? dayjs(complaintDate) : null}
-                        onChange={(newDate) => {
-                          complaint?.update({
-                            complaintDate: newDate
-                              ? dayjs(newDate).format("YYYY-MM-DD")
-                              : "",
-                          });
-                        }}
-                        format="YYYY.MM.DD"
-                        slotProps={{
-                          textField: {
-                            placeholder: "날짜",
-                            inputProps: {
-                              style: {
-                                color: "#0F0F10",
-                                fontFamily: "Wanted Sans",
-                                fontSize: "14px",
-                                fontWeight: 500,
-                              },
+                    <DatePicker
+                      value={complaintDate ? dayjs(complaintDate) : null}
+                      onChange={(newDate) => {
+                        complaint?.update({
+                          complaintDate: newDate
+                            ? dayjs(newDate).format("YYYY-MM-DD")
+                            : "",
+                        });
+                      }}
+                      format="YYYY.MM.DD"
+                      slotProps={{
+                        textField: {
+                          placeholder: "날짜",
+                          InputProps: {
+                            endAdornment: (
+                              <img
+                                src={expandIcon}
+                                alt="expand"
+                              />
+                            ),
+                          },
+                          inputProps: {
+                            style: {
+                              color: "#0F0F10",
+                              fontFamily: "Wanted Sans",
+                              fontSize: "14px",
+                              fontWeight: 500,
+                              padding: 0
                             },
                           },
-                          popper: {
-                            sx: {
-                              "& .MuiPaper-root": {
-                                width: "100%",
-                                maxWidth: "450px",
-                                borderRadius: "10px",
-                              },
+                        },
+                        popper: {
+                          sx: {
+                            "& .MuiPaper-root": {
+                              width: "100%",
+                              maxWidth: "450px",
+                              borderRadius: "10px",
                             },
                           },
-                        }}
-                        sx={{
-                          width: "100%",
-                          maxWidth: "450px",
-                          "& .MuiOutlinedInput-root": {
-                            height: "56px",
-                            backgroundColor: "#f6f8fb",
-                            borderRadius: "10px",
-                            "& fieldset": {
-                              borderColor: "#c0cbd9",
-                            },
-                            "&:hover fieldset": {
-                              borderColor: "#0059ff",
-                            },
-                            "&.Mui-focused fieldset": {
-                              border: "1px solid #0059ff",
-                            },
+                        },
+                      }}
+                      sx={{
+                        width: "100%",
+                        maxWidth: "450px",
+                        "& .MuiOutlinedInput-root": {
+                          padding: "20px 14px 16px 14px",
+                          backgroundColor: "#f6f8fb",
+                          borderRadius: "10px",
+                          "& fieldset": {
+                            borderColor: "#c0cbd9",
                           },
-                        }}
-                      />
-                      <img src={expandIcon} alt="expand" />
-                    </div>
+                          "&:hover fieldset": {
+                            borderColor: "#0059ff",
+                          },
+                          "&.Mui-focused fieldset": {
+                            border: "1px solid #0059ff",
+                          },
+                        },
+                      }}
+                    />
                   ) : (
                     <span>{complaint.complaintDate}</span>
                   )}
