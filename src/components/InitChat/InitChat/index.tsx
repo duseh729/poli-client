@@ -35,7 +35,7 @@ const InitChat = ({
   const [showRecommendMessages, setShowRecommendMessages] = useState(false);
   const width = useWindowWidth();
   const recommendRef = useRef<HTMLDivElement>(null);
-  const recommendButtonRef = useRef<HTMLButtonElement>(null);
+  const recommendButtonRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     if (width > 600) {

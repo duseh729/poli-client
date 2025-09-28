@@ -81,7 +81,7 @@ const Chat = ({ messages: initialMessages, roomId, isInit }: ChatProps) => {
   const navigate = useNavigate();
   const width = useWindowWidth();
   const recommendRef = useRef<HTMLDivElement>(null);
-  const recommendButtonRef = useRef<HTMLButtonElement>(null);
+  const recommendButtonRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     if (width > 600) {
