@@ -13,15 +13,15 @@ export const Container = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
+  justify-content: space-between;
   width: 100%;
   height: 100vh;
   box-sizing: border-box;
   overflow-y: auto;
 
   ${media.mobile} {
-    height: auto;
-    padding: 24px 16px;
+    height: calc(100vh - 127px - 44px);
+    padding: 24px 16px 16px 16px;
   }
 `;
 
@@ -56,7 +56,6 @@ export const Subtitle = styled.p`
     text-align: center;
 
     font-size: 16px;
-    margin-bottom: 32px;
   }
 `;
 
@@ -64,13 +63,14 @@ export const CardContainer = styled.div`
   display: flex;
   width: 100%;
   justify-content: space-between;
-  margin: 32px 0 80px 0;
+  margin: 0 0 80px 0;
 
   ${media.mobile} {
     width: 100%;
     flex-direction: column;
     gap: 8px;
-    margin: 0 0 40px 0;
+    margin: 0;
+    padding-bottom: 28px;
   }
 `;
 
