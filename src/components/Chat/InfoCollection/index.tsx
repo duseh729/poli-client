@@ -303,8 +303,8 @@ const InfoCollection = ({
             다음
           </S.StartButton>
           <S.Footer>
-            폴리의 역할은 정보를 제공하는데 있으며, 형사적 상담 및 법률 상담이
-            아닙니다. 본 페이지는 법적 효력이 없습니다.
+            폴리가 제공한 법률상담에 대해 어떠한 민사, 형사상의 책임도 지지
+            않습니다. 최종 결정에는 반드시 변호사의 조력을 받으십시오.
           </S.Footer>
         </S.FooterWrapper>
       </LocalizationProvider>

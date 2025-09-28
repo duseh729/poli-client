@@ -57,8 +57,9 @@ const ImageCollection = ({
             <S.FormGroupWrapper>
               <S.FormGroup>
                 <S.Label>
-                  <S.Highlight>증거 자료 |</S.Highlight><S.ResponsiveBr /> 피해 상황에 대한 증거
-                  자료를 가지고 있나요? 관련 증거 자료를 업로드해 주세요.
+                  <S.Highlight>증거 자료 |</S.Highlight>
+                  <S.ResponsiveBr /> 피해 상황에 대한 증거 자료를 가지고 있나요?
+                  관련 증거 자료를 업로드해 주세요.
                 </S.Label>
                 <S.ExampleText>
                   예시. 판매 게시글 캡처, 판매자와의 대화(채팅) 내역, 계좌이체
@@ -75,8 +76,8 @@ const ImageCollection = ({
       <S.FooterWrapper ref={footerRef}>
         <S.StartButton onClick={handleSubmit}>사건 제출하기</S.StartButton>
         <S.Footer>
-          폴리의 역할은 정보를 제공하는데 있으며, 형사적 상담 및 법률 상담이
-          아닙니다. 본 페이지는 법적 효력이 없습니다.
+          폴리가 제공한 법률상담에 대해 어떠한 민사, 형사상의 책임도 지지
+          않습니다. 최종 결정에는 반드시 변호사의 조력을 받으십시오.
         </S.Footer>
       </S.FooterWrapper>
     </S.Container>
