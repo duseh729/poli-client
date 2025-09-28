@@ -30,8 +30,7 @@ const Introduce = ({ handleNextStep }: IntroduceProps) => {
             <S.CardName>만능 진술서 도우미</S.CardName>
             <S.CardText>
               진술서 편하게 작성하고
-              <br />
-              싶은데 도와줘
+              <br /> 싶은데 도와줘
             </S.CardText>
           </S.MoblieCardWrapper>
         </S.Card>

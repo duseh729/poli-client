@@ -123,6 +123,7 @@ export const CardName = styled.p`
 
   ${media.mobile} {
     margin: 0px;
+    font-size: 12px;
   }
 `;
 
@@ -131,6 +132,14 @@ export const CardText = styled.p`
   font-size: 18px;
   font-weight: 600;
   line-height: 150%;
+
+  ${media.mobile}{
+    font-size: 16px;
+
+    br{
+      display: none;
+    }
+  }
 `;
 
 export const StartButton = styled.button`
@@ -180,8 +189,6 @@ export const Footer = styled.footer`
 `;
 
 export const FixedFooter = styled.div`
-  /* Shadow-Btn-area */
-  box-shadow: 0 -1px 12px 0 rgba(0, 0, 0, 0.16);
   position: fixed;
   bottom: 0;
   left: 0;

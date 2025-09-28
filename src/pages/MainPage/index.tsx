@@ -34,6 +34,9 @@ const MainPage = () => {
     if (showNextScreen === 3 && containerRef.current) {
       containerRef.current.scrollTo(0, 0);
     }
+    if (showNextScreen === 2 && containerRef.current) {
+      containerRef.current.scrollTo(0, 0);
+    }
   }, [showNextScreen]);
 
   const handleNextStep = () => {

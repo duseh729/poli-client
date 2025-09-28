@@ -35,7 +35,7 @@ export const FormWrapper = styled.div`
   ${media.mobile} {
     overflow: auto;
     min-width: auto;
-    padding-bottom: 120px;
+    padding-bottom: 140px;
     height: auto;
   }
 `;
@@ -216,7 +216,7 @@ export const FooterWrapper = styled.div`
     position: fixed;
     width: 100%;
     padding: 16px 16px 8px 16px;
-    box-shadow: 0 -1px 12px 0 rgba(0, 0, 0, 0.16);
+    border-top: 1px solid #e8ecf1;
   }
 `;
 
