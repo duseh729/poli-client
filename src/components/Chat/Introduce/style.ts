@@ -20,7 +20,7 @@ export const Container = styled.div`
   overflow-y: auto;
 
   ${media.mobile} {
-    height: calc(100vh - 127px - 44px);
+    height: calc(100vh - 127px - 60px);
     padding: 24px 16px 16px 16px;
   }
 `;
