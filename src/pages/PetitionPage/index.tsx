@@ -475,6 +475,7 @@ const PetitionPage = () => {
                       <Input
                         value={complainantName}
                         setValue={(newValue) => setComplainantName(newValue)}
+                        multiline
                       />
                     ) : (
                       <S.PetitionInfoContents>
@@ -489,6 +490,7 @@ const PetitionPage = () => {
                       <Input
                         value={complainantAddress}
                         setValue={(newValue) => setComplainantAddress(newValue)}
+                        multiline
                       />
                     ) : (
                       <S.PetitionInfoContents>
@@ -503,6 +505,7 @@ const PetitionPage = () => {
                       <Input
                         value={complainantContact}
                         setValue={(newValue) => setComplainantContact(newValue)}
+                        multiline
                       />
                     ) : (
                       <S.PetitionInfoContents>
@@ -524,6 +527,7 @@ const PetitionPage = () => {
                       <Input
                         value={respondentName}
                         setValue={(newValue) => setRespondentName(newValue)}
+                        multiline
                       />
                     ) : (
                       <S.PetitionInfoContents>
@@ -537,6 +541,7 @@ const PetitionPage = () => {
                       <Input
                         value={respondentContact}
                         setValue={(newValue) => setRespondentContact(newValue)}
+                        multiline
                       />
                     ) : (
                       <S.PetitionInfoContents>
@@ -552,6 +557,7 @@ const PetitionPage = () => {
                         setValue={(newValue) =>
                           setRespondentSpecialNotes(newValue)
                         }
+                        multiline
                       />
                     ) : (
                       <S.PetitionInfoContents>
@@ -617,6 +623,7 @@ const PetitionPage = () => {
                       <Input
                         value={siteName}
                         setValue={(newValue) => setSiteName(newValue)}
+                        multiline
                       />
                     ) : (
                       <S.PetitionInfoContents>
@@ -633,6 +640,7 @@ const PetitionPage = () => {
                       <Input
                         value={siteUrl}
                         setValue={(newValue) => setSiteUrl(newValue)}
+                        multiline
                       />
                     ) : (
                       <S.PetitionInfoContents>
@@ -657,6 +665,7 @@ const PetitionPage = () => {
                       <Input
                         value={crimeName}
                         setValue={(newValue) => setCrimeName(newValue)}
+                        multiline
                       />
                     ) : (
                       <S.PetitionInfoContents>
@@ -673,6 +682,7 @@ const PetitionPage = () => {
                       <Input
                         value={intentToPunish}
                         setValue={(newValue) => setIntentToPunish(newValue)}
+                        multiline
                       />
                     ) : (
                       <S.PetitionInfoContents>
@@ -696,6 +706,7 @@ const PetitionPage = () => {
                   <Input
                     value={incidentDescription}
                     setValue={(newValue) => setIncidentDescription(newValue)}
+                    multiline
                   />
                 ) : (
                   <S.PetitionInfoContents>
@@ -789,7 +800,7 @@ const PetitionPage = () => {
               )}
             </S.FloatingButtonWrapper>
           </S.FloatingContent>
-          <S.FloatingClose>
+          <S.FloatingClose isUpdate={isUpdate}>
             <button onClick={() => navigate(-1)}>
               <img src={close} alt="이전 페이지로 가기" />
             </button>

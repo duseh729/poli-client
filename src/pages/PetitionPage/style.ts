@@ -239,7 +239,7 @@ export const PetitionDateTextWrapper = styled(motion.div)`
     }
   }
 
-  div{
+  div {
     display: flex;
     align-items: center;
   }
@@ -365,7 +365,7 @@ export const PetitionInfoContentsTitle = styled.span`
 
   opacity: 0.6;
 
-  ${media.mobile}{
+  ${media.mobile} {
     font-size: 14px;
   }
 `;
@@ -500,9 +500,13 @@ export const FloatingContent = styled.div`
   flex-direction: column;
   gap: 12px;
 `;
+// props 타입을 지정해주면 자동완성 등에서 더 편리합니다 (선택 사항)
+type FloatingCloseProps = {
+  isUpdate: boolean;
+};
 
-export const FloatingClose = styled.div`
-  display: flex;
+export const FloatingClose = styled.div<FloatingCloseProps>`
+  display: ${({ isUpdate }) => (isUpdate ? "none" : "flex")};
   position: absolute;
   top: -48px;
   justify-content: center;
