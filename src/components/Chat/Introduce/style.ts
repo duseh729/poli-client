@@ -36,8 +36,10 @@ export const MainTitle = styled.h1`
   ${media.mobile} {
     text-align: center;
 
-    font-size: 30px;
+    font-size: 26px;
     line-height: 140%; /* 42px */
+    padding: 8px;
+    margin-top: 40px;
   }
 `;
 
