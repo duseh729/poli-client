@@ -26,6 +26,14 @@ export const Container = styled.div`
   }
 `;
 
+export const TitleWrapper = styled.div`
+  width: 100%;
+
+  ${media.mobile}{
+    width: auto
+  }
+`
+
 export const MainTitle = styled.h1`
   color: #2e3034;
   font-family: "Wanted Sans";
@@ -50,7 +58,6 @@ export const Subtitle = styled.p`
   color: #2e3034;
   font-weight: 500;
   line-height: 150%;
-  text-align: center;
 
   ${media.mobile} {
     color: var(--grey-5, #808996);
@@ -64,7 +71,7 @@ export const CardContainer = styled.div`
   display: flex;
   width: 100%;
   justify-content: space-between;
-  margin: 0 0 80px 0;
+  margin: 32px 0 80px 0;
 
   ${media.mobile} {
     width: 100%;

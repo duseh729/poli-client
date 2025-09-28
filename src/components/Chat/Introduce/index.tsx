@@ -16,7 +16,7 @@ const Introduce = ({ handleNextStep }: IntroduceProps) => {
   return (
     <>
       <S.Container>
-        <div>
+        <S.TitleWrapper>
           <S.MainTitle>
             누구나 사이버 사기 <S.ResponsiveBr />
             대처가 쉽도록!
@@ -25,7 +25,7 @@ const Introduce = ({ handleNextStep }: IntroduceProps) => {
             대처 상담부터 진술서 작성까지 <S.ResponsiveBr />
             사이버 사기 신고 도우미 폴리가 함께합니다.
           </S.Subtitle>
-        </div>
+        </S.TitleWrapper>
 
         <S.CardContainer>
           <S.Card onClick={handleNextStep}>
