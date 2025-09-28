@@ -23,6 +23,7 @@ import Input from "@/components/Petition/Input";
 import ImageInput from "@/components/Chat/ImageCollection/ImageInput";
 import DropdownInput from "@/components/Petition/DropdownInput";
 import { getPetition, updatePetition } from "@/api/petition";
+import { InputAdornment } from "@mui/material";
 
 // 성공 모달 프롭 타입
 interface SuccessModalProps {
@@ -382,10 +383,9 @@ const PetitionPage = () => {
                           placeholder: "날짜",
                           InputProps: {
                             endAdornment: (
-                              <img
-                                src={expandIcon}
-                                alt="expand"
-                              />
+                              <InputAdornment position="end">
+                                <img src={expandIcon} alt="expand" />
+                              </InputAdornment>
                             ),
                           },
                           inputProps: {
@@ -394,7 +394,7 @@ const PetitionPage = () => {
                               fontFamily: "Wanted Sans",
                               fontSize: "14px",
                               fontWeight: 500,
-                              padding: 0
+                              padding: 0,
                             },
                           },
                         },
@@ -413,7 +413,6 @@ const PetitionPage = () => {
                         maxWidth: "450px",
                         "& .MuiOutlinedInput-root": {
                           padding: "20px 14px 16px 14px",
-                          backgroundColor: "#f6f8fb",
                           borderRadius: "10px",
                           "& fieldset": {
                             borderColor: "#c0cbd9",

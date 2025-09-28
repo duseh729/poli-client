@@ -32,6 +32,7 @@ export const Textarea = styled.textarea`
   font-style: normal;
   font-weight: 500;
   line-height: 150%;
+  resize: none;
   ${media.mobile} {
     font-size: 14px;
   }

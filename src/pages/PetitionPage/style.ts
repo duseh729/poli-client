@@ -80,7 +80,7 @@ export const Wrapper = styled(motion.div)<{ isUpdate?: boolean }>`
   width: 100%;
   align-items: flex-start;
 
-  & > :first-child {
+  & > span:first-of-type {
     flex: 1;
     min-width: 170px;
   }
@@ -100,7 +100,7 @@ export const Wrapper = styled(motion.div)<{ isUpdate?: boolean }>`
         flex-direction: column;
         gap: 8px;
 
-        & > :first-child {
+        & > span:first-of-type {
             flex: none;
             min-width: auto;
         }
