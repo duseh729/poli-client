@@ -8,7 +8,12 @@ type InputProps = React.InputHTMLAttributes<HTMLInputElement> & {
   // rows는 이제 자동 높이 조절로 대체되므로 제거하거나 기본값으로만 사용
 };
 
-const Input = ({ value, setValue, multiline = false, ...props }: InputProps) => {
+const Input = ({
+  value,
+  setValue,
+  multiline = false,
+  ...props
+}: InputProps) => {
   // textarea 요소에 접근하기 위한 ref 생성
   const textareaRef = useRef<HTMLTextAreaElement>(null);
 
@@ -22,29 +27,22 @@ const Input = ({ value, setValue, multiline = false, ...props }: InputProps) => 
     }
   }, [value, multiline]); // value나 multiline prop이 바뀔 때 실행
 
-  const handleChange = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    setValue(e.target.value);
-  };
+  const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => setValue(e.target.value);
+  const handleTextareaChange = (e: ChangeEvent<HTMLTextAreaElement>) => setValue(e.target.value);
 
   if (multiline) {
     return (
       <S.Textarea
         ref={textareaRef} // ref를 textarea에 연결
         value={value}
-        onChange={handleChange}
-        {...props} // placeholder, className 등 나머지 props 전달
+        onChange={handleTextareaChange}
         rows={1} // 최소 높이를 위해 초기 rows를 1로 설정할 수 있음
+        {...(props as React.TextareaHTMLAttributes<HTMLTextAreaElement>)} // 타입 단언
       />
     );
   }
 
-  return (
-    <S.Input
-      value={value}
-      onChange={handleChange}
-      {...props}
-    />
-  );
+  return <S.Input value={value} onChange={handleInputChange} {...props} />;
 };
 
 export default Input;
