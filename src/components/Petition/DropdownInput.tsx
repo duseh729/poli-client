@@ -76,7 +76,7 @@ const Input = styled.input`
 
   border: 1px solid #c0cbd9;
   border-radius: 10px;
-  background: #fff;
+  background: #F6F8FB;
 
   overflow: hidden;
   color: var(--grey-8, #0f0f10);

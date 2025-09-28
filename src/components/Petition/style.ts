@@ -23,7 +23,7 @@ export const Input = styled.input`
 export const Textarea = styled.textarea`
   border-radius: 10px;
   border: 1px solid #c0cbd9;
-  background: #fff;
+  background: #F6F8FB;
   padding: 12px;
   color: #0f0f10;
 

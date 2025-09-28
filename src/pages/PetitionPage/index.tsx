@@ -481,6 +481,7 @@ const PetitionPage = () => {
                         value={complainantName}
                         setValue={(newValue) => setComplainantName(newValue)}
                         multiline
+                        style={{ backgroundColor: "white" }}
                       />
                     ) : (
                       <S.PetitionInfoContents>
@@ -496,6 +497,7 @@ const PetitionPage = () => {
                         value={complainantAddress}
                         setValue={(newValue) => setComplainantAddress(newValue)}
                         multiline
+                        style={{ backgroundColor: "white" }}
                       />
                     ) : (
                       <S.PetitionInfoContents>
@@ -511,6 +513,7 @@ const PetitionPage = () => {
                         value={complainantContact}
                         setValue={(newValue) => setComplainantContact(newValue)}
                         multiline
+                        style={{ backgroundColor: "white" }}
                       />
                     ) : (
                       <S.PetitionInfoContents>
@@ -533,6 +536,7 @@ const PetitionPage = () => {
                         value={respondentName}
                         setValue={(newValue) => setRespondentName(newValue)}
                         multiline
+                        style={{ backgroundColor: "white" }}
                       />
                     ) : (
                       <S.PetitionInfoContents>
@@ -547,6 +551,7 @@ const PetitionPage = () => {
                         value={respondentContact}
                         setValue={(newValue) => setRespondentContact(newValue)}
                         multiline
+                        style={{ backgroundColor: "white" }}
                       />
                     ) : (
                       <S.PetitionInfoContents>
@@ -563,6 +568,7 @@ const PetitionPage = () => {
                           setRespondentSpecialNotes(newValue)
                         }
                         multiline
+                        style={{ backgroundColor: "white" }}
                       />
                     ) : (
                       <S.PetitionInfoContents>
