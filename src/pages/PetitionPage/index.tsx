@@ -23,7 +23,7 @@ import Input from "@/components/Petition/Input";
 import ImageInput from "@/components/Chat/ImageCollection/ImageInput";
 import DropdownInput from "@/components/Petition/DropdownInput";
 import { getPetition, updatePetition } from "@/api/petition";
-import { InputAdornment } from "@mui/material";
+import { IconButton, InputAdornment } from "@mui/material";
 
 // 성공 모달 프롭 타입
 interface SuccessModalProps {
@@ -67,7 +67,7 @@ const PetitionPage = () => {
       evidences: [],
     })
   );
-
+  const [open, setOpen] = useState(false);
   const [isUpdate, setIsUpdate] = useState(false);
   const [isFloatingVisible, setIsFloatingVisible] = useState(false);
 
@@ -369,6 +369,9 @@ const PetitionPage = () => {
                   </span>
                   {isUpdate ? (
                     <DatePicker
+                      open={open}
+                      onOpen={() => setOpen(true)}
+                      onClose={() => setOpen(false)}
                       value={complaintDate ? dayjs(complaintDate) : null}
                       onChange={(newDate) => {
                         complaint?.update({
@@ -384,7 +387,20 @@ const PetitionPage = () => {
                           InputProps: {
                             endAdornment: (
                               <InputAdornment position="end">
-                                <img src={expandIcon} alt="expand" />
+                                <IconButton
+                                  onClick={() => setOpen((prev) => !prev)}
+                                >
+                                  <img
+                                    src={expandIcon}
+                                    alt="expand"
+                                    style={{
+                                      transition: "transform 0.3s",
+                                      transform: open
+                                        ? "rotate(180deg)"
+                                        : "rotate(0deg)",
+                                    }}
+                                  />
+                                </IconButton>
                               </InputAdornment>
                             ),
                           },
