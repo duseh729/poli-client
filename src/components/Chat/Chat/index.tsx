@@ -173,8 +173,8 @@ const Chat = ({ messages: initialMessages, roomId, isInit }: ChatProps) => {
             // ✅ 최종 텍스트에서 체크
             // 진정서 생성
             if (
-              finalText.includes("진정서 작성이 완료되었습니다.") ||
-              finalText.includes("진정서가 완성되었습니다. ")
+              finalText.includes("진정서 작성이 완료되었습니다") ||
+              finalText.includes("진정서가 완성되었습니다")
             ) {
               (async () => {
                 try {
@@ -415,32 +415,36 @@ const Chat = ({ messages: initialMessages, roomId, isInit }: ChatProps) => {
 
         {isTyping && currentBotMessage !== "" && (
           <S.MessageContainer>
-            <S.BotIcon src={poliChat} alt="AI" />
-            <S.Message {...animationProps}>
-              <ReactMarkdown
-                remarkPlugins={[remarkGfm]}
-                rehypePlugins={[rehypeHighlight]}
-                components={{
-                  a: CustomLink,
-                }}
-              >
-                {`${currentBotMessage}`}
-              </ReactMarkdown>
-            </S.Message>
+            <S.BotMessageWrapper>
+              <S.BotIcon src={poliChat} alt="AI" />
+              <S.Message {...animationProps}>
+                <ReactMarkdown
+                  remarkPlugins={[remarkGfm]}
+                  rehypePlugins={[rehypeHighlight]}
+                  components={{
+                    a: CustomLink,
+                  }}
+                >
+                  {`${currentBotMessage}`}
+                </ReactMarkdown>
+              </S.Message>
+            </S.BotMessageWrapper>
           </S.MessageContainer>
         )}
 
         {!isTyping && isPending && (
           <S.MessageContainer>
-            <S.BotIcon src={poliChat} alt="AI" />
-            <S.LoadingMessage
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ duration: 0.5 }}
-            >
-              가장 도움을 줄 수 있는 답변을 준비하고 있습니다.{" "}
-              <S.LoadingSpinner src={loadingSpinner} alt="Loading" />
-            </S.LoadingMessage>
+            <S.BotMessageWrapper>
+              <S.BotIcon src={poliChat} alt="AI" />
+              <S.LoadingMessage
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ duration: 0.5 }}
+              >
+                가장 도움을 줄 수 있는 답변을 준비하고 있습니다.{" "}
+                <S.LoadingSpinner src={loadingSpinner} alt="Loading" />
+              </S.LoadingMessage>
+            </S.BotMessageWrapper>
           </S.MessageContainer>
         )}
       </S.ChatWindow>
