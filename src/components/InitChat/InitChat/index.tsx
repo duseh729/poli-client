@@ -15,7 +15,6 @@ type ChatProps = {
   botMessage: string;
   isPending: boolean;
   isTyping: boolean;
-  handleSend: (message: string) => void;
 };
 
 const InitChat = ({
@@ -23,7 +22,6 @@ const InitChat = ({
   botMessage,
   isPending,
   isTyping,
-  handleSend,
 }: ChatProps) => {
   const [inputValue, setInputValue] = useState<string>("");
   const chatWindowRef = useRef<HTMLDivElement>(null);
@@ -120,7 +118,6 @@ const InitChat = ({
 
   const handleLocalSend = () => {
     if (inputValue.trim() !== "") {
-      handleSend(inputValue);
       setInputValue("");
     }
   };
@@ -239,7 +236,6 @@ const InitChat = ({
                   return (
                     <S.RecommendMessage
                       key={index}
-                      onClick={() => handleSend(msg.constents)}
                       disabled={isPending || isTyping}
                     >
                       {msg.constents}
@@ -253,7 +249,6 @@ const InitChat = ({
                   <S.RecommendMessage
                     key={index}
                     onClick={() => {
-                      handleSend(msg.constents);
                       setShowRecommendMessages(false); // Hide after selection
                     }}
                     disabled={isPending || isTyping}

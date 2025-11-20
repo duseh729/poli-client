@@ -152,11 +152,6 @@ const InitChatPage = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const handleSend = (message: string) => {
-    // Placeholder function to satisfy TypeScript
-    // console.log("Message to send:", message);
-  };
-
   return (
     <S.Container>
       <S.Wrapper
@@ -170,7 +165,6 @@ const InitChatPage = () => {
           botMessage={botMessage}
           isPending={isPending || isTyping}
           isTyping={isTyping}
-          handleSend={handleSend}
         />
       </S.Wrapper>
     </S.Container>
