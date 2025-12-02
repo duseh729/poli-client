@@ -3,10 +3,8 @@
 import { Global, css } from "@emotion/react";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
-import { BeatLoader } from "react-spinners";
 import { Toaster } from "react-hot-toast";
 import AppRouter from "./routes/AppRouter";
-import useLoading from "./hooks/useLoading";
 
 const GlobalStyles = css`
   @font-face {
