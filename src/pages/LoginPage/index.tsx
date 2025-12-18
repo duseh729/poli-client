@@ -10,6 +10,7 @@ import { LoginData } from "@/types/user";
 import { loginSchema } from "@/schemas/user";
 import { HTTP_STATUS } from "@/constants/http";
 import { ROUTES } from "@/constants/routes";
+import SEO from "@/components/Common/SEO";
 
 const LoginPage = () => {
   const setUser = useUserStore((state) => state.setUser);
@@ -54,31 +55,35 @@ const LoginPage = () => {
   };
 
   return (
-    <S.Container>
-      <S.Form onSubmit={handleSubmit(onSubmit)}>
-        <S.Title>로그인</S.Title>
-        <S.InputContainer>
-          <S.InputWrapper>
-            <S.Input
-              {...register("userId")}
-              type="text"
-              placeholder="아이디*"
-              hasError={!!errors.userId}
-            />
-            <S.FocusText className="focus-text" hasError={!!errors.userId}>
-              아이디*
-            </S.FocusText>
-            <S.ErrorText>{errors.userId?.message}</S.ErrorText>
-          </S.InputWrapper>
-          <S.Button type="submit" disabled={isPending}>
-            {isPending ? "로그인 중..." : "로그인"}
-          </S.Button>
-        </S.InputContainer>
-        <S.Text>
-          계정이 없으신가요? <S.StyledLink to="/signup">회원가입</S.StyledLink>
-        </S.Text>
-      </S.Form>
-    </S.Container>
+    <>
+      <SEO title="로그인" description="사이버 사기 대처의 시작, 폴리입니다. 로그인 후 이용해 주세요" />
+      <S.Container>
+        <S.Form onSubmit={handleSubmit(onSubmit)}>
+          <S.Title>로그인</S.Title>
+          <S.InputContainer>
+            <S.InputWrapper>
+              <S.Input
+                {...register("userId")}
+                type="text"
+                placeholder="아이디*"
+                hasError={!!errors.userId}
+              />
+              <S.FocusText className="focus-text" hasError={!!errors.userId}>
+                아이디*
+              </S.FocusText>
+              <S.ErrorText>{errors.userId?.message}</S.ErrorText>
+            </S.InputWrapper>
+            <S.Button type="submit" disabled={isPending}>
+              {isPending ? "로그인 중..." : "로그인"}
+            </S.Button>
+          </S.InputContainer>
+          <S.Text>
+            계정이 없으신가요?{" "}
+            <S.StyledLink to="/signup">회원가입</S.StyledLink>
+          </S.Text>
+        </S.Form>
+      </S.Container>
+    </>
   );
 };
 
