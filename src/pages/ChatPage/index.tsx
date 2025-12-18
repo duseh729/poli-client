@@ -5,6 +5,7 @@ import { useChatMessages } from "@/api/chat";
 import Chat from "@/components/Chat/Chat";
 import { useChatRoomsStore } from "@/stores";
 import useWindowWidth from "@/hooks/useWindowWidth";
+import SEO from "@/components/Common/SEO";
 
 const ChatPage = () => {
   const { id } = useParams<{ id: string }>();
@@ -42,12 +43,20 @@ const ChatPage = () => {
   }
 
   return (
-    <S.Container>
-      <S.Title>{currentRoom?.roomName}</S.Title>
-      <S.Wrapper {...animationProps}>
-        <Chat messages={messages} roomId={parseInt(id!, 10)} isInit={isInit} />
-      </S.Wrapper>
-    </S.Container>
+    <>
+      <SEO title="채팅" noindex={true} />
+
+      <S.Container>
+        <S.Title>{currentRoom?.roomName}</S.Title>
+        <S.Wrapper {...animationProps}>
+          <Chat
+            messages={messages}
+            roomId={parseInt(id!, 10)}
+            isInit={isInit}
+          />
+        </S.Wrapper>
+      </S.Container>
+    </>
   );
 };
 

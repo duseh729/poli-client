@@ -7,6 +7,7 @@ import { getDynamicPath } from "@/utils/routes.ts";
 import * as S from "./style";
 import InitChat from "@/components/InitChat/InitChat";
 import { ChatRequest } from "@/types/chat";
+import SEO from "@/components/Common/SEO";
 
 interface InitChatState {
   requestBody: ChatRequest;
@@ -153,21 +154,25 @@ const InitChatPage = () => {
   }, []);
 
   return (
-    <S.Container>
-      <S.Wrapper
-        initial={{ opacity: 0, scale: 0.9, y: 20 }}
-        animate={{ opacity: 1, scale: 1, y: 0 }}
-        exit={{ opacity: 0, scale: 0.9, y: 20 }}
-        transition={{ duration: 0.5 }}
-      >
-        <InitChat
-          message={requestBody.message}
-          botMessage={botMessage}
-          isPending={isPending || isTyping}
-          isTyping={isTyping}
-        />
-      </S.Wrapper>
-    </S.Container>
+    <>
+      <SEO title="초기 채팅" noindex={true} />
+
+      <S.Container>
+        <S.Wrapper
+          initial={{ opacity: 0, scale: 0.9, y: 20 }}
+          animate={{ opacity: 1, scale: 1, y: 0 }}
+          exit={{ opacity: 0, scale: 0.9, y: 20 }}
+          transition={{ duration: 0.5 }}
+        >
+          <InitChat
+            message={requestBody.message}
+            botMessage={botMessage}
+            isPending={isPending || isTyping}
+            isTyping={isTyping}
+          />
+        </S.Wrapper>
+      </S.Container>
+    </>
   );
 };
 

@@ -16,9 +16,10 @@ type SEOProps = {
   description?: string;
   image?: string;
   url?: string;
+  noindex?: boolean; // 검색 엔진이 수집하지 못하게 할지 여부
 };
 
-const SEO = ({ title, description, image, url }: SEOProps) => {
+const SEO = ({ title, description, image, url, noindex=false }: SEOProps) => {
   // props로 넘어온 값이 있으면 그걸 쓰고, 없으면 위의 기본값(DEFAULT_SEO)을 씁니다.
   const seoTitle = title || DEFAULT_SEO.title;
   const seoDescription = description || DEFAULT_SEO.description;
@@ -29,6 +30,8 @@ const SEO = ({ title, description, image, url }: SEOProps) => {
     <Helmet titleTemplate={`%s | ${DEFAULT_SEO.title}`}>
       {/* 1. 기본 메타 태그 */}
       <title>{seoTitle}</title>
+      {/* 2. noindex가 true이면 검색 엔진이 수집하지 못하게 함 */}
+      {noindex && <meta name="robots" content="noindex, nofollow" />}
 
       <meta name="description" content={seoDescription} />
       <meta name="viewport" content="width=device-width, initial-scale=1" />
