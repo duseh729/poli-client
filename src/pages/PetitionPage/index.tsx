@@ -24,6 +24,7 @@ import ImageInput from "@/components/Chat/ImageCollection/ImageInput";
 import DropdownInput from "@/components/Petition/DropdownInput";
 import { getPetition, updatePetition } from "@/api/petition";
 import { IconButton, InputAdornment } from "@mui/material";
+import SEO from "@/components/Common/SEO";
 
 // 성공 모달 프롭 타입
 interface SuccessModalProps {
@@ -325,516 +326,533 @@ const PetitionPage = () => {
   };
 
   return (
-    <S.Container>
-      {isSuccessModalVisible && (
-        <SuccessModal
-          onClose={() => setIsSuccessModalVisible(false)}
-          onConfirm={handleConfirmModal}
-        />
-      )}
+    <>
+      <SEO title="진정서" noindex={true} />
 
-      <S.PetitionWrapper>
-        <S.PdfWrapper ref={pdfRef}>
-          {/* 헤더 영역 */}
-          <S.PetitionHeaderWrapper className="pdf-ignore">
-            <span>작성완료</span>
-            <button
-              onClick={() => {
-                navigate(-1);
-              }}
-            >
-              <img src={close} alt="진정서 끄기" />
-            </button>
-          </S.PetitionHeaderWrapper>
-          {/* 진정서 제목 영역 */}
-          <S.PetitionTitleWrapper>
-            <div>
-              <h3>
-                진정서 : <S.ResponsiveBr isUpdate={isUpdate}></S.ResponsiveBr>
-                <span>당근마켓 사기 사건</span>
-              </h3>
-            </div>
+      <S.Container>
+        {isSuccessModalVisible && (
+          <SuccessModal
+            onClose={() => setIsSuccessModalVisible(false)}
+            onConfirm={handleConfirmModal}
+          />
+        )}
 
-            <LocalizationProvider dateAdapter={AdapterDayjs} adapterLocale="ko">
-              <S.PetionTitleContents>
-                <S.PetitionDateTextWrapper>
-                  <span
+        <S.PetitionWrapper>
+          <S.PdfWrapper ref={pdfRef}>
+            {/* 헤더 영역 */}
+            <S.PetitionHeaderWrapper className="pdf-ignore">
+              <span>작성완료</span>
+              <button
+                onClick={() => {
+                  navigate(-1);
+                }}
+              >
+                <img src={close} alt="진정서 끄기" />
+              </button>
+            </S.PetitionHeaderWrapper>
+            {/* 진정서 제목 영역 */}
+            <S.PetitionTitleWrapper>
+              <div>
+                <h3>
+                  진정서 : <S.ResponsiveBr isUpdate={isUpdate}></S.ResponsiveBr>
+                  <span>당근마켓 사기 사건</span>
+                </h3>
+              </div>
+
+              <LocalizationProvider
+                dateAdapter={AdapterDayjs}
+                adapterLocale="ko"
+              >
+                <S.PetionTitleContents>
+                  <S.PetitionDateTextWrapper>
+                    <span
+                      style={{
+                        fontSize: 16,
+                        fontWeight: 600,
+                        color: "rgba(128, 128, 128, 0.71)",
+                      }}
+                    >
+                      신고일자
+                    </span>
+                    {isUpdate ? (
+                      <DatePicker
+                        open={open}
+                        onOpen={() => setOpen(true)}
+                        onClose={() => setOpen(false)}
+                        value={complaintDate ? dayjs(complaintDate) : null}
+                        onChange={(newDate) => {
+                          complaint?.update({
+                            complaintDate: newDate
+                              ? dayjs(newDate).format("YYYY-MM-DD")
+                              : "",
+                          });
+                        }}
+                        format="YYYY.MM.DD"
+                        slotProps={{
+                          textField: {
+                            placeholder: "날짜",
+                            InputProps: {
+                              endAdornment: (
+                                <InputAdornment position="end">
+                                  <IconButton
+                                    onClick={() => setOpen((prev) => !prev)}
+                                  >
+                                    <img
+                                      src={expandIcon}
+                                      alt="expand"
+                                      style={{
+                                        transition: "transform 0.3s",
+                                        transform: open
+                                          ? "rotate(180deg)"
+                                          : "rotate(0deg)",
+                                      }}
+                                    />
+                                  </IconButton>
+                                </InputAdornment>
+                              ),
+                            },
+                            inputProps: {
+                              style: {
+                                color: "#0F0F10",
+                                fontFamily: "Wanted Sans",
+                                fontSize: "14px",
+                                fontWeight: 500,
+                                padding: 0,
+                              },
+                            },
+                          },
+                          popper: {
+                            sx: {
+                              "& .MuiPaper-root": {
+                                width: "100%",
+                                maxWidth: "450px",
+                                borderRadius: "10px",
+                              },
+                            },
+                          },
+                        }}
+                        sx={{
+                          width: "100%",
+                          maxWidth: "450px",
+                          "& .MuiOutlinedInput-root": {
+                            padding: "20px 14px 16px 14px",
+                            borderRadius: "10px",
+                            "& fieldset": {
+                              borderColor: "#c0cbd9",
+                            },
+                            "&:hover fieldset": {
+                              borderColor: "#0059ff",
+                            },
+                            "&.Mui-focused fieldset": {
+                              border: "1px solid #0059ff",
+                            },
+                          },
+                        }}
+                      />
+                    ) : (
+                      <span>{complaint.complaintDate}</span>
+                    )}
+                  </S.PetitionDateTextWrapper>
+
+                  <div
                     style={{
-                      fontSize: 16,
-                      fontWeight: 600,
-                      color: "rgba(128, 128, 128, 0.71)",
+                      display: "flex",
+                      alignItems: "flex-end",
+                      justifyContent: "flex-end",
                     }}
+                    className="pdf-ignore"
                   >
-                    신고일자
-                  </span>
+                    <S.PetitionButtonWrapper ref={buttonWrapperRef}>
+                      {isUpdate ? (
+                        <button onClick={toggleIsUpdate}>
+                          <img src={buttonCheck} alt="진정서 수정 완료" />
+                          <span>수정 완료</span>
+                        </button>
+                      ) : (
+                        <>
+                          <button onClick={toggleIsUpdate}>
+                            <img src={edit} alt="진정서 수정" />
+                            <span>내용 수정</span>
+                          </button>
+                          <button onClick={handleDownload}>
+                            <img src={exportIcon} alt="진정서 내보내기" />
+                            <span>내보내기</span>
+                          </button>
+                        </>
+                      )}
+                    </S.PetitionButtonWrapper>
+                  </div>
+                </S.PetionTitleContents>
+              </LocalizationProvider>
+            </S.PetitionTitleWrapper>
+
+            {/* 사건 기본 정보 */}
+            <S.PetitionInfoWrapper
+              style={{ borderTop: "1px solid var(--grey-3, #e8ecf1)" }}
+            >
+              <h3>사건 기본 정보</h3>
+
+              <S.PetitionInfoFlex>
+                <S.PetitionDefalutInfoWrapper>
+                  <S.PetitionInfoTitle>진정인(본인)</S.PetitionInfoTitle>
+
+                  <S.BasicColumnWrapper>
+                    <S.BasicWrapper isUpdate={isUpdate}>
+                      <S.PetitionInfoContents>이름:</S.PetitionInfoContents>
+                      {isUpdate ? (
+                        <Input
+                          value={complainantName}
+                          setValue={(newValue) => setComplainantName(newValue)}
+                          multiline
+                          style={{ backgroundColor: "white" }}
+                        />
+                      ) : (
+                        <S.PetitionInfoContents>
+                          {handleData(complainantName)}
+                        </S.PetitionInfoContents>
+                      )}
+                    </S.BasicWrapper>
+
+                    <S.BasicWrapper isUpdate={isUpdate}>
+                      <S.PetitionInfoContents>주소:</S.PetitionInfoContents>
+                      {isUpdate ? (
+                        <Input
+                          value={complainantAddress}
+                          setValue={(newValue) =>
+                            setComplainantAddress(newValue)
+                          }
+                          multiline
+                          style={{ backgroundColor: "white" }}
+                        />
+                      ) : (
+                        <S.PetitionInfoContents>
+                          {handleData(complainantAddress)}
+                        </S.PetitionInfoContents>
+                      )}
+                    </S.BasicWrapper>
+
+                    <S.BasicWrapper isUpdate={isUpdate}>
+                      <S.PetitionInfoContents>연락처:</S.PetitionInfoContents>
+                      {isUpdate ? (
+                        <Input
+                          value={complainantContact}
+                          setValue={(newValue) =>
+                            setComplainantContact(newValue)
+                          }
+                          multiline
+                          style={{ backgroundColor: "white" }}
+                        />
+                      ) : (
+                        <S.PetitionInfoContents>
+                          {handleData(complainantContact)}
+                        </S.PetitionInfoContents>
+                      )}
+                    </S.BasicWrapper>
+                  </S.BasicColumnWrapper>
+                </S.PetitionDefalutInfoWrapper>
+                <S.PetitionDefalutInfoWrapper>
+                  <S.PetitionInfoTitle>피진정인(가해자)</S.PetitionInfoTitle>
+
+                  <S.BasicColumnWrapper>
+                    <S.BasicWrapper isUpdate={isUpdate}>
+                      <S.PetitionInfoContents>
+                        이름(닉네임):
+                      </S.PetitionInfoContents>
+                      {isUpdate ? (
+                        <Input
+                          value={respondentName}
+                          setValue={(newValue) => setRespondentName(newValue)}
+                          multiline
+                          style={{ backgroundColor: "white" }}
+                        />
+                      ) : (
+                        <S.PetitionInfoContents>
+                          {handleData(respondentName)}
+                        </S.PetitionInfoContents>
+                      )}
+                    </S.BasicWrapper>
+                    <S.BasicWrapper isUpdate={isUpdate}>
+                      <S.PetitionInfoContents>연락처:</S.PetitionInfoContents>
+                      {isUpdate ? (
+                        <Input
+                          value={respondentContact}
+                          setValue={(newValue) =>
+                            setRespondentContact(newValue)
+                          }
+                          multiline
+                          style={{ backgroundColor: "white" }}
+                        />
+                      ) : (
+                        <S.PetitionInfoContents>
+                          {handleData(respondentContact)}
+                        </S.PetitionInfoContents>
+                      )}
+                    </S.BasicWrapper>
+                    <S.BasicWrapper isUpdate={isUpdate}>
+                      <S.PetitionInfoContents>특이사항:</S.PetitionInfoContents>
+                      {isUpdate ? (
+                        <Input
+                          value={respondentSpecialNotes}
+                          setValue={(newValue) =>
+                            setRespondentSpecialNotes(newValue)
+                          }
+                          multiline
+                          style={{ backgroundColor: "white" }}
+                        />
+                      ) : (
+                        <S.PetitionInfoContents>
+                          {handleData(respondentSpecialNotes)}
+                        </S.PetitionInfoContents>
+                      )}
+                    </S.BasicWrapper>
+                  </S.BasicColumnWrapper>
+                </S.PetitionDefalutInfoWrapper>
+              </S.PetitionInfoFlex>
+            </S.PetitionInfoWrapper>
+
+            {/* 사건 유형 정보 */}
+            <S.PetitionInfoWrapper>
+              <h3>사건 유형 정보</h3>
+              <S.PetitionInfoTitle>범죄유형</S.PetitionInfoTitle>
+
+              <S.ColumnWrapper>
+                <S.Wrapper isUpdate={isUpdate}>
+                  <S.PetitionInfoContentsTitle>
+                    범죄유형
+                  </S.PetitionInfoContentsTitle>
+                  <S.ResponsiveBr isUpdate={isUpdate} />
+                  <S.PetitionInfoContents>{crimeType}</S.PetitionInfoContents>
+                </S.Wrapper>
+
+                <S.Wrapper isUpdate={isUpdate}>
+                  <S.PetitionInfoContentsTitle>
+                    세부유형
+                  </S.PetitionInfoContentsTitle>
+                  <S.ResponsiveBr isUpdate={isUpdate} />
                   {isUpdate ? (
-                    <DatePicker
-                      open={open}
-                      onOpen={() => setOpen(true)}
-                      onClose={() => setOpen(false)}
-                      value={complaintDate ? dayjs(complaintDate) : null}
-                      onChange={(newDate) => {
-                        complaint?.update({
-                          complaintDate: newDate
-                            ? dayjs(newDate).format("YYYY-MM-DD")
-                            : "",
-                        });
-                      }}
-                      format="YYYY.MM.DD"
-                      slotProps={{
-                        textField: {
-                          placeholder: "날짜",
-                          InputProps: {
-                            endAdornment: (
-                              <InputAdornment position="end">
-                                <IconButton
-                                  onClick={() => setOpen((prev) => !prev)}
-                                >
-                                  <img
-                                    src={expandIcon}
-                                    alt="expand"
-                                    style={{
-                                      transition: "transform 0.3s",
-                                      transform: open
-                                        ? "rotate(180deg)"
-                                        : "rotate(0deg)",
-                                    }}
-                                  />
-                                </IconButton>
-                              </InputAdornment>
-                            ),
-                          },
-                          inputProps: {
-                            style: {
-                              color: "#0F0F10",
-                              fontFamily: "Wanted Sans",
-                              fontSize: "14px",
-                              fontWeight: 500,
-                              padding: 0,
-                            },
-                          },
-                        },
-                        popper: {
-                          sx: {
-                            "& .MuiPaper-root": {
-                              width: "100%",
-                              maxWidth: "450px",
-                              borderRadius: "10px",
-                            },
-                          },
-                        },
-                      }}
-                      sx={{
-                        width: "100%",
-                        maxWidth: "450px",
-                        "& .MuiOutlinedInput-root": {
-                          padding: "20px 14px 16px 14px",
-                          borderRadius: "10px",
-                          "& fieldset": {
-                            borderColor: "#c0cbd9",
-                          },
-                          "&:hover fieldset": {
-                            borderColor: "#0059ff",
-                          },
-                          "&.Mui-focused fieldset": {
-                            border: "1px solid #0059ff",
-                          },
-                        },
-                      }}
+                    <DropdownInput
+                      value={crimeDetail}
+                      setValue={setCrimeDetail}
+                      options={crimeOptions}
+                      placeholder="범죄명을 선택하세요"
                     />
                   ) : (
-                    <span>{complaint.complaintDate}</span>
-                  )}
-                </S.PetitionDateTextWrapper>
-
-                <div
-                  style={{
-                    display: "flex",
-                    alignItems: "flex-end",
-                    justifyContent: "flex-end",
-                  }}
-                  className="pdf-ignore"
-                >
-                  <S.PetitionButtonWrapper ref={buttonWrapperRef}>
-                    {isUpdate ? (
-                      <button onClick={toggleIsUpdate}>
-                        <img src={buttonCheck} alt="진정서 수정 완료" />
-                        <span>수정 완료</span>
-                      </button>
-                    ) : (
-                      <>
-                        <button onClick={toggleIsUpdate}>
-                          <img src={edit} alt="진정서 수정" />
-                          <span>내용 수정</span>
-                        </button>
-                        <button onClick={handleDownload}>
-                          <img src={exportIcon} alt="진정서 내보내기" />
-                          <span>내보내기</span>
-                        </button>
-                      </>
-                    )}
-                  </S.PetitionButtonWrapper>
-                </div>
-              </S.PetionTitleContents>
-            </LocalizationProvider>
-          </S.PetitionTitleWrapper>
-
-          {/* 사건 기본 정보 */}
-          <S.PetitionInfoWrapper
-            style={{ borderTop: "1px solid var(--grey-3, #e8ecf1)" }}
-          >
-            <h3>사건 기본 정보</h3>
-
-            <S.PetitionInfoFlex>
-              <S.PetitionDefalutInfoWrapper>
-                <S.PetitionInfoTitle>진정인(본인)</S.PetitionInfoTitle>
-
-                <S.BasicColumnWrapper>
-                  <S.BasicWrapper isUpdate={isUpdate}>
-                    <S.PetitionInfoContents>이름:</S.PetitionInfoContents>
-                    {isUpdate ? (
-                      <Input
-                        value={complainantName}
-                        setValue={(newValue) => setComplainantName(newValue)}
-                        multiline
-                        style={{ backgroundColor: "white" }}
-                      />
-                    ) : (
-                      <S.PetitionInfoContents>
-                        {handleData(complainantName)}
-                      </S.PetitionInfoContents>
-                    )}
-                  </S.BasicWrapper>
-
-                  <S.BasicWrapper isUpdate={isUpdate}>
-                    <S.PetitionInfoContents>주소:</S.PetitionInfoContents>
-                    {isUpdate ? (
-                      <Input
-                        value={complainantAddress}
-                        setValue={(newValue) => setComplainantAddress(newValue)}
-                        multiline
-                        style={{ backgroundColor: "white" }}
-                      />
-                    ) : (
-                      <S.PetitionInfoContents>
-                        {handleData(complainantAddress)}
-                      </S.PetitionInfoContents>
-                    )}
-                  </S.BasicWrapper>
-
-                  <S.BasicWrapper isUpdate={isUpdate}>
-                    <S.PetitionInfoContents>연락처:</S.PetitionInfoContents>
-                    {isUpdate ? (
-                      <Input
-                        value={complainantContact}
-                        setValue={(newValue) => setComplainantContact(newValue)}
-                        multiline
-                        style={{ backgroundColor: "white" }}
-                      />
-                    ) : (
-                      <S.PetitionInfoContents>
-                        {handleData(complainantContact)}
-                      </S.PetitionInfoContents>
-                    )}
-                  </S.BasicWrapper>
-                </S.BasicColumnWrapper>
-              </S.PetitionDefalutInfoWrapper>
-              <S.PetitionDefalutInfoWrapper>
-                <S.PetitionInfoTitle>피진정인(가해자)</S.PetitionInfoTitle>
-
-                <S.BasicColumnWrapper>
-                  <S.BasicWrapper isUpdate={isUpdate}>
                     <S.PetitionInfoContents>
-                      이름(닉네임):
+                      {crimeDetail}
                     </S.PetitionInfoContents>
-                    {isUpdate ? (
-                      <Input
-                        value={respondentName}
-                        setValue={(newValue) => setRespondentName(newValue)}
-                        multiline
-                        style={{ backgroundColor: "white" }}
-                      />
-                    ) : (
-                      <S.PetitionInfoContents>
-                        {handleData(respondentName)}
-                      </S.PetitionInfoContents>
-                    )}
-                  </S.BasicWrapper>
-                  <S.BasicWrapper isUpdate={isUpdate}>
-                    <S.PetitionInfoContents>연락처:</S.PetitionInfoContents>
-                    {isUpdate ? (
-                      <Input
-                        value={respondentContact}
-                        setValue={(newValue) => setRespondentContact(newValue)}
-                        multiline
-                        style={{ backgroundColor: "white" }}
-                      />
-                    ) : (
-                      <S.PetitionInfoContents>
-                        {handleData(respondentContact)}
-                      </S.PetitionInfoContents>
-                    )}
-                  </S.BasicWrapper>
-                  <S.BasicWrapper isUpdate={isUpdate}>
-                    <S.PetitionInfoContents>특이사항:</S.PetitionInfoContents>
-                    {isUpdate ? (
-                      <Input
-                        value={respondentSpecialNotes}
-                        setValue={(newValue) =>
-                          setRespondentSpecialNotes(newValue)
-                        }
-                        multiline
-                        style={{ backgroundColor: "white" }}
-                      />
-                    ) : (
-                      <S.PetitionInfoContents>
-                        {handleData(respondentSpecialNotes)}
-                      </S.PetitionInfoContents>
-                    )}
-                  </S.BasicWrapper>
-                </S.BasicColumnWrapper>
-              </S.PetitionDefalutInfoWrapper>
-            </S.PetitionInfoFlex>
-          </S.PetitionInfoWrapper>
+                  )}
+                </S.Wrapper>
+              </S.ColumnWrapper>
+            </S.PetitionInfoWrapper>
 
-          {/* 사건 유형 정보 */}
-          <S.PetitionInfoWrapper>
-            <h3>사건 유형 정보</h3>
-            <S.PetitionInfoTitle>범죄유형</S.PetitionInfoTitle>
+            {/* 상세 피해 상황 */}
+            <S.PetitionInfoWrapper>
+              <h3>상세 피해 상황</h3>
 
-            <S.ColumnWrapper>
-              <S.Wrapper isUpdate={isUpdate}>
-                <S.PetitionInfoContentsTitle>
-                  범죄유형
-                </S.PetitionInfoContentsTitle>
-                <S.ResponsiveBr isUpdate={isUpdate} />
-                <S.PetitionInfoContents>{crimeType}</S.PetitionInfoContents>
-              </S.Wrapper>
+              {/* 피해장소, 진정취지 wrapper */}
+              <S.RowColumnWrapper isUpdate={isUpdate}>
+                {/* 피해장소 */}
+                <div style={{ flex: "1 1 0", minWidth: 0 }}>
+                  <S.PetitionInfoTitle>피해장소</S.PetitionInfoTitle>
 
-              <S.Wrapper isUpdate={isUpdate}>
-                <S.PetitionInfoContentsTitle>
-                  세부유형
-                </S.PetitionInfoContentsTitle>
-                <S.ResponsiveBr isUpdate={isUpdate} />
+                  <S.ColumnWrapper>
+                    <S.Wrapper isUpdate={isUpdate}>
+                      <S.PetitionInfoContentsTitle>
+                        사이트명
+                      </S.PetitionInfoContentsTitle>
+                      <S.ResponsiveBr isUpdate={isUpdate} />
+                      {isUpdate ? (
+                        <Input
+                          value={siteName}
+                          setValue={(newValue) => setSiteName(newValue)}
+                          multiline
+                        />
+                      ) : (
+                        <S.PetitionInfoContents>
+                          {handleData(siteName)}
+                        </S.PetitionInfoContents>
+                      )}
+                    </S.Wrapper>
+                    <S.Wrapper isUpdate={isUpdate}>
+                      <S.PetitionInfoContentsTitle>
+                        사이트 주소
+                      </S.PetitionInfoContentsTitle>
+                      <S.ResponsiveBr isUpdate={isUpdate} />
+                      {isUpdate ? (
+                        <Input
+                          value={siteUrl}
+                          setValue={(newValue) => setSiteUrl(newValue)}
+                          multiline
+                        />
+                      ) : (
+                        <S.PetitionInfoContents>
+                          {handleData(siteUrl)}
+                        </S.PetitionInfoContents>
+                      )}
+                    </S.Wrapper>
+                  </S.ColumnWrapper>
+                </div>
+                {/* 진정취지 */}
+
+                <div style={{ flex: "1 1 0", minWidth: 0 }}>
+                  <S.PetitionInfoTitle>진정취지</S.PetitionInfoTitle>
+
+                  <S.ColumnWrapper>
+                    <S.Wrapper isUpdate={isUpdate}>
+                      <S.PetitionInfoContentsTitle>
+                        진정죄명
+                      </S.PetitionInfoContentsTitle>
+                      <S.ResponsiveBr isUpdate={isUpdate} />
+                      {isUpdate ? (
+                        <Input
+                          value={crimeName}
+                          setValue={(newValue) => setCrimeName(newValue)}
+                          multiline
+                        />
+                      ) : (
+                        <S.PetitionInfoContents>
+                          {handleData(crimeName)}
+                        </S.PetitionInfoContents>
+                      )}
+                    </S.Wrapper>
+                    <S.Wrapper isUpdate={isUpdate}>
+                      <S.PetitionInfoContentsTitle>
+                        처벌의사
+                      </S.PetitionInfoContentsTitle>
+                      <S.ResponsiveBr isUpdate={isUpdate} />
+                      {isUpdate ? (
+                        <Input
+                          value={intentToPunish}
+                          setValue={(newValue) => setIntentToPunish(newValue)}
+                          multiline
+                        />
+                      ) : (
+                        <S.PetitionInfoContents>
+                          {handleData(intentToPunish)}
+                        </S.PetitionInfoContents>
+                      )}
+                    </S.Wrapper>
+                  </S.ColumnWrapper>
+                </div>
+              </S.RowColumnWrapper>
+              {/* 피해상황 */}
+              <S.PetitionInfoTitle>피해상황</S.PetitionInfoTitle>
+
+              <S.ColumnWrapper>
+                <S.Wrapper isUpdate={isUpdate}>
+                  <S.PetitionInfoContentsTitle>
+                    피해사실
+                  </S.PetitionInfoContentsTitle>
+                  <S.ResponsiveBr isUpdate={isUpdate} />
+                  {isUpdate ? (
+                    <Input
+                      value={incidentDescription}
+                      setValue={(newValue) => setIncidentDescription(newValue)}
+                      multiline
+                    />
+                  ) : (
+                    <S.PetitionInfoContents>
+                      {handleData(incidentDescription)}
+                    </S.PetitionInfoContents>
+                  )}
+                </S.Wrapper>
+                <S.Wrapper isUpdate={isUpdate}>
+                  <S.PetitionInfoContentsTitle>
+                    피해상황
+                  </S.PetitionInfoContentsTitle>
+                  <S.ResponsiveBr isUpdate={isUpdate} />
+                  {isUpdate ? (
+                    <Input
+                      value={incidentDetails}
+                      setValue={(newValue) => setIncidentDetails(newValue)}
+                      multiline={true}
+                    />
+                  ) : (
+                    <S.PetitionInfoContents>
+                      {handleData(incidentDetails)}
+                    </S.PetitionInfoContents>
+                  )}
+                </S.Wrapper>
+              </S.ColumnWrapper>
+            </S.PetitionInfoWrapper>
+
+            {/* 부가 정보 */}
+            <S.PetitionInfoWrapper>
+              <h3>부가 정보</h3>
+              <S.PetitionInfoTitle>증거자료</S.PetitionInfoTitle>
+
+              <S.InputWrapper>
+                <S.PetitionInfoContentsTitleWrapper>
+                  <S.PetitionInfoContentsTitle>
+                    증거자료
+                  </S.PetitionInfoContentsTitle>
+                </S.PetitionInfoContentsTitleWrapper>
+
+                <S.PetitionInfoContentsWrapper>
+                  {isUpdate ? (
+                    <ImageInput
+                      files={evidences}
+                      setFiles={setEvidences}
+                      isBlur={false}
+                    />
+                  ) : (
+                    complaint?.evidences
+                      ?.filter(
+                        (evidence) => evidence.fileName && evidence.fileUrl
+                      )
+                      .map((evidence, index) => (
+                        <S.PetitionInfoContents
+                          key={index}
+                          onClick={() =>
+                            window.open(evidence.fileUrl, "_blank")
+                          }
+                        >
+                          {evidence.fileName}
+                        </S.PetitionInfoContents>
+                      ))
+                  )}
+                </S.PetitionInfoContentsWrapper>
+              </S.InputWrapper>
+            </S.PetitionInfoWrapper>
+          </S.PdfWrapper>
+        </S.PetitionWrapper>
+        <S.ResponsiveBr></S.ResponsiveBr>
+        <S.ResponsiveBr></S.ResponsiveBr>
+        <S.ResponsiveBr></S.ResponsiveBr>
+        <S.ResponsiveBr></S.ResponsiveBr>
+        <S.ResponsiveBr></S.ResponsiveBr>
+        {isFloatingVisible && (
+          <S.FloatingContainer className={isFloatingVisible ? "visible" : ""}>
+            <S.FloatingContent>
+              <S.FloatingButtonWrapper>
                 {isUpdate ? (
-                  <DropdownInput
-                    value={crimeDetail}
-                    setValue={setCrimeDetail}
-                    options={crimeOptions}
-                    placeholder="범죄명을 선택하세요"
-                  />
-                ) : (
-                  <S.PetitionInfoContents>{crimeDetail}</S.PetitionInfoContents>
-                )}
-              </S.Wrapper>
-            </S.ColumnWrapper>
-          </S.PetitionInfoWrapper>
-
-          {/* 상세 피해 상황 */}
-          <S.PetitionInfoWrapper>
-            <h3>상세 피해 상황</h3>
-
-            {/* 피해장소, 진정취지 wrapper */}
-            <S.RowColumnWrapper isUpdate={isUpdate}>
-              {/* 피해장소 */}
-              <div style={{ flex: "1 1 0", minWidth: 0 }}>
-                <S.PetitionInfoTitle>피해장소</S.PetitionInfoTitle>
-
-                <S.ColumnWrapper>
-                  <S.Wrapper isUpdate={isUpdate}>
-                    <S.PetitionInfoContentsTitle>
-                      사이트명
-                    </S.PetitionInfoContentsTitle>
-                    <S.ResponsiveBr isUpdate={isUpdate} />
-                    {isUpdate ? (
-                      <Input
-                        value={siteName}
-                        setValue={(newValue) => setSiteName(newValue)}
-                        multiline
-                      />
-                    ) : (
-                      <S.PetitionInfoContents>
-                        {handleData(siteName)}
-                      </S.PetitionInfoContents>
-                    )}
-                  </S.Wrapper>
-                  <S.Wrapper isUpdate={isUpdate}>
-                    <S.PetitionInfoContentsTitle>
-                      사이트 주소
-                    </S.PetitionInfoContentsTitle>
-                    <S.ResponsiveBr isUpdate={isUpdate} />
-                    {isUpdate ? (
-                      <Input
-                        value={siteUrl}
-                        setValue={(newValue) => setSiteUrl(newValue)}
-                        multiline
-                      />
-                    ) : (
-                      <S.PetitionInfoContents>
-                        {handleData(siteUrl)}
-                      </S.PetitionInfoContents>
-                    )}
-                  </S.Wrapper>
-                </S.ColumnWrapper>
-              </div>
-              {/* 진정취지 */}
-
-              <div style={{ flex: "1 1 0", minWidth: 0 }}>
-                <S.PetitionInfoTitle>진정취지</S.PetitionInfoTitle>
-
-                <S.ColumnWrapper>
-                  <S.Wrapper isUpdate={isUpdate}>
-                    <S.PetitionInfoContentsTitle>
-                      진정죄명
-                    </S.PetitionInfoContentsTitle>
-                    <S.ResponsiveBr isUpdate={isUpdate} />
-                    {isUpdate ? (
-                      <Input
-                        value={crimeName}
-                        setValue={(newValue) => setCrimeName(newValue)}
-                        multiline
-                      />
-                    ) : (
-                      <S.PetitionInfoContents>
-                        {handleData(crimeName)}
-                      </S.PetitionInfoContents>
-                    )}
-                  </S.Wrapper>
-                  <S.Wrapper isUpdate={isUpdate}>
-                    <S.PetitionInfoContentsTitle>
-                      처벌의사
-                    </S.PetitionInfoContentsTitle>
-                    <S.ResponsiveBr isUpdate={isUpdate} />
-                    {isUpdate ? (
-                      <Input
-                        value={intentToPunish}
-                        setValue={(newValue) => setIntentToPunish(newValue)}
-                        multiline
-                      />
-                    ) : (
-                      <S.PetitionInfoContents>
-                        {handleData(intentToPunish)}
-                      </S.PetitionInfoContents>
-                    )}
-                  </S.Wrapper>
-                </S.ColumnWrapper>
-              </div>
-            </S.RowColumnWrapper>
-            {/* 피해상황 */}
-            <S.PetitionInfoTitle>피해상황</S.PetitionInfoTitle>
-
-            <S.ColumnWrapper>
-              <S.Wrapper isUpdate={isUpdate}>
-                <S.PetitionInfoContentsTitle>
-                  피해사실
-                </S.PetitionInfoContentsTitle>
-                <S.ResponsiveBr isUpdate={isUpdate} />
-                {isUpdate ? (
-                  <Input
-                    value={incidentDescription}
-                    setValue={(newValue) => setIncidentDescription(newValue)}
-                    multiline
-                  />
-                ) : (
-                  <S.PetitionInfoContents>
-                    {handleData(incidentDescription)}
-                  </S.PetitionInfoContents>
-                )}
-              </S.Wrapper>
-              <S.Wrapper isUpdate={isUpdate}>
-                <S.PetitionInfoContentsTitle>
-                  피해상황
-                </S.PetitionInfoContentsTitle>
-                <S.ResponsiveBr isUpdate={isUpdate} />
-                {isUpdate ? (
-                  <Input
-                    value={incidentDetails}
-                    setValue={(newValue) => setIncidentDetails(newValue)}
-                    multiline={true}
-                  />
-                ) : (
-                  <S.PetitionInfoContents>
-                    {handleData(incidentDetails)}
-                  </S.PetitionInfoContents>
-                )}
-              </S.Wrapper>
-            </S.ColumnWrapper>
-          </S.PetitionInfoWrapper>
-
-          {/* 부가 정보 */}
-          <S.PetitionInfoWrapper>
-            <h3>부가 정보</h3>
-            <S.PetitionInfoTitle>증거자료</S.PetitionInfoTitle>
-
-            <S.InputWrapper>
-              <S.PetitionInfoContentsTitleWrapper>
-                <S.PetitionInfoContentsTitle>
-                  증거자료
-                </S.PetitionInfoContentsTitle>
-              </S.PetitionInfoContentsTitleWrapper>
-
-              <S.PetitionInfoContentsWrapper>
-                {isUpdate ? (
-                  <ImageInput
-                    files={evidences}
-                    setFiles={setEvidences}
-                    isBlur={false}
-                  />
-                ) : (
-                  complaint?.evidences
-                    ?.filter(
-                      (evidence) => evidence.fileName && evidence.fileUrl
-                    )
-                    .map((evidence, index) => (
-                      <S.PetitionInfoContents
-                        key={index}
-                        onClick={() => window.open(evidence.fileUrl, "_blank")}
-                      >
-                        {evidence.fileName}
-                      </S.PetitionInfoContents>
-                    ))
-                )}
-              </S.PetitionInfoContentsWrapper>
-            </S.InputWrapper>
-          </S.PetitionInfoWrapper>
-        </S.PdfWrapper>
-      </S.PetitionWrapper>
-      <S.ResponsiveBr></S.ResponsiveBr>
-      <S.ResponsiveBr></S.ResponsiveBr>
-      <S.ResponsiveBr></S.ResponsiveBr>
-      <S.ResponsiveBr></S.ResponsiveBr>
-      <S.ResponsiveBr></S.ResponsiveBr>
-      {isFloatingVisible && (
-        <S.FloatingContainer className={isFloatingVisible ? "visible" : ""}>
-          <S.FloatingContent>
-            <S.FloatingButtonWrapper>
-              {isUpdate ? (
-                <button onClick={toggleIsUpdate}>
-                  <img src={buttonCheck} alt="진정서 수정 완료" />
-                  <span>수정 완료</span>
-                </button>
-              ) : (
-                <>
                   <button onClick={toggleIsUpdate}>
-                    <img src={edit} alt="진정서 수정" />
-                    <span>내용 수정</span>
+                    <img src={buttonCheck} alt="진정서 수정 완료" />
+                    <span>수정 완료</span>
                   </button>
-                  <button onClick={handleDownload}>
-                    <img src={exportIcon} alt="진정서 내보내기" />
-                    <span>내보내기</span>
-                  </button>
-                </>
-              )}
-            </S.FloatingButtonWrapper>
-          </S.FloatingContent>
-          <S.FloatingClose isUpdate={isUpdate}>
-            <button onClick={() => navigate(-1)}>
-              <img src={close} alt="이전 페이지로 가기" />
-            </button>
-          </S.FloatingClose>
-        </S.FloatingContainer>
-      )}
-    </S.Container>
+                ) : (
+                  <>
+                    <button onClick={toggleIsUpdate}>
+                      <img src={edit} alt="진정서 수정" />
+                      <span>내용 수정</span>
+                    </button>
+                    <button onClick={handleDownload}>
+                      <img src={exportIcon} alt="진정서 내보내기" />
+                      <span>내보내기</span>
+                    </button>
+                  </>
+                )}
+              </S.FloatingButtonWrapper>
+            </S.FloatingContent>
+            <S.FloatingClose isUpdate={isUpdate}>
+              <button onClick={() => navigate(-1)}>
+                <img src={close} alt="이전 페이지로 가기" />
+              </button>
+            </S.FloatingClose>
+          </S.FloatingContainer>
+        )}
+      </S.Container>
+    </>
   );
 };
 
