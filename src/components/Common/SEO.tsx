@@ -4,7 +4,7 @@
 import { Helmet } from "react-helmet-async";
 
 const DEFAULT_SEO = {
-  title: "폴리(Poli)", // 기본 사이트 이름
+  title: "폴리(POLI)", // 기본 사이트 이름
   description:
     "사이버 사기, 폴리와 함께 빠르고 든든하게 대처하세요. AI 상담부터 경찰서 제출용 진정서 자동 작성까지, 복잡한 신고 과정을 한 번에 도와드립니다.",
   image: "https://poli.ai.kr/poli-og-image.png", // ⚠️ 실제 썸네일 이미지 경로로 꼭 수정해주세요! (public 폴더 안의 경로 등)
