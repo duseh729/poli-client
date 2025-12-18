@@ -1,0 +1,17 @@
+# 모든 검색 로봇(*)에게 적용
+User-agent: *
+
+# 모든 페이지 수집을 허용
+Allow: /
+
+# (선택) 로그인, 회원가입 등 크롤러가 굳이 알 필요 없는 페이지는 수집 차단
+# 로그인 후의 비공개 페이지 경로가 있다면 여기에 추가
+Disallow: /login
+Disallow: /signup
+Disallow: /chat
+Disallow: /petition
+Disallow: /main
+Disallow: /init-chat
+
+# 사이트맵 위치를 알려줌 (내 도메인 주소로 수정)
+Sitemap: https://poli.ai.kr/sitemap.xml
