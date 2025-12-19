@@ -8,7 +8,7 @@ export const LogoContainer = styled.div`
   align-items: center;
 `;
 
-export const Title = styled.h1`
+export const Title = styled.p`
   color: #2e3034;
   text-align: center;
   font-family: "Wanted Sans";

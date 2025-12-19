@@ -28,7 +28,7 @@ const SEO = ({ title, description, image, url, noindex=false }: SEOProps) => {
 
   const jsonLd = {
     "@context": "https://schema.org",
-    "@type": "Organization", // 혹은 "WebSite"
+    "@type": "WebSite", // 혹은 "WebSite", "Organization" 등 상황에 맞게 변경
     "name": "폴리(POLI) - 사이버 사기 상담 및 진정서 작성 도우미",
     "url": seoUrl,
     "logo": "https://poli.ai.kr/poli-og-image.png", // 구글 검색결과에 뜰 로고/이미지
