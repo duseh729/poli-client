@@ -26,6 +26,19 @@ const SEO = ({ title, description, image, url, noindex=false }: SEOProps) => {
   const seoImage = image || DEFAULT_SEO.image;
   const seoUrl = url || DEFAULT_SEO.url;
 
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "Organization", // 혹은 "WebSite"
+    "name": "폴리(POLI) - 사이버 사기 상담 및 진정서 작성 도우미",
+    "url": seoUrl,
+    "logo": "https://poli.ai.kr/poli-og-image.png", // 구글 검색결과에 뜰 로고/이미지
+    "image": seoImage,
+    "description": seoDescription,
+    "sameAs": [
+      "https://poli.ai.kr" // 관련 소셜 미디어가 있다면 여기에 추가
+    ]
+  };
+
   return (
     <Helmet titleTemplate={`%s | ${DEFAULT_SEO.title}`}>
       {/* 1. 기본 메타 태그 */}
@@ -49,6 +62,10 @@ const SEO = ({ title, description, image, url, noindex=false }: SEOProps) => {
       <meta name="twitter:title" content={seoTitle} />
       <meta name="twitter:description" content={seoDescription} />
       <meta name="twitter:image" content={seoImage} />
+
+      <script type="application/ld+json">
+        {JSON.stringify(jsonLd)}
+      </script>
     </Helmet>
   );
 };
