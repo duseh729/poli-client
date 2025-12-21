@@ -146,44 +146,50 @@ body,
 
 @font-face {
   font-family: "Wanted Sans";
-  src: url("/fonts/WantedSans-Regular.ttf") format("truetype");
+  src: url("/fonts/WantedSans-Regular.woff2") format("woff2");
   font-weight: 400;
   font-style: normal;
+  font-display: swap;
 }
 
 @font-face {
   font-family: "Wanted Sans";
-  src: url("/fonts/WantedSans-Medium.ttf") format("truetype");
+  src: url("/fonts/WantedSans-Medium.woff2") format("woff2");
   font-weight: 500;
   font-style: normal;
+  font-display: swap;
 }
 
 @font-face {
   font-family: "Wanted Sans";
-  src: url("/fonts/WantedSans-SemiBold.ttf") format("truetype");
+  src: url("/fonts/WantedSans-SemiBold.woff2") format("woff2");
   font-weight: 600;
   font-style: normal;
+  font-display: swap;
 }
 
 @font-face {
   font-family: "Wanted Sans";
-  src: url("/fonts/WantedSans-Bold.ttf") format("truetype");
+  src: url("/fonts/WantedSans-Bold.woff2") format("woff2");
   font-weight: 700;
   font-style: normal;
+  font-display: swap;
 }
 
 @font-face {
   font-family: "Wanted Sans";
-  src: url("/fonts/WantedSans-ExtraBold.ttf") format("truetype");
+  src: url("/fonts/WantedSans-ExtraBold.woff2") format("woff2");
   font-weight: 800;
   font-style: normal;
+  font-display: swap;
 }
 
 @font-face {
   font-family: "Wanted Sans";
-  src: url("/fonts/WantedSans-Black.ttf") format("truetype");
+  src: url("/fonts/WantedSans-Black.woff2") format("woff2");
   font-weight: 900;
   font-style: normal;
+  font-display: swap;
 }
 
 * {
