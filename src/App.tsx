@@ -10,7 +10,8 @@ import { HelmetProvider } from "react-helmet-async";
 const GlobalStyles = css`
   @font-face {
     font-family: "Wanted Sans";
-    src: url("/fonts/WantedSans.ttf") format("truetype");
+    src: url("/fonts/WantedSans.woff2") format("woff2");
+    font-display: swap;
   }
 
   * {
