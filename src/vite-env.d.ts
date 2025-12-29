@@ -1,3 +1,5 @@
+/// <reference types="vite/client" />
+
 import "react";
 
 declare module "react" {
@@ -5,5 +7,3 @@ declare module "react" {
     fetchpriority?: "high" | "low" | "auto";
   }
 }
-
-/// <reference types="vite/client" />
