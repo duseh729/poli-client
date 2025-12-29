@@ -1,29 +1,26 @@
-import { useEffect, useLayoutEffect, useState } from "react";
-import { useRef } from "react";
+import { useEffect, useState, useRef } from "react";
+import { useNavigate, useParams } from "react-router-dom";
+import dayjs from "dayjs";
+import "dayjs/locale/ko";
 
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { DatePicker } from "@mui/x-date-pickers";
-import { useLocation, useNavigate, useParams } from "react-router-dom";
-import dayjs from "dayjs";
+import { IconButton, InputAdornment } from "@mui/material";
 
-import html2canvas from "html2canvas";
-import jsPDF from "jspdf";
 
 import * as S from "./style";
 import close from "@/assets/close.svg";
 import exportIcon from "@/assets/exportIcon.svg";
 import edit from "@/assets/edit.svg";
-import expandIcon from "@/assets/expand.svg"; // 아이콘 import 추가
+import expandIcon from "@/assets/expand.svg";
 import petitionUpdateIcon from "@/assets/petition-update.svg";
 import Complaint, { ComplaintData, Evidence } from "@/types/petition";
 import buttonCheck from "@/assets/button-check.svg";
-import "dayjs/locale/ko";
 import Input from "@/components/Petition/Input";
 import ImageInput from "@/components/Chat/ImageCollection/ImageInput";
 import DropdownInput from "@/components/Petition/DropdownInput";
 import { getPetition, updatePetition } from "@/api/petition";
-import { IconButton, InputAdornment } from "@mui/material";
 import SEO from "@/components/Common/SEO";
 
 // 성공 모달 프롭 타입
@@ -52,6 +49,7 @@ const SuccessModal = ({ onClose, onConfirm }: SuccessModalProps) => (
 
 const PetitionPage = () => {
   const { id } = useParams<{ id: string }>();
+  // ... (State들은 그대로 유지)
   const [complaint, setComplaint] = useState<Complaint>(
     new Complaint({
       complaintDate: "",
@@ -114,7 +112,7 @@ const PetitionPage = () => {
     complaint?.complaintDate || null
   );
 
-  const [isSuccessModalVisible, setIsSuccessModalVisible] = useState(false); // 모달 상태 추가
+  const [isSuccessModalVisible, setIsSuccessModalVisible] = useState(false);
 
   const navigate = useNavigate();
 
@@ -174,10 +172,10 @@ const PetitionPage = () => {
     try {
       if (isUpdate) {
         await putPetition();
-        setIsUpdate(false); // 수정 모드 종료
-        setIsSuccessModalVisible(true); // 성공 모달 띄우기
+        setIsUpdate(false);
+        setIsSuccessModalVisible(true);
       } else {
-        setIsUpdate(true); // 수정 모드 시작
+        setIsUpdate(true);
       }
     } catch (err) {
       console.error("Failed to update petition:", err);
@@ -186,18 +184,21 @@ const PetitionPage = () => {
 
   const handleConfirmModal = () => {
     setIsSuccessModalVisible(false);
-    // 필요하다면 여기서 다른 페이지로 navigate
-    // navigate(`/petition/${id}`); // 예: 확인 페이지로 이동
   };
 
+  // ✨ 여기가 최적화의 핵심입니다!
   const handleDownload = async () => {
     if (!pdfRef.current) return;
+
+    // 1. 버튼을 누르는 순간! 라이브러리를 가져옵니다 (약 1MB 절약 효과)
+    // loading state를 추가하여 사용자에게 로딩중임을 알려주면 더 좋습니다.
+    const html2canvas = (await import("html2canvas")).default;
+    const jsPDF = (await import("jspdf")).default;
 
     const isMobile = window.innerWidth < 1024;
     const pdfElement = pdfRef.current;
 
     if (!isMobile) {
-      // 데스크톱 환경에서는 기존 로직을 사용합니다.
       try {
         const canvas = await html2canvas(pdfElement, {
           ignoreElements: (element) => element.classList.contains("pdf-ignore"),
@@ -226,7 +227,6 @@ const PetitionPage = () => {
       return;
     }
 
-    // 모바일 환경에서는 UI 깨짐 방지를 위해 복제해서 사용합니다.
     const clone = pdfElement.cloneNode(true) as HTMLElement;
     clone.style.position = "absolute";
     clone.style.left = "-9999px";
@@ -275,7 +275,6 @@ const PetitionPage = () => {
     "기타 사이버사기",
   ];
 
-  // 진정서 조회
   useEffect(() => {
     if (!id) return;
 
