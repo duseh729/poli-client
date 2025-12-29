@@ -1,0 +1,33 @@
+개선전:
+
+모바일
+First Contentful Paint
+11.4 초
+Largest Contentful Paint
+41.3 초
+Total Blocking Time
+320 밀리초
+Cumulative Layout Shift
+0.12
+Speed Index
+13.4 초
+
+데스크탑
+First Contentful Paint
+2.6 초
+Largest Contentful Paint
+7.6 초
+Total Blocking Time
+20 밀리초
+Cumulative Layout Shift
+0.036
+Speed Index
+5.2 초
+
+https://pagespeed.web.dev/analysis/https-poli-ai-kr/1eaeq2956n?form_factor=desktop&category=performance&category=accessibility&category=best-practices&category=seo&hl=ko&utm_source=lh-chrome-ext
+
+폰트 개선 후:
+https://pagespeed.web.dev/analysis/https-poli-ai-kr/fp6u5mcgyz?form_factor=desktop&category=performance&category=accessibility&category=best-practices&category=seo&hl=ko&utm_source=lh-chrome-ext
+
+---
+lcp 개선

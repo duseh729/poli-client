@@ -1,19 +1,18 @@
 /** @jsxImportSource @emotion/react */
 import * as S from "./style";
 import { visuallyHidden } from "@/pages/HomePage/styles";
-import poliMain from "@/assets/poli-main-sm.svg";
 
 const Main = () => (
   <S.Container>
     <h1 css={visuallyHidden}>사이버 사기 상담 및 진정서 작성 도우미 폴리</h1>
     <S.LogoContainer>
       <img
-        src={poliMain}
+        src="/poli-main-sm.svg"
         alt="POLI"
-        onError={(e) => {
-          e.currentTarget.onerror = null; // 무한 루프 방지
-          e.currentTarget.src = "/poli-main-sm.svg"; // 대체 이미지 경로
-        }}
+        fetchpriority="high"
+        loading="eager"
+        width={385}
+        height={220}
       />
     </S.LogoContainer>
     <S.Title>

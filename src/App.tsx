@@ -4,24 +4,14 @@ import { Global, css } from "@emotion/react";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { Toaster } from "react-hot-toast";
-import AppRouter from "./routes/AppRouter";
 import { HelmetProvider } from "react-helmet-async";
+import AppRouter from "./routes/AppRouter";
 
 const GlobalStyles = css`
-  @font-face {
-    font-family: "Wanted Sans";
-    src: url("/fonts/WantedSans.woff2") format("woff2");
-    font-display: swap;
-  }
-
   * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-  }
-
-  body {
-    font-family: "Wanted Sans", sans-serif;
   }
 `;
 

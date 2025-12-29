@@ -8,25 +8,20 @@ import {
 import ReactMarkdown from "react-markdown";
 import rehypeHighlight from "rehype-highlight";
 import remarkGfm from "remark-gfm";
+import { useNavigate } from "react-router-dom";
+import * as S from "./style";
 import {
   useChatMessages,
-  useChatRoomProgress,
   useChatRooms,
   useChatStream,
 } from "@/api/chat";
 import chatArrow from "@/assets/chat-arrow.svg";
 import poliChat from "@/assets/poli-chat-icon-sm.svg";
-import progressOn from "@/assets/progress-on.svg";
 import check2 from "@/assets/check2.svg";
 import loadingSpinner from "@/assets/loading-spinner.svg";
 import type { ChatMessage } from "@/types/chat";
-import * as S from "./style";
 import "highlight.js/styles/github.css";
-import { COLORS } from "@/constants/color";
-import { useNavigate } from "react-router-dom";
 import { getPetition, initPetition } from "@/api/petition";
-import { useComplaintStore } from "@/stores/petition";
-import Complaint from "@/types/petition";
 import useWindowWidth from "@/hooks/useWindowWidth";
 
 type ChatProps = {
