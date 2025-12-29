@@ -11,6 +11,8 @@ const Main = () => (
         alt="POLI"
         fetchPriority="high"
         loading="eager"
+        width={385}
+        height={220}
       />
     </S.LogoContainer>
     <S.Title>
