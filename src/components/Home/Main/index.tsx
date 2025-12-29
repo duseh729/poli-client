@@ -9,7 +9,7 @@ const Main = () => (
       <img
         src="/poli-main-sm.svg"
         alt="POLI"
-        fetchPriority="high"
+        fetchpriority="high"
         loading="eager"
         width={385}
         height={220}
