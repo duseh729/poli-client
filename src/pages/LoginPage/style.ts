@@ -90,7 +90,7 @@ export const Button = styled.button`
   font-weight: 600;
   cursor: pointer;
   margin-bottom: 48px;
-  font-family: "Wanted Sans";
+  
   &:hover {
     background-color: #3b82f6;
   }

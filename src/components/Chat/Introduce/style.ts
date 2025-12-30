@@ -36,7 +36,7 @@ export const TitleWrapper = styled.div`
 
 export const MainTitle = styled.h1`
   color: #2e3034;
-  font-family: "Wanted Sans";
+  
   font-size: 36px;
   font-style: normal;
   font-weight: 700;
@@ -53,7 +53,7 @@ export const MainTitle = styled.h1`
 `;
 
 export const Subtitle = styled.p`
-  font-family: "Wanted Sans";
+  
   font-size: 20px;
   color: #2e3034;
   font-weight: 500;
@@ -161,7 +161,7 @@ export const StartButton = styled.button`
   height: 70px;
   box-sizing: border-box;
   cursor: pointer;
-  font-family: "Wanted Sans";
+  
   position: relative;
   overflow: hidden;
 
@@ -188,7 +188,7 @@ export const Footer = styled.footer`
   font-weight: 500;
   color: #808996;
   margin-top: 20px;
-  font-family: "Wanted Sans";
+  
 
   ${media.mobile} {
     line-height: 150%; /* 18px */

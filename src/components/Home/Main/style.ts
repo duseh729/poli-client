@@ -11,7 +11,7 @@ export const LogoContainer = styled.div`
 export const Title = styled.p`
   color: #2e3034;
   text-align: center;
-  font-family: "Wanted Sans";
+  
   font-size: 42px;
   font-style: normal;
   font-weight: 700;

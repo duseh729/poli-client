@@ -78,7 +78,7 @@ export const Label = styled.label`
   line-height: 150%; /* 27px */
 
   ${media.mobile} {
-    font-family: "Wanted Sans";
+    
     font-size: 14px;
     margin-bottom: 12px;
   }
@@ -88,7 +88,7 @@ export const Highlight = styled.span`
   color: #0f0f10;
   font-weight: 600;
   line-height: 150%;
-  font-family: "Wanted Sans";
+  
   ${media.mobile} {
     font-size: 16px;
   }
@@ -230,7 +230,7 @@ export const StartButton = styled.button`
   height: 70px;
   box-sizing: border-box;
   cursor: pointer;
-  font-family: "Wanted Sans";
+  
 
   &:hover {
     background: ${COLORS.PRIMARY900};
@@ -267,7 +267,7 @@ export const TitleText = styled.span`
   text-align: center;
   padding: 20px 24px;
   line-height: 150%; /* 27px */
-  font-family: "Wanted Sans";
+  
 
   ${media.mobile} {
     font-size: 18px;

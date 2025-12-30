@@ -262,7 +262,7 @@ export const UserMessage = styled(motion.div)`
   padding: 16px;
   max-width: 600px;
 
-  font-family: "Wanted Sans";
+  
   font-size: 16px;
   font-style: normal;
   font-weight: 500;
@@ -379,7 +379,7 @@ export const SendButton = styled.button`
   display: flex;
   align-items: center;
   justify-content: center;
-  font-family: "Wanted Sans";
+  
 
   &:hover {
     background-color: #0059ff;
@@ -401,7 +401,7 @@ export const RecommendButton = styled.div<{ showRecommendMessages: boolean }>`
   padding: 4px 10px;
   background-color: ${COLORS.GRAY4};
   font-size: 12px;
-  font-family: "Wanted Sans";
+  
   font-weight: 400;
   line-height: 150%;
   color: #fff;
@@ -427,7 +427,7 @@ export const RecommendMessage = styled.button<{ disabled?: boolean }>`
   background-color: transparent;
 
   font-size: 12px;
-  font-family: "Wanted Sans";
+  
   font-weight: 400;
   line-height: 150%;
   color: #808996;
@@ -536,7 +536,7 @@ export const PreformattedCode = styled.pre`
   border-radius: 8px;
   overflow: auto;
   font-size: 14px;
-  font-family: "Wanted Sans";
+  
   font-weight: 500;
 `;
 
@@ -545,7 +545,7 @@ export const InlineCode = styled.code`
   padding: 0.2em 0.4em;
   border-radius: 3px;
   font-size: 14px;
-  font-family: "Wanted Sans";
+  
   font-weight: 500;
 `;
 

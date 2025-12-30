@@ -83,7 +83,7 @@ const Input = styled.input`
   text-overflow: ellipsis;
 
   /* body/1 */
-  font-family: "Wanted Sans";
+  
   font-size: 16px;
   font-style: normal;
   font-weight: 500;
@@ -124,7 +124,7 @@ const Option = styled.li`
 
   color: var(--Input-Color-Default-Text, #4b5362);
 
-  font-family: "Wanted Sans";
+  
   font-size: 16px;
   font-style: normal;
   font-weight: 500;
