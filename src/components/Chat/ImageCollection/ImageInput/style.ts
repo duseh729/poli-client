@@ -28,7 +28,7 @@ export const ImageInputText = styled.span`
   text-overflow: ellipsis;
 
   /* subtitle/3 */
-  font-family: "Wanted Sans";
+  
   font-size: 14px;
   font-style: normal;
   font-weight: 600;
@@ -47,7 +47,7 @@ export const ImageInputLimitedText = styled.span`
   text-align: center;
 
   /* caption/2 */
-  font-family: "Wanted Sans";
+  
   font-size: 12px;
   font-style: normal;
   font-weight: 500;
@@ -76,7 +76,7 @@ export const ImageInputButton = styled.button`
   text-overflow: ellipsis;
 
   /* body/2 */
-  font-family: "Wanted Sans";
+  
   font-size: 14px;
   font-style: normal;
   font-weight: 500;

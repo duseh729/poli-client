@@ -7,7 +7,7 @@ const Main = () => (
     <h1 css={visuallyHidden}>사이버 사기 상담 및 진정서 작성 도우미 폴리</h1>
     <S.LogoContainer>
       <img
-        src="/poli-main-sm.svg"
+        src="/poli-main-sm.webp"
         alt="POLI"
         fetchpriority="high"
         loading="eager"

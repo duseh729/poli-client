@@ -30,7 +30,7 @@ export const Title = styled.div`
   overflow: hidden;
   color: var(--grey-8, #0f0f10);
   text-overflow: ellipsis;
-  font-family: "Wanted Sans";
+  
   font-size: 16px;
   font-style: normal;
   font-weight: 600;
