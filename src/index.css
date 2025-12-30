@@ -103,6 +103,11 @@ section {
 body {
   line-height: 1;
   font-family: "Wanted Sans Variable", "Wanted Sans", sans-serif;
+  letter-spacing: -0.03em;
+}
+button{
+  font-family: "Wanted Sans Variable", "Wanted Sans", sans-serif;
+  letter-spacing: -0.03em;
 }
 ol,
 ul {
