@@ -1,0 +1,12 @@
+
+QA 작업 완료입니다! 모두 적용 부탁드려요!
+
+[QA시트 - 4차]
+https://docs.google.com/spreadsheets/d/1y0mzuvoFuGaRWIQU_Hm6rWxHyJ2jyjcoHuauWAZJPuM/edit?gid=539148017#gid=539148017
+
+[QA 개선 화면 정의서]
+https://www.figma.com/design/1lc9OlApPj06HrFYTPZWer/-phase2-Final-UI-ver-1.0-?node-id=455-4091&t=SQnnIy2Liy19FRT5-1
+
+웹 프론트 https://poli.ai.kr/ , https://www.poli.ai.kr/
+백엔드 swagger 문서 : https://backend.poli.ai.kr/swagger-ui/index.html
+챗봇 : https://chatbot.poli.ai.kr/
