@@ -10,6 +10,21 @@ import loadingSpinner from "@/assets/loading-spinner.svg";
 import { COLORS } from "@/constants/color";
 import useWindowWidth from "@/hooks/useWindowWidth";
 
+/**
+ * 타이핑 중 불완전한 마크다운 구문을 닫아주어 ReactMarkdown이 정상 렌더링하도록 보완
+ */
+function fixPartialMarkdown(text: string): string {
+  let result = text;
+  const boldCount = (result.match(/\*\*/g) || []).length;
+  if (boldCount % 2 !== 0) result += "**";
+  const stripped = result.replace(/\*\*/g, "");
+  const italicCount = (stripped.match(/\*/g) || []).length;
+  if (italicCount % 2 !== 0) result += "*";
+  const backtickCount = (result.match(/`/g) || []).length;
+  if (backtickCount % 2 !== 0) result += "`";
+  return result;
+}
+
 type ChatProps = {
   message: string;
   botMessage: string;
@@ -162,7 +177,7 @@ const InitChat = ({
                     ),
                   }}
                 >
-                  {botMessage}
+                  {fixPartialMarkdown(botMessage)}
                 </ReactMarkdown>
               </S.Message>
             </S.BotMessageWrapper>

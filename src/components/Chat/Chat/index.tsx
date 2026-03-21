@@ -38,6 +38,24 @@ type ChatProps = {
 const BLOCK_SIZE = 2; // 한 번에 붙일 글자 수 (조정 가능)
 const TICK_DELAY_MS = 30; // 반복 간격(ms) — 작을수록 더 빠름
 
+/**
+ * 타이핑 중 불완전한 마크다운 구문을 닫아주어 ReactMarkdown이 정상 렌더링하도록 보완
+ */
+function fixPartialMarkdown(text: string): string {
+  let result = text;
+  // ** (볼드) 쌍 맞추기
+  const boldCount = (result.match(/\*\*/g) || []).length;
+  if (boldCount % 2 !== 0) result += "**";
+  // * (이탤릭) 쌍 맞추기 — 볼드(**)를 제거한 후 남은 홀수 * 체크
+  const stripped = result.replace(/\*\*/g, "");
+  const italicCount = (stripped.match(/\*/g) || []).length;
+  if (italicCount % 2 !== 0) result += "*";
+  // ` (인라인 코드) 쌍 맞추기
+  const backtickCount = (result.match(/`/g) || []).length;
+  if (backtickCount % 2 !== 0) result += "`";
+  return result;
+}
+
 const Chat = ({ messages: initialMessages, roomId, isInit }: ChatProps) => {
   const [inputValue, setInputValue] = useState<string>("");
   const [chatMessages, setChatMessages] = useState<ChatMessage[]>([]);
@@ -67,10 +85,10 @@ const Chat = ({ messages: initialMessages, roomId, isInit }: ChatProps) => {
   const animationProps = isInit
     ? {}
     : {
-        initial: { opacity: 0 },
-        animate: { opacity: 1 },
-        transition: { duration: 0.5 },
-      };
+      initial: { opacity: 0 },
+      animate: { opacity: 1 },
+      transition: { duration: 0.5 },
+    };
 
   // 스크롤 변수
   const [autoScroll, setAutoScroll] = useState(true);
@@ -425,7 +443,7 @@ const Chat = ({ messages: initialMessages, roomId, isInit }: ChatProps) => {
                     a: CustomLink,
                   }}
                 >
-                  {`${currentBotMessage}`}
+                  {fixPartialMarkdown(currentBotMessage)}
                 </ReactMarkdown>
               </S.Message>
             </S.BotMessageWrapper>

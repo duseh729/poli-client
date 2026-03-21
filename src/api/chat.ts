@@ -44,7 +44,6 @@ export const useChatStream = () => {
           headers: {
             Accept: "text/event-stream",
             "user-id": userId ?? "",
-            // ⚠️ Content-Type은 설정하지 말 것!
           },
           body: formData,
         }
