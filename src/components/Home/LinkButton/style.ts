@@ -15,7 +15,7 @@ export const Button = styled.button`
   background: #1e1e1e;
   color: white;
   font-weight: bold;
-  font-family: "Wanted Sans";
+  
   font-size: 26px;
   font-style: normal;
   font-weight: 600;

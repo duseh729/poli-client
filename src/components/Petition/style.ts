@@ -9,7 +9,7 @@ export const Input = styled.input`
   padding: 12px;
   color: #0f0f10;
 
-  font-family: "Wanted Sans";
+  
   font-size: 16px;
   font-style: normal;
   font-weight: 500;
@@ -27,7 +27,7 @@ export const Textarea = styled.textarea`
   padding: 12px;
   color: #0f0f10;
 
-  font-family: "Wanted Sans";
+  
   font-size: 16px;
   font-style: normal;
   font-weight: 500;

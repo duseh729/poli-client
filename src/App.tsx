@@ -4,22 +4,14 @@ import { Global, css } from "@emotion/react";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { Toaster } from "react-hot-toast";
+import { HelmetProvider } from "react-helmet-async";
 import AppRouter from "./routes/AppRouter";
 
 const GlobalStyles = css`
-  @font-face {
-    font-family: "Wanted Sans";
-    src: url("/fonts/WantedSans.ttf") format("truetype");
-  }
-
   * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-  }
-
-  body {
-    font-family: "Wanted Sans", sans-serif;
   }
 `;
 
@@ -30,10 +22,13 @@ function App() {
 
   return (
     <QueryClientProvider client={queryClient}>
-      <Global styles={GlobalStyles} />
-      <AppRouter />
-      <Toaster position="top-center" />
-      {import.meta.env.MODE === "development" && <ReactQueryDevtools />}
+      {/* 2. HelmetProvider로 내부 전체를 감싸줍니다 */}
+      <HelmetProvider>
+        <Global styles={GlobalStyles} />
+        <AppRouter />
+        <Toaster position="top-center" />
+        {import.meta.env.MODE === "development" && <ReactQueryDevtools />}
+      </HelmetProvider>
     </QueryClientProvider>
   );
 }

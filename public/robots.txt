@@ -1,0 +1,8 @@
+# 모든 검색 로봇(*)에게 적용
+User-agent: *
+
+# 모든 페이지 수집을 허용
+Allow: /
+
+# 사이트맵 위치를 알려줌 (내 도메인 주소로 수정)
+Sitemap: https://poli.ai.kr/sitemap.xml

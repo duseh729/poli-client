@@ -64,7 +64,7 @@ export const SidebarButton = styled.button`
   width: 228px;
   box-sizing: border-box;
   background-color: #f6f8fb;
-  font-family: "Wanted Sans";
+  
 
   &:hover {
     background-color: #e8ecf1;
@@ -75,7 +75,7 @@ export const SidebarText = styled.span`
   font-size: 16px;
   color: #4e5867;
   font-weight: 700;
-  font-family: "Wanted Sans";
+  
 `;
 
 export const UserContainer = styled.div`
@@ -215,7 +215,7 @@ export const LogoutButton = styled(motion.button)`
   left: 15px;
   gap: 10px;
   z-index: 100;
-  font-family: "Wanted Sans";
+  
   &:hover {
     background-color: #e8ecf1;
   }

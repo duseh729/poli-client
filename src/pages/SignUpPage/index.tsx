@@ -9,6 +9,7 @@ import poliSmText from "@/assets/poli-sm-text.svg";
 import { SignUpData } from "@/types/user";
 import { signUpSchema } from "@/schemas/user";
 import { ROUTES } from "@/constants/routes";
+import SEO from "@/components/Common/SEO";
 
 const SignUpPage = () => {
   const {
@@ -50,44 +51,49 @@ const SignUpPage = () => {
   };
 
   return (
-    <S.Container>
-      <S.Form onSubmit={handleSubmit(onSubmit)}>
-        <S.Title>회원가입</S.Title>
-        <S.InputContainer>
-          <S.InputWrapper>
-            <S.Input
-              {...register("userId")}
-              type="text"
-              placeholder="아이디*"
-              hasError={!!errors.userId}
-            />
-            <S.FocusText className="focus-text" hasError={!!errors.userId}>
-              아이디*
-            </S.FocusText>
-            <S.ErrorText>{errors.userId && errors.userId.message}</S.ErrorText>
-          </S.InputWrapper>
-          <S.InputWrapper>
-            <S.Input
-              {...register("userName")}
-              type="text"
-              placeholder="이름*"
-              hasError={!!errors.userName}
-            />
-            <S.FocusText className="focus-text" hasError={!!errors.userName}>
-              이름*
-            </S.FocusText>
-            <S.ErrorText>
-              {errors.userName && errors.userName.message}
-            </S.ErrorText>
-          </S.InputWrapper>
-        </S.InputContainer>
-        <S.Button type="submit">회원가입</S.Button>
-        <S.Text>
-          이미 계정이 있으신가요?{" "}
-          <S.StyledLink to="/login">로그인</S.StyledLink>
-        </S.Text>
-      </S.Form>
-    </S.Container>
+    <>
+      <SEO title="회원가입" />
+      <S.Container>
+        <S.Form onSubmit={handleSubmit(onSubmit)}>
+          <S.Title>회원가입</S.Title>
+          <S.InputContainer>
+            <S.InputWrapper>
+              <S.Input
+                {...register("userId")}
+                type="text"
+                placeholder="아이디*"
+                hasError={!!errors.userId}
+              />
+              <S.FocusText className="focus-text" hasError={!!errors.userId}>
+                아이디*
+              </S.FocusText>
+              <S.ErrorText>
+                {errors.userId && errors.userId.message}
+              </S.ErrorText>
+            </S.InputWrapper>
+            <S.InputWrapper>
+              <S.Input
+                {...register("userName")}
+                type="text"
+                placeholder="이름*"
+                hasError={!!errors.userName}
+              />
+              <S.FocusText className="focus-text" hasError={!!errors.userName}>
+                이름*
+              </S.FocusText>
+              <S.ErrorText>
+                {errors.userName && errors.userName.message}
+              </S.ErrorText>
+            </S.InputWrapper>
+          </S.InputContainer>
+          <S.Button type="submit">회원가입</S.Button>
+          <S.Text>
+            이미 계정이 있으신가요?{" "}
+            <S.StyledLink to="/login">로그인</S.StyledLink>
+          </S.Text>
+        </S.Form>
+      </S.Container>
+    </>
   );
 };
 
