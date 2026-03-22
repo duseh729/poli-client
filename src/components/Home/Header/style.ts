@@ -18,7 +18,7 @@ export const Container = styled.div`
 
 export const StyledLink = styled(Link)`
   color: #2e3034;
-  font-family: "Wanted Sans";
+  
   font-size: 18px;
   font-style: normal;
   font-weight: 600;

@@ -1,8 +1,10 @@
 /** @jsxImportSource @emotion/react */
 import { css } from "@emotion/react";
+import { visuallyHidden } from "./styles";
 import Header from "@/components/Home/Header";
 import Main from "@/components/Home/Main";
 import LinkButton from "@/components/Home/LinkButton";
+import SEO from "@/components/Common/SEO";
 
 const HomePage = () => {
   return (
@@ -13,6 +15,8 @@ const HomePage = () => {
         align-items: center;
       `}
     >
+      <SEO title="사이버 사기 상담" />
+
       <Header />
       <Main />
       <LinkButton />

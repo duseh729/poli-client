@@ -149,7 +149,7 @@ export const PetitionHeaderWrapper = styled(motion.div)`
     background: #caefe3;
 
     color: #389f73;
-    font-family: "Wanted Sans";
+    
     font-size: 13px;
     font-style: normal;
     font-weight: 600;
@@ -175,7 +175,7 @@ export const PetitionTitleWrapper = styled(motion.div)`
 
   h3 {
     color: #1a1b1c;
-    font-family: "Wanted Sans";
+    
     font-size: 32px;
     font-style: normal;
     font-weight: 600;
@@ -215,7 +215,7 @@ export const PetionTitleContents = styled(motion.div)`
 
     & > span {
       color: #626262;
-      font-family: "Wanted Sans";
+      
       font-size: 20px;
       font-style: normal;
       font-weight: 500;
@@ -229,7 +229,7 @@ export const PetitionDateTextWrapper = styled(motion.div)`
   flex-direction: column;
 
   span {
-    font-family: "Wanted Sans";
+    
     line-height: 140%; /* 22.4px */
   }
 
@@ -275,7 +275,7 @@ export const PetitionButtonWrapper = styled(motion.div)`
       overflow: hidden;
       color: #404652;
       text-overflow: ellipsis;
-      font-family: "Wanted Sans";
+      
       font-size: 16px;
       font-style: normal;
       font-weight: 500;
@@ -295,7 +295,7 @@ export const PetitionInfoWrapper = styled(motion.div)`
 
   h3 {
     color: rgba(128, 128, 128, 0.71);
-    font-family: "Wanted Sans";
+    
     font-size: 18px;
     font-style: normal;
     font-weight: 600;
@@ -320,7 +320,7 @@ export const PetitionInfoFlex = styled(motion.div)`
 
 export const PetitionInfoTitle = styled(motion.p)`
   color: #2d76ff;
-  font-family: "Wanted Sans";
+  
   font-size: 16px;
   font-style: normal;
   font-weight: 600;
@@ -341,7 +341,7 @@ export const PetitionInfoContentsTitleWrapper = styled(motion.span)`
 
   span {
     color: #1a1b1c;
-    font-family: "Wanted Sans";
+    
     font-size: 18px;
     font-style: normal;
     font-weight: 600;
@@ -353,7 +353,7 @@ export const PetitionInfoContentsTitleWrapper = styled(motion.span)`
 
 export const PetitionInfoContentsTitle = styled.span`
   color: #1a1b1c;
-  font-family: "Wanted Sans";
+  
   font-size: 18px;
   font-style: normal;
   font-weight: 600;
@@ -376,7 +376,7 @@ export const PetitionInfoContentsWrapper = styled(motion.span)`
 
 export const PetitionInfoContents = styled(motion.span)`
   color: #1a1b1c;
-  font-family: "Wanted Sans";
+  
   font-size: 18px;
   font-style: normal;
   font-weight: 600;
@@ -454,7 +454,7 @@ export const FloatingButtonWrapper = styled.div`
       overflow: hidden;
       color: #404652;
       text-overflow: ellipsis;
-      font-family: "Wanted Sans";
+      
       font-size: 16px;
       font-style: normal;
       font-weight: 500;
@@ -572,7 +572,7 @@ export const ModalTitle = styled.h2`
 export const ModalText = styled.p`
   color: #9098a4;
   text-align: center;
-  font-family: "Wanted Sans";
+  
   font-size: 16px;
   font-style: normal;
   font-weight: 500;
