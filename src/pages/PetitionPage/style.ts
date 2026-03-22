@@ -9,7 +9,7 @@ export const Container = styled(motion.div)`
 
   overflow: auto;
 
-  -ms-overflow-style: none; /* IE, Edge(구버전) */
+  -ms-overflow-style: none; /* IE, Edge(구버?? */
   scrollbar-width: none; /* Firefox */
   &::-webkit-scrollbar {
     display: none; /* Chrome, Safari */
@@ -414,7 +414,7 @@ export const InputWrapper = styled.div`
   }
 `;
 
-// 피해장소, 진정취지 wrapper
+// ?�해?�소, 진정취�? wrapper
 export const RowColumnWrapper = styled.div<{ isUpdate?: boolean }>`
   display: flex;
   gap: 28px;
@@ -496,7 +496,7 @@ export const FloatingContent = styled.div`
   flex-direction: column;
   gap: 12px;
 `;
-// props 타입을 지정해주면 자동완성 등에서 더 편리합니다 (선택 사항)
+// props ?�?�을 지?�해주면 ?�동?�성 ?�에?????�리?�니??(?�택 ?�항)
 type FloatingCloseProps = {
   isUpdate: boolean;
 };
@@ -562,7 +562,7 @@ export const ModalIcon = styled.div`
 export const ModalTitle = styled.h2`
   color: #1a1b1c;
   text-align: center;
-  font-family: Pretendard;
+  
   font-size: 18px;
   font-style: normal;
   font-weight: 700;
