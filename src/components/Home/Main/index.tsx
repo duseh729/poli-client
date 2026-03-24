@@ -9,7 +9,7 @@ const Main = () => (
       <img
         src="/poli-main-sm.webp"
         alt="POLI"
-        fetchpriority="high"
+        fetchPriority="high"
         loading="eager"
         width={385}
         height={220}
